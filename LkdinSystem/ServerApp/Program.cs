@@ -2,12 +2,13 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using Utils;
 
 namespace ServerApp
 {
     class Program
     {
-        const string localhost = "127.0.0.1";
+        static readonly SettingsManager settingsManager = new SettingsManager();
 
         public static void Main(string[] args)
         {
@@ -15,8 +16,10 @@ namespace ServerApp
 
             var serverSocket = new Socket(AddressFamily.InterNetwork,SocketType.Stream,ProtocolType.Tcp);
 
+            string ipAddress = settingsManager.ReadSettings(ServerConfig.serverIPConfigKey);
+            int ipPort = int.Parse(settingsManager.ReadSettings(ServerConfig.serverPortConfigKey));
 
-            var localEndpoint = new IPEndPoint(IPAddress.Parse(localhost), 5000);
+            var localEndpoint = new IPEndPoint(IPAddress.Parse(ipAddress), ipPort);
 
             serverSocket.Bind(localEndpoint); // vinculo el socket al endpoint
             serverSocket.Listen(1); // pongo el servidor en listen
@@ -45,10 +48,10 @@ namespace ServerApp
 
                 while (clientConnected)
                 {
-                    byte[] dataLength = new byte[Constants.FixedLength];
+                    byte[] dataLength = new byte[Constants.FixedDataSize];
 
                     int offset = 0;
-                    int size = Constants.FixedLength;
+                    int size = Constants.FixedDataSize;
 
                     while (offset < size)
                     {

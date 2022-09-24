@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "UTGxv+jtY7Ve6nBhrz02Dfd2UYw/B4yvcxYv6bd2RerYEDVbJ/tmO7BULtMVXNhzL8zSqFdYiLXsyetHwrc+OQ==",
+  "dgSpecHash": "vbl5urMBKk8kojsRzuTqqXprq/TWslQ4Ous6CsxU+Fk+SXzitQdTfoyxr2OuzOZL9Wy7fyC+22SEAqxbgybIsA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\danil\\source\\repos\\LkdinSystem\\ClientApp\\ClientApp.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\ClientApp\\ClientApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\danil\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "C:\\Users\\danil\\.nuget\\packages\\system.configuration.configurationmanager\\6.0.1\\system.configuration.configurationmanager.6.0.1.nupkg.sha512",
+    "C:\\Users\\danil\\.nuget\\packages\\system.drawing.common\\6.0.0\\system.drawing.common.6.0.0.nupkg.sha512",
+    "C:\\Users\\danil\\.nuget\\packages\\system.security.accesscontrol\\6.0.0\\system.security.accesscontrol.6.0.0.nupkg.sha512",
+    "C:\\Users\\danil\\.nuget\\packages\\system.security.cryptography.protecteddata\\6.0.0\\system.security.cryptography.protecteddata.6.0.0.nupkg.sha512",
+    "C:\\Users\\danil\\.nuget\\packages\\system.security.permissions\\6.0.0\\system.security.permissions.6.0.0.nupkg.sha512",
+    "C:\\Users\\danil\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

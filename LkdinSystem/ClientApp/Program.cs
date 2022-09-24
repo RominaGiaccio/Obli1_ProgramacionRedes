@@ -44,7 +44,7 @@ namespace ClientApp
                     byte[] dataLength = BitConverter.GetBytes(data.Length);
 
                     int offset = 0;
-                    int size = Constants.FixedLength;
+                    int size = Constants.FixedDataSize;
 
                     while (offset < size)
                     {

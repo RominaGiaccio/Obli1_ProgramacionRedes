@@ -2,8 +2,9 @@
 {
     public class Constants
     {
-        public static int FixedLength = 4;
+        public static readonly int FixedDataSize = 4;
 
-        public static void Main(string[] args) { }
+        public static readonly int FixedFileSize = 8;
+        public static readonly int MaxPackageSize = 32768; // 32kb
     }
 }
