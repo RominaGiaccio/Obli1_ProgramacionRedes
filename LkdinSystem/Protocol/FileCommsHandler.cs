@@ -17,6 +17,11 @@ namespace Protocol
             _socketHelper = new SocketHelper(socket);
         }
 
+        public FileCommsHandler(SocketHelper socketHelper)
+        {
+            _socketHelper = socketHelper;
+        }
+
         public void SendFile(string path)
         {
             if (FileHandler.FileExists(path))
@@ -26,7 +31,6 @@ namespace Protocol
                 _socketHelper.Send(ConversionHandler.ConvertIntToBytes(fileName.Length));
                 // ---> Enviar el nombre del archivo
                 _socketHelper.Send(ConversionHandler.ConvertStringToBytes(fileName));
-
                 // ---> Obtener el tamaño del archivo
                 long fileSize = FileHandler.GetFileSize(path);
                 // ---> Enviar el tamaño del archivo
@@ -45,7 +49,7 @@ namespace Protocol
         {
             // ---> Recibir el largo del nombre del archivo
             int fileNameSize = ConversionHandler.ConvertBytesToInt(
-                _socketHelper.Receive(Constants.FixedDataSize));
+                _socketHelper.Receive(Constants.FixedFileNameSize));
             // ---> Recibir el nombre del archivo
             string fileName = ConversionHandler.ConvertBytesToString(_socketHelper.Receive(fileNameSize));
             // ---> Recibir el largo del archivo
@@ -101,6 +105,7 @@ namespace Protocol
                     data = _socketHelper.Receive(Constants.MaxPackageSize);
                     offset += Constants.MaxPackageSize;
                 }
+
                 FileStreamHandler.Write(fileName, data);
                 currentPart++;
             }

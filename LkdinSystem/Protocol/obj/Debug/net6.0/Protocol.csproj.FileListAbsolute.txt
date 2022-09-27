@@ -13,9 +13,7 @@ C:\Users\danil\source\repos\LkdinSystem\Protocol\obj\Debug\net6.0\refint\Protoco
 C:\Users\danil\source\repos\LkdinSystem\Protocol\obj\Debug\net6.0\Protocol.pdb
 C:\Users\danil\source\repos\LkdinSystem\Protocol\obj\Debug\net6.0\Protocol.genruntimeconfig.cache
 C:\Users\danil\source\repos\LkdinSystem\Protocol\obj\Debug\net6.0\ref\Protocol.dll
-C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\bin\Debug\net6.0\Protocol.exe
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\bin\Debug\net6.0\Protocol.deps.json
-C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\bin\Debug\net6.0\Protocol.runtimeconfig.json
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\bin\Debug\net6.0\Protocol.dll
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\bin\Debug\net6.0\Protocol.pdb
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\obj\Debug\net6.0\Protocol.csproj.AssemblyReference.cache
@@ -26,5 +24,11 @@ C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\obj\Deb
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\obj\Debug\net6.0\Protocol.dll
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\obj\Debug\net6.0\refint\Protocol.dll
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\obj\Debug\net6.0\Protocol.pdb
-C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\obj\Debug\net6.0\Protocol.genruntimeconfig.cache
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\obj\Debug\net6.0\ref\Protocol.dll
+C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\bin\Debug\net6.0\Utils.dll
+C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\bin\Debug\net6.0\Utils.pdb
+C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\obj\Debug\net6.0\Protocol.csproj.CopyComplete
+C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\bin\Debug\net6.0\Domain.dll
+C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\bin\Debug\net6.0\Enums.dll
+C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\bin\Debug\net6.0\Domain.pdb
+C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Protocol\bin\Debug\net6.0\Enums.pdb

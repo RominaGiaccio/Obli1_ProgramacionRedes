@@ -1,4 +1,6 @@
-﻿namespace Protocol
+﻿using Utils;
+
+namespace Protocol
 {
     public class FileStreamHandler
     {
@@ -27,6 +29,14 @@
         public static void Write(string fileName, byte[] data)
         {
             var fileMode = FileHandler.FileExists(fileName) ? FileMode.Append : FileMode.Create;
+            using var fs = new FileStream(fileName, fileMode);
+            fs.Write(data, 0, data.Length);
+        }
+
+        public static void EmptyFile(string fileName)
+        {
+            byte[] data = ConversionHandler.ConvertStringToBytes("");
+            var fileMode = FileMode.Create;
             using var fs = new FileStream(fileName, fileMode);
             fs.Write(data, 0, data.Length);
         }

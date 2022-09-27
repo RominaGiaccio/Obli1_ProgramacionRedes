@@ -4,7 +4,7 @@ namespace Utils
 {
     public class SettingsManager
     {
-        public string ReadSettings(string key)
+        public static string ReadSettings(string key)
         {
             try
             {

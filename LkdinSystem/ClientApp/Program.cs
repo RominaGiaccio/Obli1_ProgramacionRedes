@@ -1,8 +1,12 @@
-﻿using Protocol;
+﻿using Domain;
+using Protocol;
+using Protocol.Commands;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection.Metadata;
 using System.Text;
+using Utils;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ClientApp
 {
@@ -10,12 +14,21 @@ namespace ClientApp
     {
         const string localhost = "127.0.0.1";
 
+        public static void SendProfileImage(UserProfile usu, SocketHelper clientSocket)
+        {
+            Console.WriteLine("Ingrese ruta de archivo");
+            string absPath = Console.ReadLine() ?? "";
+
+            usu.Image = absPath;
+
+            ClientCommands.UploadUserProfileImage(usu, absPath, clientSocket);
+        }
+
         public static void Main(string[] args)
         {
             Console.WriteLine("Client initialize...");
 
             var clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
 
             var localEndpoint = new IPEndPoint(IPAddress.Parse(localhost), 0); // Puerto 0, toma el primero disponible
             clientSocket.Bind(localEndpoint); // vinculo el socket al endpoint
@@ -29,77 +42,121 @@ namespace ClientApp
             Console.WriteLine("Write message and press enter to send it");
 
             bool stop = false;
+
+            bool start = true;
+            var sh = new SocketHelper(clientSocket);
+
             while (!stop)
             {
-                string message = Console.ReadLine() ?? "";
-
-                bool isMessageEqualsToExit = message.Equals("Exit", StringComparison.InvariantCultureIgnoreCase);
-
-                if (isMessageEqualsToExit)
+                if (start)
                 {
-                    stop = true;
-                } else
-                {
-                    byte[] data = Encoding.UTF8.GetBytes(message);
-                    byte[] dataLength = BitConverter.GetBytes(data.Length);
+                    User usu = new User("test", "test", "" + User.Status.Logged);
 
-                    int offset = 0;
-                    int size = Constants.FixedDataSize;
+                    ClientCommands.CreateNewUser(usu, sh);
 
-                    while (offset < size)
+                    ClientCommands.SignIn(usu, sh);
+
+                    ClientCommands.SignOut(usu, sh);
+
+                    ClientCommands.SignIn(usu, sh);
+
+                    string[] a = new string[2]
                     {
-                        int sended = clientSocket.Send(dataLength, offset, size - offset, SocketFlags.None);
+                        "ability 01",
+                        "ability 02"
+                    };
 
-                        if (sended == 0)
-                        {
-                            throw new SocketException();
-                        }
+                    UserProfile up = new UserProfile(usu.Id, "some description", a, "");
 
-                        offset += sended;
-                    }
+                    ClientCommands.CreateUserProfile(up, sh);
 
-                    offset = 0;
-                    size = data.Length;
-                    
-                    while (offset < size)
-                    {
-                        int sended = clientSocket.Send(data, offset, size - offset, SocketFlags.None);
+                    ClientCommands.GetAllProfiles("2ff13762-6fe7-4bd0-8903-959db32d0f1d", " description", new string[] { "ability 02" }, sh);
 
-                        if (sended == 0)
-                        {
-                            throw new SocketException();
-                        }
+                    var msg = new Message(usu.Email, usu.Email, "Some message content", "" + Message.Status.NotReaded);
 
-                        offset += sended;
-                    }
+                    ClientCommands.SendMessage(msg, sh);
 
-                    // receive response
-                    //byte[] dataResponseLength = new byte[Constants.FixedLength];
-                    //int request = clientSocket.Receive(dataResponseLength);
+                    ClientCommands.GetUnreadedMessages(usu, sh);
 
-                    //try
-                    //{
-                    //    if (request == 0)
-                    //    {
-                    //        throw new SocketException();
-                    //    }
+                    ClientCommands.GetMessagesHistory(usu, sh);
 
-                    //    byte[] dataResponse = new byte[BitConverter.ToInt32(dataLength)];
-                    //    request = clientSocket.Receive(dataResponse);
+                    //SendProfileImage(up, sh);
 
-                    //    if (request == 0)
-                    //    {
-                    //        throw new SocketException();
-                    //    }
+                    //ClientCommands.DownloadUserProfileImage(up, sh);
 
-                    //    string responseMessage = Encoding.UTF8.GetString(dataResponse);
-
-                    //    Console.WriteLine("Server response: {0}", responseMessage);
-                    //} catch (SocketException e)
-                    //{
-                    //    Console.WriteLine("Connection Lost: {0}", e.Message);
-                    //}
+                    start = false;
                 }
+
+                //string message = Console.ReadLine() ?? "";
+
+                //bool isMessageEqualsToExit = message.Equals("Exit", StringComparison.InvariantCultureIgnoreCase);
+
+                //if (isMessageEqualsToExit)
+                //{
+                //    stop = true;
+                //} else
+                //{
+                //    byte[] data = Encoding.UTF8.GetBytes(message);
+                //    byte[] dataLength = BitConverter.GetBytes(data.Length);
+
+                //    int offset = 0;
+                //    int size = Constants.FixedDataSize;
+
+                //    while (offset < size)
+                //    {
+                //        int sended = clientSocket.Send(dataLength, offset, size - offset, SocketFlags.None);
+
+                //        if (sended == 0)
+                //        {
+                //            throw new SocketException();
+                //        }
+
+                //        offset += sended;
+                //    }
+
+                //    offset = 0;
+                //    size = data.Length;
+
+                //    while (offset < size)
+                //    {
+                //        int sended = clientSocket.Send(data, offset, size - offset, SocketFlags.None);
+
+                //        if (sended == 0)
+                //        {
+                //            throw new SocketException();
+                //        }
+
+                //        offset += sended;
+                //    }
+
+                // receive response
+                //byte[] dataResponseLength = new byte[2];
+                //int request = clientSocket.Receive(dataResponseLength);
+
+                //try
+                //{
+                //    if (request == 0)
+                //    {
+                //        throw new SocketException();
+                //    }
+
+                //    byte[] dataResponse = new byte[2];
+                //    request = clientSocket.Receive(dataResponse);
+
+                //    if (request == 0)
+                //    {
+                //        throw new SocketException();
+                //    }
+
+                //    string responseMessage = Encoding.UTF8.GetString(dataResponse);
+
+                //    Console.WriteLine("Server response: {0}", responseMessage);
+                //}
+                //catch (SocketException e)
+                //{
+                //    Console.WriteLine("Connection Lost: {0}", e.Message);
+                //}
+                //}
             }
 
             clientSocket.Shutdown(SocketShutdown.Both);
