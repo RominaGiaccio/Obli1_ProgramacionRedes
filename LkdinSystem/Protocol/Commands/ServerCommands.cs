@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Enums;
+using Protocol.Enums;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -78,14 +79,14 @@ namespace Protocol.Commands
                 }
             }
 
-            return message == String.Empty ? "No profiles" : message;
+            return message == String.Empty ? EmptyStatesMessages.NoProfilesMessage : message;
         }
 
         public string SaveNewUser(string message)
         {
             if (string.IsNullOrWhiteSpace(message))
             {
-                throw new Exception("Invalid User");
+                throw new Exception("Usuario invalido");
             }
             else
             {
@@ -97,12 +98,12 @@ namespace Protocol.Commands
 
                 if (usu != null)
                 {
-                    throw new Exception("User already registered");
+                    throw new Exception("Usuario ya registrado");
                 }
 
                 fileDatabaseManager.SaveNewUser(user);
 
-                return "User saved success";
+                return "Usuario guardado";
             }
         }
 
@@ -110,7 +111,7 @@ namespace Protocol.Commands
         {
             if (string.IsNullOrWhiteSpace(message))
             {
-                throw new Exception("Invalid User Profile");
+                throw new Exception("Perfil invalido");
             }
             else
             {
@@ -122,30 +123,64 @@ namespace Protocol.Commands
 
                 if (user == null)
                 {
-                    throw new Exception("User Profile not exists");
+                    throw new Exception("No existe el usuario");
                 }
 
                 fileDatabaseManager.SaveNewUserProfile(userProfile);
 
-                return "User Profile saved success";
+                return "Perfil guardado correctamente";
             }
         }
 
-        public string UpdateUser(string message)
+        public string SignIn(string message)
         {
             User user = User.ToEntity(message);
 
             var users = fileDatabaseManager.GetAllUsers();
 
-            User? savedUserProfile = users.Find((e) => e.Id == user.Id);
+            User? savedUser = users.Find((e) => e.Email == user.Email);
 
-            if (savedUserProfile == null)
+            if (savedUser == null)
             {
-                throw new Exception("User not exists");
+                throw new Exception("No existe el usuario");
+            }
+
+            if (savedUser.CurrentState == "" + User.Status.Logged)
+            {
+                throw new Exception("Usuario ya logeado");
+            }
+
+            var newUsers = users.FindAll((e) => e.Id != savedUser.Id);
+
+            savedUser.CurrentState = "" + User.Status.Logged;
+            newUsers.Add(savedUser);
+
+            fileDatabaseManager.EmptyDataBase(usersFileName);
+
+            newUsers.ForEach(user =>
+            {
+                fileDatabaseManager.SaveNewUser(user);
+            });
+
+            return "Login exitoso";
+        }
+
+        public string SignOut(string message)
+        {
+            User user = User.ToEntity(message);
+
+            var users = fileDatabaseManager.GetAllUsers();
+
+            User? savedUser = users.Find((e) => e.Id == user.Id);
+
+            if (savedUser == null)
+            {
+                throw new Exception("No existe el usuario");
             }
 
             var newUsers = users.FindAll((e) => e.Id != user.Id);
 
+            user.CurrentState = "" + User.Status.NotLogged;
             newUsers.Add(user);
 
             fileDatabaseManager.EmptyDataBase(usersFileName);
@@ -155,14 +190,14 @@ namespace Protocol.Commands
                 fileDatabaseManager.SaveNewUser(user);
             });
 
-            return "User Uploaded";
+            return "Usuario deslogeado";
         }
 
         public string UploadUserProfileImage(string message)
         {
             if (string.IsNullOrWhiteSpace(message))
             {
-                throw new Exception("Invalid User");
+                throw new Exception("Usuario invalido");
             }
             else
             {
@@ -174,7 +209,7 @@ namespace Protocol.Commands
 
                 if (savedUserProfile == null)
                 {
-                    throw new Exception("User Profile not exists");
+                    throw new Exception("No existe el perfil");
                 }
 
                 var newUsersProfiles = userProfiles.FindAll((e) => e.UserId != userProfile.UserId);
@@ -190,7 +225,7 @@ namespace Protocol.Commands
                     fileDatabaseManager.SaveNewUserProfile(user);
                 });
 
-                return "User Profile Uploaded";
+                return "Perfil actualizado";
             }
         }
 
@@ -205,7 +240,7 @@ namespace Protocol.Commands
         {
             if (string.IsNullOrWhiteSpace(message))
             {
-                throw new Exception("Invalid message");
+                throw new Exception("Mensaje invalido");
             }
             else
             {
@@ -218,17 +253,17 @@ namespace Protocol.Commands
 
                 if (sender == null)
                 {
-                    throw new Exception("Sender user not exists");
+                    throw new Exception("Usuario emisor no existe");
                 }
 
                 if (receiver == null)
                 {
-                    throw new Exception("Destination user not exists");
+                    throw new Exception("Usuario receptor no existe");
                 }
 
                 fileDatabaseManager.SaveNewMessage(msg);
 
-                return "Message saved success";
+                return "Mensaje guardado correctamente";
             }
         }
 
@@ -250,7 +285,7 @@ namespace Protocol.Commands
                 }
             }
 
-            return message;
+            return message == String.Empty ? EmptyStatesMessages.NoMessagesMessage : message;
         }
 
         public string GetUserMessagesHistory(string receiveStr)
@@ -270,7 +305,7 @@ namespace Protocol.Commands
                 }
             }
 
-            return message;
+            return message == String.Empty ? EmptyStatesMessages.NoMessagesMessage : message;
         }
     }
 }

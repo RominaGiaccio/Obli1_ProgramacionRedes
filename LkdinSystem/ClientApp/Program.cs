@@ -70,11 +70,13 @@ namespace ClientApp
 
                     ClientCommands.CreateUserProfile(up, sh);
 
-                    ClientCommands.GetAllProfiles("2ff13762-6fe7-4bd0-8903-959db32d0f1d", " description", new string[] { "ability 02" }, sh);
+                    ClientCommands.GetAllProfiles("", " ", Array.Empty<string>(), sh);
 
                     var msg = new Message(usu.Email, usu.Email, "Some message content", "" + Message.Status.NotReaded);
 
                     ClientCommands.SendMessage(msg, sh);
+
+                    usu.Email = "no email";
 
                     ClientCommands.GetUnreadedMessages(usu, sh);
 

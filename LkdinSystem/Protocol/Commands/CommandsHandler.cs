@@ -23,7 +23,8 @@ namespace Protocol.Commands
             { "07", serverCommands.GetUserMessagesHistory },
             { "08", serverCommands.GetUserMessagesHistory },
             { "09", serverCommands.DownloadUserProfileImage },
-            { "10", serverCommands.UpdateUser },
+            { "10", serverCommands.SignIn },
+            { "11", serverCommands.SignOut },
         };
     }
 }
