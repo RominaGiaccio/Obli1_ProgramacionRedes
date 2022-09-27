@@ -19,9 +19,6 @@ C:\Users\danil\source\repos\LkdinSystem\ServerApp\bin\Debug\net6.0\Protocol.exe
 C:\Users\danil\source\repos\LkdinSystem\ServerApp\bin\Debug\net6.0\Protocol.dll
 C:\Users\danil\source\repos\LkdinSystem\ServerApp\bin\Debug\net6.0\Protocol.pdb
 C:\Users\danil\source\repos\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.csproj.CopyComplete
-C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\Protocol.deps.json
-C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\Protocol.runtimeconfig.json
-C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\Protocol.exe
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\ServerApp.exe
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\ServerApp.dll.config
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\ServerApp.deps.json
@@ -54,3 +51,7 @@ C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\De
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.pdb
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.genruntimeconfig.cache
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ref\ServerApp.dll
+C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\Domain.dll
+C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\Enums.dll
+C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\Domain.pdb
+C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\Enums.pdb
