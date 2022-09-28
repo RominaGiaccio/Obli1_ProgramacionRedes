@@ -108,10 +108,11 @@ namespace Protocol.Commands
 
             TransferSegmentManager.SendData(fixedPart, message, sh);
 
-            Console.WriteLine("Recibiendo imagen de perfil");
+            Console.WriteLine("Recibiendo imagen de perfil...");
             var fileCommonHandler = new FileCommsHandler(sh);
             fileCommonHandler.ReceiveFile();
-            Console.WriteLine("Imagen de perfil recibida");
+            Console.WriteLine("Imagen de perfil recibida...");
+
         }
 
         public static bool GetAllProfiles(string userId, string description, string[] abilities, SocketHelper sh)

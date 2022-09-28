@@ -71,7 +71,7 @@ namespace ClientApp
                                 // Cerrar la conexion.
                                 printPrincipal();
                                 disconnected = true;
-                                Console.WriteLine("Cierro el Cliente");
+                                Console.WriteLine("Se cerró el Cliente");
                                 socketCliente.Shutdown(SocketShutdown.Both);
                                 socketCliente.Close();
                                 disconnected = true;
@@ -105,13 +105,17 @@ namespace ClientApp
                             case "2"://ACTUALIZAR FOTO DE PERFIL
                                 updateProfilePhoto(sh);
                                 break;
-                            case "3"://CONSULTAR PERFILES
+                            case "3"://DESCARGAR FOTO DE PERFIL
+                                downloadProfilePhoto(sh);
+                                break;
+                            case "4"://CONSULTAR PERFILES
                                 consultProfile(sh);
                                 break;
-                            case "4"://MENSAJES
+                            case "5"://MENSAJES
                                 consultMessages(sh);
                                 break;
-                            case "5"://LOGOFF
+                            case "6"://LOGOUT
+                                logOutMethod(sh);
                                 login = false;
                                 emaiLogged = string.Empty;
                                 break;
@@ -180,9 +184,10 @@ namespace ClientApp
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine("1 DAR DE ALTA PERFIL");
             Console.WriteLine("2 ACTUALIZAR FOTO DE PERFIL");
-            Console.WriteLine("3 CONSULTAR PERFILES");
-            Console.WriteLine("4 MENSAJES");
-            Console.WriteLine("5 LOGOUT");
+            Console.WriteLine("3 DESCARGAR FOTO DE PERFIL");
+            Console.WriteLine("4 CONSULTAR PERFILES");
+            Console.WriteLine("5 MENSAJES");
+            Console.WriteLine("6 LOGOUT");
             Console.WriteLine("----------------------------------------------------------------------------");
         }
         static void printSearchProfileMenu()
@@ -194,8 +199,7 @@ namespace ClientApp
             Console.WriteLine("1 FILTRAR POR HABILIDAD");
             Console.WriteLine("2 FILTRAR POR PALABRA CLAVE");
             Console.WriteLine("3 ESPECIFICO POR ID");
-            Console.WriteLine("4 ESPECIFICO POR NOMBRE");
-            Console.WriteLine("5 ATRAS");
+            Console.WriteLine("4 ATRAS");
             Console.WriteLine("----------------------------------------------------------------------------");
         }
 
@@ -361,10 +365,7 @@ namespace ClientApp
                     case "3": //ESPECIFICO POR ID
                         filterByID(sh);
                         break;
-                    case "4": //ESPECIFICO POR NOMBRE
-                        filterByUsername(sh);
-                        break;
-                    case "5": //ATRAS
+                    case "4": //ATRAS
                         filterProfile = false;
                         break;
                     default:
@@ -389,6 +390,23 @@ namespace ClientApp
             }
             actionFinished();
         }
+
+        static void downloadProfilePhoto(SocketHelper sh)
+        {
+            printBasicMenu("DESCARGAR FOTO DE PERFIL");
+            string res = string.Empty;
+            res = messageLoop("Ingresar el path de foto a descargar.", "Debe ingresar el path de foto a descargar.");
+            if (downloadProfileImageMethod(res, sh))
+            {
+                printBasicMenu("Foto descargada.");
+            }
+            else
+            {
+                Console.WriteLine("No es posible descargar la foto con el path ingresado.");
+            }
+            actionFinished();
+        }
+
         static void consultMessages(SocketHelper sh)
         {
             printBasicMenu("CONSULTA MENSAJES");
@@ -511,15 +529,6 @@ namespace ClientApp
             actionFinished();
         }
 
-        static void filterByUsername(SocketHelper sh)
-        {
-            printBasicMenu("FILTRO POR NOMBRE");
-            string res = string.Empty;
-            res = messageLoop("Ingrese el nombre por el cual desea filtrar: ", "Debe ingresar el nombre por la cual desea filtrar: ");
-            printBasicMenu("RESULTADO FILTRO POR NOMBRE");
-            requestfilterNameMethod(res, sh);
-            actionFinished();
-        }
 
         static void printPrincipal()
         {
@@ -596,8 +605,11 @@ namespace ClientApp
         {
             User usu = new User() { Email = userEmail };
             userLogged = ClientCommands.SignIn(usu, sh);
-
             return userLogged != null;
+        }
+
+        static bool logOutMethod(SocketHelper sh) {
+            return true;
         }
 
         static void historicalQueryMethod(string emaiLogged, SocketHelper sh)
@@ -642,12 +654,6 @@ namespace ClientApp
         {
             string[] keywords = new string[] { word };
             return ClientCommands.GetAllProfiles("", "", keywords, sh);
-        }
-
-        static bool requestfilterNameMethod(string name, SocketHelper sh)
-        {
-            //Buscar perfil por nombre de usuario no implementado
-            return false;
         }
 
         static bool requestfilterIdMethod(string id, SocketHelper sh)
