@@ -90,3 +90,4 @@ C:\Users\Nahuel\Desktop\repoPRedes\Obli1_ProgramacionRedes\LkdinSystem\ClientApp
 C:\Users\Nahuel\Desktop\repoPRedes\Obli1_ProgramacionRedes\LkdinSystem\ClientApp\obj\Debug\net6.0\ClientApp.genruntimeconfig.cache
 C:\Users\Nahuel\Desktop\repoPRedes\Obli1_ProgramacionRedes\LkdinSystem\ClientApp\obj\Debug\net6.0\ref\ClientApp.dll
 C:\Users\Nahuel\Desktop\repoPRedes\Obli1_ProgramacionRedes\LkdinSystem\ClientApp\bin\Debug\net6.0\ClientApp.dll.config
+C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ClientApp\bin\Debug\net6.0\ClientApp.dll.config

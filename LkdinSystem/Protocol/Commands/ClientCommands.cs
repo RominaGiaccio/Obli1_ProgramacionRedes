@@ -22,7 +22,7 @@ namespace Protocol.Commands
             var response = TransferSegmentManager.ReceiveData(sh);
 
             Console.WriteLine(response.Data);
-            return response.Status == "" + States.OK; ;
+            return response.Status == ((int)States.OK).ToString();
         }
 
         public static User SignIn(User user, SocketHelper sh)
@@ -34,11 +34,10 @@ namespace Protocol.Commands
 
             var response = TransferSegmentManager.ReceiveData(sh);
 
-            Console.WriteLine(response.Data);
-            Console.WriteLine("respuesta " +response.Status == "" + States.OK);
-            if (response.Status == "" + States.OK) {
+            if (response.Status == ((int)States.OK).ToString()) {
                 return User.ToEntity(response.Data);
-            } 
+            }
+
             return null;
         }
 
@@ -65,7 +64,7 @@ namespace Protocol.Commands
 
             Console.WriteLine(response.Data);
 
-            return response.Status == "" + States.OK;
+            return response.Status == ((int)States.OK).ToString();
         }
 
         public static bool SendMessage(Message msg, SocketHelper sh)
@@ -78,7 +77,7 @@ namespace Protocol.Commands
             var response = TransferSegmentManager.ReceiveData(sh);
 
             Console.WriteLine(response.Data);
-            return response.Status == "" + States.OK;
+            return response.Status == ((int)States.OK).ToString();
         }
 
         public static bool UploadUserProfileImage(UserProfile userProfile, string path, SocketHelper sh)
@@ -99,7 +98,7 @@ namespace Protocol.Commands
 
             Console.WriteLine(response.Data);
 
-            return response.Status == "" + States.OK;
+            return response.Status == ((int)States.OK).ToString();
         }
 
         public static void DownloadUserProfileImage(UserProfile userProfile, SocketHelper sh)
@@ -153,7 +152,7 @@ namespace Protocol.Commands
                 Console.WriteLine(response.Data);
             }
 
-            return response.Status == "" + States.OK;
+            return response.Status == ((int)States.OK).ToString();
         }
 
         public static void GetUnreadedMessages(User user, SocketHelper sh)

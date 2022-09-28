@@ -430,7 +430,6 @@ namespace ClientApp
                 if (loginUserMethod(email, sh))
                 {
                     printBasicMenu("Login exitoso.");
-                    Console.ReadLine();
                     loginRes = true;
                     emaiLogged = email;
                 }
@@ -438,8 +437,8 @@ namespace ClientApp
                 {
                     Console.WriteLine("ERROR: El usario es incorrecto o no existe, intente nuevamente.");
                     loginRes = false;
+                    res = messageLoop("Ingresar X para cancelar, Y para reintentar:", "Ingresar X para cancelar, Y para reintentar:");
                 }
-                res = messageLoop("Ingresar X para cancelar, Y para reintentar:", "Ingresar X para cancelar, Y para reintentar:");
             }
             return loginRes;
         }
@@ -595,11 +594,9 @@ namespace ClientApp
 
         static bool loginUserMethod(string userEmail, SocketHelper sh)
         {
-           // Console.WriteLine("email " + userEmail);
             User usu = new User() { Email = userEmail };
-           // Console.WriteLine("email " + usu.Email);
             userLogged = ClientCommands.SignIn(usu, sh);
-            
+
             return userLogged != null;
         }
 

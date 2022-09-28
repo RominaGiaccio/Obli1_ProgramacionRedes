@@ -162,7 +162,7 @@ namespace Protocol.Commands
                 fileDatabaseManager.SaveNewUser(user);
             });
 
-            return "Login exitoso";
+            return savedUser.ToString();
         }
 
         public string SignOut(string message)
