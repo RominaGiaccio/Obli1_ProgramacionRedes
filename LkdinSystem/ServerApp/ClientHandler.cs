@@ -24,7 +24,18 @@ namespace ServerApp
 
                 while (clientConnected)
                 {
-                    TransferSegmentManager.SegmentDataObject segment = TransferSegmentManager.ReceiveData(sh);
+                    TransferSegmentManager.SegmentDataObject segment;
+
+                    try
+                    {
+                        segment = TransferSegmentManager.ReceiveData(sh);
+                    }
+                    catch (Exception ex)
+                    {
+                        clientSocket.Shutdown(SocketShutdown.Both);
+                        clientSocket.Close();
+                        break;
+                    }
 
                     Console.WriteLine("<- Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, segment.Status, segment.Data);
 

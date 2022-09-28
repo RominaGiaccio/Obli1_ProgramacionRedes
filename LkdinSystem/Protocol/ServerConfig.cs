@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServerApp
+namespace Protocol
 {
     public class ServerConfig
     {
         public static string serverIPConfigKey = "ServerIpAddress";
         public static string serverPortConfigKey = "ServerPort";
+        public static string clientIPconfigkey = "ClientIPAddress";
     }
 }
