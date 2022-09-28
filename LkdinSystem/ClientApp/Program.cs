@@ -608,8 +608,9 @@ namespace ClientApp
             return userLogged != null;
         }
 
-        static bool logOutMethod(SocketHelper sh) {
-            return true;
+        static bool logOutMethod(SocketHelper sh)
+        {
+            return ClientCommands.SignOut(userLogged, sh);
         }
 
         static void historicalQueryMethod(string emaiLogged, SocketHelper sh)
@@ -639,7 +640,7 @@ namespace ClientApp
 
         static bool updateProfilePhotoMethod(string photo, SocketHelper sh)
         {
-            UserProfile up = new UserProfile() { UserId = userLogged.Id };
+            UserProfile up = new UserProfile() { UserId = userLogged.Id, Image = photo };
             return ClientCommands.UploadUserProfileImage(up, photo, sh);
         }
 
@@ -653,7 +654,7 @@ namespace ClientApp
         static bool requestfilterKeywordMethod(string word, SocketHelper sh)
         {
             string[] keywords = new string[] { word };
-            return ClientCommands.GetAllProfiles("", "", keywords, sh);
+            return ClientCommands.GetAllProfiles(word, word, keywords, sh);
         }
 
         static bool requestfilterIdMethod(string id, SocketHelper sh)
@@ -665,8 +666,7 @@ namespace ClientApp
         static bool downloadProfileImageMethod(string imagePath, SocketHelper sh)
         {
             UserProfile up = new UserProfile() { Image = imagePath };
-            ClientCommands.DownloadUserProfileImage(up, sh);
-            return true;
+            return ClientCommands.DownloadUserProfileImage(up, sh);
         }
     }
 }

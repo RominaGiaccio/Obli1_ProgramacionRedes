@@ -41,7 +41,7 @@ namespace Protocol.Commands
             return null;
         }
 
-        public static void SignOut(User user, SocketHelper sh)
+        public static bool SignOut(User user, SocketHelper sh)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("11", States.OK, user.ToString());
             string message = user.ToString();
@@ -51,6 +51,7 @@ namespace Protocol.Commands
             var response = TransferSegmentManager.ReceiveData(sh);
 
             Console.WriteLine(response.Data);
+            return response.Status == ((int)States.OK).ToString();
         }
 
         public static bool CreateUserProfile(UserProfile userProfile, SocketHelper sh)
@@ -101,18 +102,30 @@ namespace Protocol.Commands
             return response.Status == ((int)States.OK).ToString();
         }
 
-        public static void DownloadUserProfileImage(UserProfile userProfile, SocketHelper sh)
+        public static bool DownloadUserProfileImage(UserProfile userProfile, SocketHelper sh)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("09", States.OK, userProfile.ToString());
             string message = userProfile.ToString();
 
             TransferSegmentManager.SendData(fixedPart, message, sh);
 
-            Console.WriteLine("Recibiendo imagen de perfil...");
-            var fileCommonHandler = new FileCommsHandler(sh);
-            fileCommonHandler.ReceiveFile();
-            Console.WriteLine("Imagen de perfil recibida...");
+            var response = TransferSegmentManager.ReceiveData(sh);
 
+            if (response.Status == ((int)States.OK).ToString())
+            {
+                Console.WriteLine("Recibiendo imagen de perfil...");
+                var fileCommonHandler = new FileCommsHandler(sh);
+                fileCommonHandler.ReceiveFile();
+                Console.WriteLine("Imagen de perfil recibida...");
+
+                return true;
+            }
+            else
+            {
+                Console.WriteLine(response.Data);
+
+                return false;
+            }
         }
 
         public static bool GetAllProfiles(string userId, string description, string[] abilities, SocketHelper sh)

@@ -212,11 +212,11 @@ namespace Protocol.Commands
                     throw new Exception("No existe el perfil");
                 }
 
-                var newUsersProfiles = userProfiles.FindAll((e) => e.UserId != userProfile.UserId);
+                var newUsersProfiles = userProfiles.FindAll((e) => e.UserId != savedUserProfile.UserId);
 
-                userProfile.Image = userProfile.Image.Split("\\").Last();
+                savedUserProfile.Image = userProfile.Image.Split("\\").Last();
 
-                newUsersProfiles.Add(userProfile);
+                newUsersProfiles.Add(savedUserProfile);
 
                 fileDatabaseManager.EmptyDataBase(usersProfileFileName);
 
