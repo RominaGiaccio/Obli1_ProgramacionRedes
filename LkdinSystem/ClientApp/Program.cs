@@ -33,11 +33,6 @@ namespace ClientApp
             Console.WriteLine("Iniciando Aplicacion Cliente....!!!");
 
             var socketCliente = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-            //string ipServer = settingsMngr.ReadSettings(ClientConfig.serverIPconfigkey);
-            //string ipClient = settingsMngr.ReadSettings(ClientConfig.clientIPconfigkey);
-            //int serverPort = int.Parse(settingsMngr.ReadSettings(ClientConfig.serverPortconfigkey));
-
             var localEndPoint = new IPEndPoint(IPAddress.Parse(ipClient), clientPort);
             socketCliente.Bind(localEndPoint);
             var serverEndpoint = new IPEndPoint(IPAddress.Parse(ipServer), serverPort);
@@ -146,6 +141,7 @@ namespace ClientApp
                     }
                 }
             }
+            Console.Clear();
             Console.WriteLine("FIN.");
 
         }
@@ -597,7 +593,7 @@ namespace ClientApp
 
         static bool sendMessageMethod(string transmitterEmail, string receiverEmail, string messageText, SocketHelper sh)
         {
-            var msg = new Message(transmitterEmail, receiverEmail, "Some message content", "" + Message.Status.NotReaded);
+            var msg = new Message(transmitterEmail, receiverEmail, messageText, "" + Message.Status.NotReaded);
             return ClientCommands.SendMessage(msg, sh);
         }
 
