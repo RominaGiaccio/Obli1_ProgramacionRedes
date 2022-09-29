@@ -81,12 +81,12 @@ namespace ServerApp
 
                                 if (segment.Command == "09")
                                 {
-                                    if (FileHandler.FileExists(responseMessage))
+                                    if (!responseMessage.Equals("No image") && FileHandler.FileExists(responseMessage))
                                     {
                                         string correctPathMessage = "Enviando imagen...";
                                         string fixedPart = TransferSegmentManager.GerFixedPart(segment.Command, States.OK, correctPathMessage);
 
-                                        TransferSegmentManager.SendData(fixedPart, responseMessage, sh);
+                                        TransferSegmentManager.SendData(fixedPart, correctPathMessage, sh);
 
                                         Console.WriteLine("-> Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, (int)States.OK, correctPathMessage);
 

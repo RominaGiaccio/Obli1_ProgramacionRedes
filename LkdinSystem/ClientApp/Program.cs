@@ -21,7 +21,7 @@ namespace ClientApp
         static string ipServer = SettingsManager.ReadSettings(ServerConfig.serverIPConfigKey);
         static string ipClient = SettingsManager.ReadSettings(ServerConfig.clientIPconfigkey);
         static int serverPort = int.Parse(SettingsManager.ReadSettings(ServerConfig.serverPortConfigKey));
-        static int clientPort = 0;
+        static int clientPort = int.Parse(SettingsManager.ReadSettings(ServerConfig.clientPortconfigkey));
         static string emaiLogged = string.Empty;
         static User userLogged = null;
 
@@ -33,10 +33,6 @@ namespace ClientApp
             Console.WriteLine("Iniciando Aplicacion Cliente....!!!");
 
             var socketCliente = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-            //string ipServer = settingsMngr.ReadSettings(ClientConfig.serverIPconfigkey);
-            //string ipClient = settingsMngr.ReadSettings(ClientConfig.clientIPconfigkey);
-            //int serverPort = int.Parse(settingsMngr.ReadSettings(ClientConfig.serverPortconfigkey));
 
             var localEndPoint = new IPEndPoint(IPAddress.Parse(ipClient), clientPort);
             socketCliente.Bind(localEndPoint);
@@ -146,6 +142,7 @@ namespace ClientApp
                     }
                 }
             }
+            Console.Clear();
             Console.WriteLine("FIN.");
 
         }
@@ -395,14 +392,14 @@ namespace ClientApp
         {
             printBasicMenu("DESCARGAR FOTO DE PERFIL");
             string res = string.Empty;
-            res = messageLoop("Ingresar el path de foto a descargar.", "Debe ingresar el path de foto a descargar.");
+            res = messageLoop("Ingresar el id del perfil que posee la foto a descargar.", "Debe ingresar el id del perfil para descargar la foto.");
             if (downloadProfileImageMethod(res, sh))
             {
                 printBasicMenu("Foto descargada.");
             }
             else
             {
-                Console.WriteLine("No es posible descargar la foto con el path ingresado.");
+                Console.WriteLine("No es posible descargar la foto con el id ingresado.");
             }
             actionFinished();
         }
@@ -453,7 +450,7 @@ namespace ClientApp
                 }
                 else
                 {
-                    Console.WriteLine("ERROR: El usario es incorrecto o no existe, intente nuevamente.");
+                    Console.WriteLine("ERROR: Error al logear.");
                     loginRes = false;
                     res = messageLoop("Ingresar X para cancelar, Y para reintentar:", "Ingresar X para cancelar, Y para reintentar:");
                 }
@@ -597,7 +594,7 @@ namespace ClientApp
 
         static bool sendMessageMethod(string transmitterEmail, string receiverEmail, string messageText, SocketHelper sh)
         {
-            var msg = new Message(transmitterEmail, receiverEmail, "Some message content", "" + Message.Status.NotReaded);
+            var msg = new Message(transmitterEmail, receiverEmail, messageText, "" + Message.Status.NotReaded);
             return ClientCommands.SendMessage(msg, sh);
         }
 
@@ -663,9 +660,9 @@ namespace ClientApp
             return ClientCommands.GetAllProfiles(id, "", Array.Empty<string>(), sh);
         }
 
-        static bool downloadProfileImageMethod(string imagePath, SocketHelper sh)
+        static bool downloadProfileImageMethod(string userId, SocketHelper sh)
         {
-            UserProfile up = new UserProfile() { Image = imagePath };
+            UserProfile up = new UserProfile() { UserId = userId };
             return ClientCommands.DownloadUserProfileImage(up, sh);
         }
     }

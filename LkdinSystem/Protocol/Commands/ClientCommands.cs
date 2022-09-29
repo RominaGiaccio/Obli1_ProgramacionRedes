@@ -34,6 +34,8 @@ namespace Protocol.Commands
 
             var response = TransferSegmentManager.ReceiveData(sh);
 
+            Console.WriteLine(response.Data);
+
             if (response.Status == ((int)States.OK).ToString()) {
                 return User.ToEntity(response.Data);
             }

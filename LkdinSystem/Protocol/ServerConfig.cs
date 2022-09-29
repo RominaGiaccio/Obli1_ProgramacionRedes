@@ -11,5 +11,6 @@ namespace Protocol
         public static string serverIPConfigKey = "ServerIpAddress";
         public static string serverPortConfigKey = "ServerPort";
         public static string clientIPconfigkey = "ClientIPAddress";
+        public static string clientPortconfigkey = "ClientPort";
     }
 }
