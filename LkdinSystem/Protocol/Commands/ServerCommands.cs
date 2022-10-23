@@ -39,7 +39,8 @@ namespace Protocol.Commands
 
         public string GetAllProfiles(string filters)
         {
-            var usersProfiles = fileDatabaseManager.GetAllProfiles();
+            var originalUsersProfiles = fileDatabaseManager.GetAllProfiles();
+            var usersProfiles = originalUsersProfiles;
 
             var splitedFilters = filters.Split(SpecialChars.Separator);
 
@@ -47,14 +48,9 @@ namespace Protocol.Commands
             var description = splitedFilters[1];
             var abilities = splitedFilters[2];
 
-            if (!string.IsNullOrWhiteSpace(userId))
+            if (!string.IsNullOrWhiteSpace(userId) || !string.IsNullOrWhiteSpace(description))
             {
-                usersProfiles = usersProfiles.FindAll((e) => e.UserId == userId);
-            }
-
-            if (!string.IsNullOrWhiteSpace(description))
-            {
-                usersProfiles = usersProfiles.FindAll((e) => e.Description.Contains(description));
+                usersProfiles = usersProfiles.FindAll((e) => e.UserId.Contains(userId) || e.Description.Contains(description));
             }
 
             if (!string.IsNullOrWhiteSpace(abilities))
@@ -63,7 +59,13 @@ namespace Protocol.Commands
 
                 for (int i = 0; i < splitedAbilities.Length; i++)
                 {
-                    usersProfiles = usersProfiles.FindAll((e) => e.Abilities.Contains(splitedAbilities[i]));
+                    originalUsersProfiles.FindAll((e) => e.Abilities.Contains(splitedAbilities[i])).ForEach(up =>
+                    {
+                        if (usersProfiles.Find(u => u.UserId == up.UserId) == null)
+                        {
+                            usersProfiles.Add(up);
+                        }
+                    });
                 }
             }
 
@@ -162,7 +164,7 @@ namespace Protocol.Commands
                 fileDatabaseManager.SaveNewUser(user);
             });
 
-            return "Login exitoso";
+            return savedUser.ToString();
         }
 
         public string SignOut(string message)
@@ -212,11 +214,11 @@ namespace Protocol.Commands
                     throw new Exception("No existe el perfil");
                 }
 
-                var newUsersProfiles = userProfiles.FindAll((e) => e.UserId != userProfile.UserId);
+                var newUsersProfiles = userProfiles.FindAll((e) => e.UserId != savedUserProfile.UserId);
 
-                userProfile.Image = userProfile.Image.Split("\\").Last();
+                savedUserProfile.Image = userProfile.Image.Split("\\").Last();
 
-                newUsersProfiles.Add(userProfile);
+                newUsersProfiles.Add(savedUserProfile);
 
                 fileDatabaseManager.EmptyDataBase(usersProfileFileName);
 
@@ -233,7 +235,11 @@ namespace Protocol.Commands
         {
             UserProfile userProfile = UserProfile.ToEntity(message);
 
-            return userProfile.Image;
+            var usersProfiles = fileDatabaseManager.GetAllProfiles();
+
+            var image = usersProfiles?.Find(up => up.UserId == userProfile.UserId)?.Image;
+
+            return !string.IsNullOrWhiteSpace(image) ? image : "No image";
         }
 
         public string SaveNewMessage(string message)

@@ -14,6 +14,8 @@ namespace Protocol
                 var bytesRead = 0;
                 while (bytesRead < length)
                 {
+
+                    Thread.Sleep(5000);
                     var read = fs.Read(data, bytesRead, length - bytesRead);
                     if (read == 0)
                         throw new Exception("Error reading file");

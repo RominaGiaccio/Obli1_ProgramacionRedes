@@ -12,7 +12,7 @@ namespace Protocol.Commands
 {
     public class ClientCommands
     {
-        public static void CreateNewUser(User user, SocketHelper sh)
+        public static bool CreateNewUser(User user, SocketHelper sh)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("01", States.OK, user.ToString());
             string message = user.ToString();
@@ -22,9 +22,10 @@ namespace Protocol.Commands
             var response = TransferSegmentManager.ReceiveData(sh);
 
             Console.WriteLine(response.Data);
+            return response.Status == ((int)States.OK).ToString();
         }
 
-        public static void SignIn(User user, SocketHelper sh)
+        public static User SignIn(User user, SocketHelper sh)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("10", States.OK, user.ToString());
             string message = user.ToString();
@@ -34,9 +35,15 @@ namespace Protocol.Commands
             var response = TransferSegmentManager.ReceiveData(sh);
 
             Console.WriteLine(response.Data);
+
+            if (response.Status == ((int)States.OK).ToString()) {
+                return User.ToEntity(response.Data);
+            }
+
+            return null;
         }
 
-        public static void SignOut(User user, SocketHelper sh)
+        public static bool SignOut(User user, SocketHelper sh)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("11", States.OK, user.ToString());
             string message = user.ToString();
@@ -46,9 +53,10 @@ namespace Protocol.Commands
             var response = TransferSegmentManager.ReceiveData(sh);
 
             Console.WriteLine(response.Data);
+            return response.Status == ((int)States.OK).ToString();
         }
 
-        public static void CreateUserProfile(UserProfile userProfile, SocketHelper sh)
+        public static bool CreateUserProfile(UserProfile userProfile, SocketHelper sh)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("02", States.OK, userProfile.ToString());
             string message = userProfile.ToString();
@@ -58,9 +66,11 @@ namespace Protocol.Commands
             var response = TransferSegmentManager.ReceiveData(sh);
 
             Console.WriteLine(response.Data);
+
+            return response.Status == ((int)States.OK).ToString();
         }
 
-        public static void SendMessage(Message msg, SocketHelper sh)
+        public static bool SendMessage(Message msg, SocketHelper sh)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("05", States.OK, msg.ToString());
             string message = msg.ToString();
@@ -70,9 +80,10 @@ namespace Protocol.Commands
             var response = TransferSegmentManager.ReceiveData(sh);
 
             Console.WriteLine(response.Data);
+            return response.Status == ((int)States.OK).ToString();
         }
 
-        public static void UploadUserProfileImage(UserProfile userProfile, string path, SocketHelper sh)
+        public static bool UploadUserProfileImage(UserProfile userProfile, string path, SocketHelper sh)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("03", States.OK, userProfile.ToString());
             string message = userProfile.ToString();
@@ -89,22 +100,37 @@ namespace Protocol.Commands
             var response = TransferSegmentManager.ReceiveData(sh);
 
             Console.WriteLine(response.Data);
+
+            return response.Status == ((int)States.OK).ToString();
         }
 
-        public static void DownloadUserProfileImage(UserProfile userProfile, SocketHelper sh)
+        public static bool DownloadUserProfileImage(UserProfile userProfile, SocketHelper sh)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("09", States.OK, userProfile.ToString());
             string message = userProfile.ToString();
 
             TransferSegmentManager.SendData(fixedPart, message, sh);
 
-            Console.WriteLine("Recibiendo imagen de perfil");
-            var fileCommonHandler = new FileCommsHandler(sh);
-            fileCommonHandler.ReceiveFile();
-            Console.WriteLine("Imagen de perfil recibida");
+            var response = TransferSegmentManager.ReceiveData(sh);
+
+            if (response.Status == ((int)States.OK).ToString())
+            {
+                Console.WriteLine("Recibiendo imagen de perfil...");
+                var fileCommonHandler = new FileCommsHandler(sh);
+                fileCommonHandler.ReceiveFile();
+                Console.WriteLine("Imagen de perfil recibida...");
+
+                return true;
+            }
+            else
+            {
+                Console.WriteLine(response.Data);
+
+                return false;
+            }
         }
 
-        public static void GetAllProfiles(string userId, string description, string[] abilities, SocketHelper sh)
+        public static bool GetAllProfiles(string userId, string description, string[] abilities, SocketHelper sh)
         {
             string abilitiesMessage = "";
 
@@ -141,6 +167,8 @@ namespace Protocol.Commands
             {
                 Console.WriteLine(response.Data);
             }
+
+            return response.Status == ((int)States.OK).ToString();
         }
 
         public static void GetUnreadedMessages(User user, SocketHelper sh)

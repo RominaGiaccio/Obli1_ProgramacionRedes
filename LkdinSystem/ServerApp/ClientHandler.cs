@@ -24,7 +24,18 @@ namespace ServerApp
 
                 while (clientConnected)
                 {
-                    TransferSegmentManager.SegmentDataObject segment = TransferSegmentManager.ReceiveData(sh);
+                    TransferSegmentManager.SegmentDataObject segment;
+
+                    try
+                    {
+                        segment = TransferSegmentManager.ReceiveData(sh);
+                    }
+                    catch (Exception ex)
+                    {
+                        clientSocket.Shutdown(SocketShutdown.Both);
+                        clientSocket.Close();
+                        break;
+                    }
 
                     Console.WriteLine("<- Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, segment.Status, segment.Data);
 
@@ -36,7 +47,10 @@ namespace ServerApp
                     {
                         try
                         {
-                            if (segment.Command == "01" || segment.Command == "02" || segment.Command == "05" || segment.Command == "06" || segment.Command == "07")
+                            if (segment.Command == "01" || segment.Command == "02" 
+                                || segment.Command == "05" || segment.Command == "06" 
+                                || segment.Command == "07" || segment.Command == "08" 
+                                || segment.Command == "10" || segment.Command == "11")
                             {
                                 lock (this)
                                 {
@@ -67,10 +81,28 @@ namespace ServerApp
 
                                 if (segment.Command == "09")
                                 {
-                                    Console.WriteLine("Sending image...");
-                                    var fileCommonHandler = new FileCommsHandler(sh);
-                                    fileCommonHandler.SendFile(responseMessage);
-                                    Console.WriteLine("Image sended");
+                                    if (!responseMessage.Equals("No image") && FileHandler.FileExists(responseMessage))
+                                    {
+                                        string correctPathMessage = "Enviando imagen...";
+                                        string fixedPart = TransferSegmentManager.GerFixedPart(segment.Command, States.OK, correctPathMessage);
+
+                                        TransferSegmentManager.SendData(fixedPart, correctPathMessage, sh);
+
+                                        Console.WriteLine("-> Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, (int)States.OK, correctPathMessage);
+
+                                        var fileCommonHandler = new FileCommsHandler(sh);
+                                        fileCommonHandler.SendFile(responseMessage);
+                                        Console.WriteLine("Image sended");
+                                    }
+                                    else
+                                    {
+                                        string errorMessage = "No existe la imagen";
+                                        string fixedPart = TransferSegmentManager.GerFixedPart(segment.Command, States.ERROR, errorMessage);
+
+                                        TransferSegmentManager.SendData(fixedPart, errorMessage, sh);
+
+                                        Console.WriteLine("-> Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, (int)States.ERROR, errorMessage);
+                                    }
                                 }
                                 else
                                 {

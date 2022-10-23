@@ -46,7 +46,7 @@ namespace Domain
                 UserId = splited[0],
                 Description = splited[1],
                 Abilities = abilities,
-                Image = splited[3]
+                Image = splited[3]?.Split("\r")[0] ?? ""
             };
         }
     }
