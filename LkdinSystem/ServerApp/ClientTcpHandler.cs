@@ -11,11 +11,11 @@ using System.IO;
 
 namespace ServerApp
 {
-    public class ClientHandler
+    public class ClientTcpHandler
     {
         public void Handler(TcpClient tcpClientSocket, int number)
         {
-            var tch = new tcpServerHelper(tcpClientSocket);
+            var sh = new tcpServerHelper(tcpClientSocket);
             NetworkStream networkStream = tcpClientSocket.GetStream();
 
             try
@@ -29,13 +29,14 @@ namespace ServerApp
 
                     try
                     {
-                        segment = TransferSegmentManager.ReceiveData(tch);
+                        segment = TransferSegmentManager.ReceiveData(tcpClientSocket);
                     }
                     catch (Exception ex)
                     {
                         networkStream.Close();
+                        Console.WriteLine("Closing connection...");
                         //clientSocket.Shutdown(SocketShutdown.Both);
-                       // clientSocket.Close();
+                        //clientSocket.Close();
                         break;
                     }
 
@@ -76,7 +77,7 @@ namespace ServerApp
                                 if (segment.Command == "03")
                                 {
                                     Console.WriteLine("Reading file");
-                                    var fileCommonHandler = new FileCommsHandler(networkStream);
+                                    var fileCommonHandler = new FileCommsHandler(tcpClientSocket);
                                     fileCommonHandler.ReceiveFile();
                                     Console.WriteLine("Profile image received");
                                 }
@@ -88,11 +89,11 @@ namespace ServerApp
                                         string correctPathMessage = "Enviando imagen...";
                                         string fixedPart = TransferSegmentManager.GerFixedPart(segment.Command, States.OK, correctPathMessage);
 
-                                        TransferSegmentManager.SendData(fixedPart, correctPathMessage, tch);
+                                        TransferSegmentManager.SendData(fixedPart, correctPathMessage, tcpClientSocket);
 
                                         Console.WriteLine("-> Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, (int)States.OK, correctPathMessage);
 
-                                        var fileCommonHandler = new FileCommsHandler(tch);
+                                        var fileCommonHandler = new FileCommsHandler(tcpClientSocket);
                                         fileCommonHandler.SendFile(responseMessage);
                                         Console.WriteLine("Image sended");
                                     }
@@ -101,7 +102,7 @@ namespace ServerApp
                                         string errorMessage = "No existe la imagen";
                                         string fixedPart = TransferSegmentManager.GerFixedPart(segment.Command, States.ERROR, errorMessage);
 
-                                        TransferSegmentManager.SendData(fixedPart, errorMessage, tch);
+                                        TransferSegmentManager.SendData(fixedPart, errorMessage, tcpClientSocket);
 
                                         Console.WriteLine("-> Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, (int)States.ERROR, errorMessage);
                                     }
@@ -110,7 +111,7 @@ namespace ServerApp
                                 {
                                     string fixedPart = TransferSegmentManager.GerFixedPart(segment.Command, States.OK, responseMessage);
 
-                                    TransferSegmentManager.SendData(fixedPart, responseMessage, tch);
+                                    TransferSegmentManager.SendData(fixedPart, responseMessage, tcpClientSocket);
 
                                     Console.WriteLine("-> Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, (int)States.OK, responseMessage);
                                 }
@@ -120,7 +121,7 @@ namespace ServerApp
                         {
                             string fixedPart = TransferSegmentManager.GerFixedPart(segment.Command, States.ERROR, ex.InnerException.Message);
 
-                            TransferSegmentManager.SendData(fixedPart, ex.InnerException.Message, tch);
+                            TransferSegmentManager.SendData(fixedPart, ex.InnerException.Message, tcpClientSocket);
 
                             Console.WriteLine("-> Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, (int)States.ERROR, ex.InnerException.Message);
                         }

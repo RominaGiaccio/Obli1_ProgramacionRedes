@@ -3,11 +3,11 @@ using System.Text;
 
 namespace Protocol
 {
-    public class tcpHelper
+    public class tcpClientHelper
     {
         private readonly NetworkStream _networkStream;
 
-        public tcpHelper(NetworkStream networkStream)
+        public tcpClientHelper(NetworkStream networkStream)
         {
             _networkStream = networkStream;
         }

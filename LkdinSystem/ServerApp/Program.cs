@@ -10,12 +10,14 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Utils;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace ServerApp
 {
     class Program
     {
-        public static ClientHandler ch = new ClientHandler();
+        //public static ClientHandler ch = new ClientHandler();
+        public static ClientTcpHandler cth = new ClientTcpHandler();
 
         public static void Main(string[] args)
         {
@@ -53,7 +55,7 @@ namespace ServerApp
 
                 //new Thread(() => ch.Handler(clientSocket, clientsCount)).Start();
                 //var task = Task.Run(async () => await HandleClient(tcpClientSocket).ConfigureAwait(false));
-                var thread = new Thread(() =>  HandleTcpClient(tcpClientSocket));
+                var thread = new Thread(() => cth.Handler(tcpClientSocket, clientsCount));
                 thread.Start();
                 //new Thread(() => HandleTcpClient(tcpClientSocket)).Start();
             }
@@ -61,52 +63,59 @@ namespace ServerApp
             Console.ReadLine();
         }
 
-        private static void HandleTcpClient(TcpClient tcpClientSocket)
-        {
-            
-            NetworkStream networkStream = tcpClientSocket.GetStream();
-        
-            while (true) {
-                //recibo el largo del mensaje
-                byte[] dataLength = new byte[Protocol.Constants.WordLength]; //buffer
-                int totalRecived = 0; //offset
-                while (totalRecived < Protocol.Constants.WordLength) {
-                    //para recibir o leer el buffer si o si tenemos que llevar a mano lo que se recibe
-                    // y cotnrolar que recibimos lo que necesitamos
-                    var count = Protocol.Constants.WordLength - totalRecived;
-                    int recived = networkStream.Read(dataLength, totalRecived,count);
-                    if (recived == 0) {
-                        //cerrar conexion con cliente o lanzar excepcion, enviar mensaje
-                        //cerrar conexion
-                        networkStream.Close();
-                        Console.WriteLine("conexion terminada");
-                        return;
-                    }
-                    totalRecived += recived;
-                }
-                var largo = BitConverter.ToInt32(dataLength);
+        /*   private static void HandleTcpClient(TcpClient tcpClientSocket)
+          {
 
-                //recibo el mensaje
-                var data = new byte[largo]; 
-                totalRecived = 0; 
-                while (totalRecived < largo)
-                {
-                    int count = largo - totalRecived;
-                    int recived = networkStream.Read(data, totalRecived, count);
-                    if (recived == 0)
-                    {
-                        //cerrar conexion con cliente o lanzar excepcion, enviar mensaje
-                        return;
-                    }
-                    
-                    totalRecived += recived;
-                }
-                
-                string mensaje = Encoding.UTF8.GetString(data);
-                Console.WriteLine("El cliente dice: {0}", mensaje);
+              NetworkStream networkStream = tcpClientSocket.GetStream();
 
-            }
 
-        }
+          //public static ClientHandler ch = new ClientHandler();
+          // while (true) {
+
+          //recibo el largo del mensaje
+          //byte[] dataLength = new byte[Protocol.Constants.WordLength]; //buffer
+
+
+
+          /* int totalRecived = 0; //offset
+           while (totalRecived < Protocol.Constants.WordLength) {
+               //para recibir o leer el buffer si o si tenemos que llevar a mano lo que se recibe
+               // y cotnrolar que recibimos lo que necesitamos
+               var count = Protocol.Constants.WordLength - totalRecived;
+               int recived = networkStream.Read(dataLength, totalRecived,count);
+               if (recived == 0) {
+                   //cerrar conexion con cliente o lanzar excepcion, enviar mensaje
+                   //cerrar conexion
+                   networkStream.Close();
+                   Console.WriteLine("conexion terminada");
+                   return;
+               }
+               totalRecived += recived;
+           }
+           var largo = BitConverter.ToInt32(dataLength);
+
+
+           //recibo el mensaje
+           var data = new byte[largo]; 
+           totalRecived = 0; 
+           while (totalRecived < largo)
+           {
+               int count = largo - totalRecived;
+               int recived = networkStream.Read(data, totalRecived, count);
+               if (recived == 0)
+               {
+                   //cerrar conexion con cliente o lanzar excepcion, enviar mensaje
+                   return;
+               }
+
+               totalRecived += recived;
+           }
+
+           string mensaje = Encoding.UTF8.GetString(data);
+           Console.WriteLine("El cliente dice: {0}", mensaje);
+  
+        //  }
+
+    }*/
     }
 }

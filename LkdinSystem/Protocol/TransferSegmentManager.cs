@@ -29,13 +29,13 @@ namespace Protocol
 
         public static readonly int fixedPartLength = Constants.FixedCommandDataSize + Constants.FixedStatusSize + Constants.FixedDataSize;
 
-        public static void SendData(string fixedPart, string message, SocketHelper sh)
+        public static void SendData(string fixedPart, string message, tcpServerHelper sh)
         {
             sh.Send(ConversionHandler.ConvertStringToBytes(fixedPart));
             sh.Send(ConversionHandler.ConvertStringToBytes(message));
         }
 
-        public static SegmentDataObject ReceiveData(SocketHelper sh)
+        public static SegmentDataObject ReceiveData(tcpServerHelper sh)
         {
             byte[] responseFixedPart = sh.Receive(fixedPartLength);
 
