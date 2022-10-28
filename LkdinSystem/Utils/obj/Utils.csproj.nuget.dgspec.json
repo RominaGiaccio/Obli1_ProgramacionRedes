@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {}
+    "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {}
   },
   "projects": {
-    "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {
+    "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
+        "projectUniqueName": "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
         "projectName": "Utils",
-        "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
-        "packagesPath": "C:\\Users\\danil\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\obj\\",
+        "projectPath": "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
+        "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\danil\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

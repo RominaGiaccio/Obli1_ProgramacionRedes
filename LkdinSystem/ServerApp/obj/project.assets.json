@@ -450,19 +450,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\danil\\.nuget\\packages\\": {}
+    "C:\\Users\\USUARIO\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\ServerApp.csproj",
+      "projectUniqueName": "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\ServerApp.csproj",
       "projectName": "ServerApp",
-      "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\ServerApp.csproj",
-      "packagesPath": "C:\\Users\\danil\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\obj\\",
+      "projectPath": "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\ServerApp.csproj",
+      "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\danil\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -476,11 +476,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj": {
-              "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj"
+            "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj": {
+              "projectPath": "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj"
             },
-            "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {
-              "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj"
+            "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {
+              "projectPath": "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj"
             }
           }
         }

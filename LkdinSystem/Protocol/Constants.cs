@@ -9,5 +9,7 @@
         public static readonly int FixedFileNameSize = 4;
         public static readonly int FixedFileSize = 8;
         public static readonly int MaxPackageSize = 32768; // 32kb
+
+        public static int WordLength = 4;
     }
 }

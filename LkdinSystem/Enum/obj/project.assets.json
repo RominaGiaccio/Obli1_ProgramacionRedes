@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\danil\\.nuget\\packages\\": {}
+    "C:\\Users\\USUARIO\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj",
+      "projectUniqueName": "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj",
       "projectName": "Enums",
-      "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj",
-      "packagesPath": "C:\\Users\\danil\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\obj\\",
+      "projectPath": "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj",
+      "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\danil\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
