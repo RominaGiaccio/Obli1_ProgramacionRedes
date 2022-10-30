@@ -46,7 +46,7 @@ namespace ServerApp
             while (!exit)
             {
                 //Operacion bloqueante
-                var tcpClientSocket = tcpListener.AcceptTcpClient(); 
+                var tcpClientListener = tcpListener.AcceptTcpClient(); 
                 //var tcpClientSocket = await tcpListener.AcceptTcpClientAsync().ConfigureAwait(false);
 
                 //var clientSocket = serverSocket.Accept();
@@ -55,7 +55,7 @@ namespace ServerApp
 
                 //new Thread(() => ch.Handler(clientSocket, clientsCount)).Start();
                 //var task = Task.Run(async () => await HandleClient(tcpClientSocket).ConfigureAwait(false));
-                var thread = new Thread(() => cth.Handler(tcpClientSocket, clientsCount));
+                var thread = new Thread(() => cth.Handler(tcpClientListener, clientsCount));
                 thread.Start();
                 //new Thread(() => HandleTcpClient(tcpClientSocket)).Start();
             }

@@ -11,17 +11,31 @@ namespace Protocol
 {
     public class FileCommsHandler
     {
-        private readonly SocketHelper _socketHelper;
+        //private readonly SocketHelper _socketHelper;
+        // private readonly NetworkStream _networkStream;
+        //private readonly TcpClient _tcpClientListener;
+        private readonly tcpClientHelper _tch;
 
-        public FileCommsHandler(Socket socket)
+    //    public FileCommsHandler(TcpClient tcpClientListener)
+     //   {
+     //       _tch = new tcpServerHelper(tcpClientListener); ;
+
+            //var tch = new tcpServerHelper(tcpClientListener);
+            // _networkStream = tcpClientListener.GetStream();
+    //    }
+
+        public FileCommsHandler(tcpClientHelper tch)
         {
-            _socketHelper = new SocketHelper(socket);
+            _tch = tch;
+
+            //var tch = new tcpServerHelper(tcpClientListener);
+            // _networkStream = tcpClientListener.GetStream();
         }
 
-        public FileCommsHandler(SocketHelper socketHelper)
-        {
-            _socketHelper = socketHelper;
-        }
+        /*  public FileCommsHandler(SocketHelper socketHelper)
+          {
+              _socketHelper = socketHelper;
+          }*/
 
         public void SendFile(string path)
         {
@@ -29,14 +43,14 @@ namespace Protocol
             {
                 var fileName = FileHandler.GetFileName(path);
                 // ---> Enviar el largo del nombre del archivo
-                _socketHelper.Send(ConversionHandler.ConvertIntToBytes(fileName.Length));
+                _tch.Send(ConversionHandler.ConvertIntToBytes(fileName.Length));
                 // ---> Enviar el nombre del archivo
-                _socketHelper.Send(ConversionHandler.ConvertStringToBytes(fileName));
+                _tch.Send(ConversionHandler.ConvertStringToBytes(fileName));
                 // ---> Obtener el tamaño del archivo
                 long fileSize = FileHandler.GetFileSize(path);
                 // ---> Enviar el tamaño del archivo
                 var convertedFileSize = ConversionHandler.ConvertLongToBytes(fileSize);
-                _socketHelper.Send(convertedFileSize);
+                _tch.Send(convertedFileSize);
                 // ---> Enviar el archivo (pero con file stream)
                 SendFileWithStream(fileSize, path);
             }
@@ -50,12 +64,12 @@ namespace Protocol
         {
             // ---> Recibir el largo del nombre del archivo
             int fileNameSize = ConversionHandler.ConvertBytesToInt(
-                _socketHelper.Receive(Constants.FixedFileNameSize));
+                _tch.Receive(Constants.FixedFileNameSize));
             // ---> Recibir el nombre del archivo
-            string fileName = ConversionHandler.ConvertBytesToString(_socketHelper.Receive(fileNameSize));
+            string fileName = ConversionHandler.ConvertBytesToString(_tch.Receive(fileNameSize));
             // ---> Recibir el largo del archivo
             long fileSize = ConversionHandler.ConvertBytesToLong(
-                _socketHelper.Receive(Constants.FixedFileSize));
+                _tch.Receive(Constants.FixedFileSize));
             // ---> Recibir el archivo
             ReceiveFileWithStreams(fileSize, fileName);
         }
@@ -81,7 +95,7 @@ namespace Protocol
                     offset += Constants.MaxPackageSize;
                 }
 
-                _socketHelper.Send(data);
+                _tch.Send(data);
                 currentPart++;
             }
         }
@@ -98,12 +112,12 @@ namespace Protocol
                 if (currentPart == fileParts)
                 {
                     var lastPartSize = (int)(fileSize - offset);
-                    data = _socketHelper.Receive(lastPartSize);
+                    data = _tch.Receive(lastPartSize);
                     offset += lastPartSize;
                 }
                 else
                 {
-                    data = _socketHelper.Receive(Constants.MaxPackageSize);
+                    data = _tch.Receive(Constants.MaxPackageSize);
                     offset += Constants.MaxPackageSize;
                 }
 

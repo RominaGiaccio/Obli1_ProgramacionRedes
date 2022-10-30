@@ -66,7 +66,7 @@ namespace Protocol
             }
 
 
-            string mensaje = Encoding.UTF8.GetString(data);
+            //string mensaje = Encoding.UTF8.GetString(data);
 
             return data;
             //Console.WriteLine("El cliente dice: {0}", mensaje);

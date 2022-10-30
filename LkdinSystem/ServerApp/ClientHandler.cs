@@ -13,10 +13,10 @@ namespace ServerApp
 {
     public class ClientHandler
     {
-        public void Handler(TcpClient tcpClientSocket, int number)
+        public void Handler(TcpClient tcpClientListener, int number)
         {
-            var tch = new tcpServerHelper(tcpClientSocket);
-            NetworkStream networkStream = tcpClientSocket.GetStream();
+            var tch = new tcpServerHelper(tcpClientListener);
+            NetworkStream networkStream = tcpClientListener.GetStream();
 
             try
             {
@@ -76,7 +76,7 @@ namespace ServerApp
                                 if (segment.Command == "03")
                                 {
                                     Console.WriteLine("Reading file");
-                                    var fileCommonHandler = new FileCommsHandler(networkStream);
+                                    var fileCommonHandler = new FileCommsHandler(tcpClientListener);//networkStream
                                     fileCommonHandler.ReceiveFile();
                                     Console.WriteLine("Profile image received");
                                 }
@@ -92,7 +92,7 @@ namespace ServerApp
 
                                         Console.WriteLine("-> Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, (int)States.OK, correctPathMessage);
 
-                                        var fileCommonHandler = new FileCommsHandler(tch);
+                                        var fileCommonHandler = new FileCommsHandler(tcpClientListener);
                                         fileCommonHandler.SendFile(responseMessage);
                                         Console.WriteLine("Image sended");
                                     }
