@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj": {}
+    "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj": {
+    "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj",
+        "projectUniqueName": "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj",
         "projectName": "Enums",
-        "projectPath": "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj",
-        "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USUARIO\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\obj\\",
+        "projectPath": "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj",
+        "packagesPath": "C:\\Users\\Nahuel\\.nuget\\packages\\",
+        "outputPath": "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Nahuel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

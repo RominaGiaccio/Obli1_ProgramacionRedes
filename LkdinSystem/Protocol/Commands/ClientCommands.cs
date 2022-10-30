@@ -92,7 +92,7 @@ namespace Protocol.Commands
 
             Console.WriteLine("Subiendo archivo...");
 
-            var fileCommonHandler = new FileCommsHandler(tch);
+            var fileCommonHandler = new FileCommsClientHandler(tch);
             fileCommonHandler.SendFile(path);
 
             Console.WriteLine("Archivo enviado");
@@ -116,7 +116,7 @@ namespace Protocol.Commands
             if (response.Status == ((int)States.OK).ToString())
             {
                 Console.WriteLine("Recibiendo imagen de perfil...");
-                var fileCommonHandler = new FileCommsHandler(tch);
+                var fileCommonHandler = new FileCommsClientHandler(tch);
                 fileCommonHandler.ReceiveFile();
                 Console.WriteLine("Imagen de perfil recibida...");
 

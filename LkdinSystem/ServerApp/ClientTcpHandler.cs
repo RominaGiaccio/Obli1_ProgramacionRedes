@@ -77,7 +77,7 @@ namespace ServerApp
                                 if (segment.Command == "03")
                                 {
                                     Console.WriteLine("Reading file");
-                                    var fileCommonHandler = new FileCommsHandler(tsh);
+                                    var fileCommonHandler = new FileCommsServerHandler(tsh);
                                     fileCommonHandler.ReceiveFile();
                                     Console.WriteLine("Profile image received");
                                 }
@@ -93,7 +93,7 @@ namespace ServerApp
 
                                         Console.WriteLine("-> Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, (int)States.OK, correctPathMessage);
 
-                                        var fileCommonHandler = new FileCommsHandler(tsh);
+                                        var fileCommonHandler = new FileCommsServerHandler(tsh);
                                         fileCommonHandler.SendFile(responseMessage);
                                         Console.WriteLine("Image sended");
                                     }

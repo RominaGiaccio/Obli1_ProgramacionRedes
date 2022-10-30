@@ -9,22 +9,22 @@ using Utils;
 
 namespace Protocol
 {
-    public class FileCommsHandler
+    public class FileCommsClientHandler
     {
         //private readonly SocketHelper _socketHelper;
         // private readonly NetworkStream _networkStream;
         //private readonly TcpClient _tcpClientListener;
-        private readonly tcpClientHelper _tch;
+        private readonly tcpClientHelper _tch; 
 
-    //    public FileCommsHandler(TcpClient tcpClientListener)
-     //   {
-     //       _tch = new tcpServerHelper(tcpClientListener); ;
+        //    public FileCommsHandler(TcpClient tcpClientListener)
+        //   {
+        //       _tch = new tcpServerHelper(tcpClientListener); ;
 
-            //var tch = new tcpServerHelper(tcpClientListener);
-            // _networkStream = tcpClientListener.GetStream();
-    //    }
+        //var tch = new tcpServerHelper(tcpClientListener);
+        // _networkStream = tcpClientListener.GetStream();
+        //    }
 
-        public FileCommsHandler(tcpClientHelper tch)
+        public FileCommsClientHandler(tcpClientHelper tch)
         {
             _tch = tch;
 

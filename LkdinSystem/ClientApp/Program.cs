@@ -29,6 +29,9 @@ namespace ClientApp
         static bool disconnected = true;
         static bool exit = false;
 
+        static NetworkStream networkStream;
+        static tcpClientHelper tch;
+
         public static void Main(string[] args)
         {
             Console.WriteLine("Iniciando Aplicacion Cliente....!!!");
@@ -41,8 +44,7 @@ namespace ClientApp
             //tcpClient.Connect(remoteEndPoint);
             //Console.WriteLine("Conectado con el servidor ...");
 
-            NetworkStream networkStream = tcpClient.GetStream();
-            var tch = new tcpClientHelper(networkStream);
+;
 
             /*     var option = "";
                  var exit = false;
@@ -98,6 +100,8 @@ namespace ClientApp
                                 printPrincipal();
                                 //socketCliente.Connect(serverEndpoint);
                                 tcpClient.Connect(remoteEndPoint);
+                                networkStream = tcpClient.GetStream();
+                                tch = new tcpClientHelper(networkStream);
                                 Console.WriteLine("Cliente Conectado al Servidor...!!!");
                                 disconnected = false;
                                 cont = true;
@@ -534,6 +538,7 @@ namespace ClientApp
                         res = messageLoop("", "Debe elegir una opcion ingresando A o C sin espacios.");
                         break;
                 }
+                Console.WriteLine("se obtuvo respuesta");
             }
         }
 
