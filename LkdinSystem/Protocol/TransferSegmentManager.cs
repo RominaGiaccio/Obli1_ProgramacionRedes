@@ -29,21 +29,15 @@ namespace Protocol
 
         public static readonly int fixedPartLength = Constants.FixedCommandDataSize + Constants.FixedStatusSize + Constants.FixedDataSize;
 
-        public static void SendData(string fixedPart, string message, tcpServerHelper tsh)
+        public static void SendData(string fixedPart, string message, tcpHelper th)
         {
-            tsh.Send(ConversionHandler.ConvertStringToBytes(fixedPart));
-            tsh.Send(ConversionHandler.ConvertStringToBytes(message));
+            th.Send(ConversionHandler.ConvertStringToBytes(fixedPart));
+            th.Send(ConversionHandler.ConvertStringToBytes(message));
         }
 
-        public static void SendData(string fixedPart, string message, tcpClientHelper tch)
+        public static SegmentDataObject ReceiveData(tcpHelper th)
         {
-            tch.Send(ConversionHandler.ConvertStringToBytes(fixedPart));
-            tch.Send(ConversionHandler.ConvertStringToBytes(message));
-        }
-
-        public static SegmentDataObject ReceiveData(tcpServerHelper tsh)
-        {
-            byte[] responseFixedPart = tsh.Receive(fixedPartLength);
+            byte[] responseFixedPart = th.Receive(fixedPartLength);
 
             string stringFixedPart = ConversionHandler.ConvertBytesToString(responseFixedPart);
 
@@ -53,31 +47,7 @@ namespace Protocol
 
             int dataLengthNumber = int.Parse(dataLength);
 
-            byte[] responseData = tsh.Receive(dataLengthNumber);
-            string responseMessage = Encoding.UTF8.GetString(responseData);
-
-            return new SegmentDataObject
-            {
-                Command = command,
-                Status = status,
-                DataLength = dataLengthNumber,
-                Data = responseMessage
-            };
-        }
-
-        public static SegmentDataObject ReceiveData(tcpClientHelper tch)
-        {
-            byte[] responseFixedPart = tch.Receive(fixedPartLength);
-
-            string stringFixedPart = ConversionHandler.ConvertBytesToString(responseFixedPart);
-
-            string command = stringFixedPart.Substring(0, Constants.FixedCommandDataSize);
-            string status = stringFixedPart.Substring(Constants.FixedCommandDataSize, Constants.FixedStatusSize);
-            string dataLength = stringFixedPart.Substring(Constants.FixedCommandDataSize + Constants.FixedStatusSize, Constants.FixedDataSize);
-
-            int dataLengthNumber = int.Parse(dataLength);
-
-            byte[] responseData = tch.Receive(dataLengthNumber);
+            byte[] responseData = th.Receive(dataLengthNumber);
             string responseMessage = Encoding.UTF8.GetString(responseData);
 
             return new SegmentDataObject

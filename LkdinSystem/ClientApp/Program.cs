@@ -30,7 +30,7 @@ namespace ClientApp
         static bool exit = false;
 
         static NetworkStream networkStream;
-        static tcpClientHelper tch;
+        static tcpHelper tch;
 
         public static void Main(string[] args)
         {
@@ -40,45 +40,6 @@ namespace ClientApp
             var remoteEndPoint = new IPEndPoint(IPAddress.Parse(ipServer), serverPort);
             Console.WriteLine("Voy a conectar ...");
             var tcpClient = new TcpClient(localEndPoint);
-            //conectamos a servidor, le indicamos a que servidor conectarce
-            //tcpClient.Connect(remoteEndPoint);
-            //Console.WriteLine("Conectado con el servidor ...");
-
-;
-
-            /*     var option = "";
-                 var exit = false;
-                 while (!exit) {
-                     Console.WriteLine("Escribo un mensaje ...");
-                     Console.WriteLine("Escrib a exit para salir ...");
-                     option = Console.ReadLine();
-                     if (option.Equals("exit"))
-                     {
-                         exit = true;
-                     }
-                     else {
-                         //obtener datos a enviar
-                         byte[] data = Encoding.UTF8.GetBytes(option);
-                         //obtener el largo de los datos del mensaje 
-                         byte[] dataLength = BitConverter.GetBytes(data.Length);
-                         //enviar el largo 
-                         networkStream.Write(dataLength, 0, Protocol.Constants.WordLength);
-                         //Enviar el mensaje
-                         networkStream.Write(data, 0, data.Length);
-
-
-                     }
-             networkStream.Close();
-                 }*/
-
-
-            //var socketCliente = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            //var localEndPoint = new IPEndPoint(IPAddress.Parse(ipClient), clientPort);
-            // socketCliente.Bind(localEndPoint);
-            // var serverEndpoint = new IPEndPoint(IPAddress.Parse(ipServer), serverPort);
-            // var socketCliente = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            //  var serverEndpoint = new IPEndPoint(IPAddress.Parse(ipServer), serverPort);
-            //var sh = new SocketHelper(socketCliente);
 
             bool cont = false;
             bool login = false;
@@ -98,10 +59,9 @@ namespace ClientApp
                             if (disconnected)
                             {   // Crear la conexion.
                                 printPrincipal();
-                                //socketCliente.Connect(serverEndpoint);
                                 tcpClient.Connect(remoteEndPoint);
                                 networkStream = tcpClient.GetStream();
-                                tch = new tcpClientHelper(networkStream);
+                                tch = new tcpHelper(networkStream);
                                 Console.WriteLine("Cliente Conectado al Servidor...!!!");
                                 disconnected = false;
                                 cont = true;
@@ -112,8 +72,6 @@ namespace ClientApp
                                 printPrincipal();
                                 disconnected = true;
                                 Console.WriteLine("Se cerró el Cliente");
-                                //socketCliente.Shutdown(SocketShutdown.Both);
-                                //socketCliente.Close();
                                 networkStream.Close();
                                 disconnected = true;
                                 exit = true;
@@ -306,7 +264,7 @@ namespace ClientApp
             }
         }
 
-        static void clientConfiguration(tcpClientHelper tch)
+        static void clientConfiguration(tcpHelper tch)
         {
             bool cont = true;
             while (cont)
@@ -330,7 +288,7 @@ namespace ClientApp
             }
         }
 
-        static void setPort(tcpClientHelper tch)
+        static void setPort(tcpHelper tch)
         {
             printBasicMenu("CAMBIAR PUERTO");
             bool number = false;
@@ -351,7 +309,7 @@ namespace ClientApp
             printBasicMenu("El puerto fue actualizado: " + clientPort.ToString());
             actionFinished();
         }
-        static void setIp(tcpClientHelper tch)
+        static void setIp(tcpHelper tch)
         {
             printBasicMenu("CAMBIAR IP");
             string res = messageLoop("Ingresar una IP.", "Debe ingresar una nueva IP:");
@@ -360,7 +318,7 @@ namespace ClientApp
             printBasicMenu("La ip fue actualizada: " + ipClient);
             actionFinished();
         }
-        static void createProfile(tcpClientHelper tch)
+        static void createProfile(tcpHelper tch)
         {
             printBasicMenu("DAR DE ALTA PERFIL");
             //Revisar si ya existe perfil
@@ -388,7 +346,7 @@ namespace ClientApp
             actionFinished();
         }
 
-        static void consultProfile(tcpClientHelper tch)
+        static void consultProfile(tcpHelper tch)
         {
             bool filterProfile = true;
             string res;
@@ -417,7 +375,7 @@ namespace ClientApp
             }
         }
 
-        static void updateProfilePhoto(tcpClientHelper tch)
+        static void updateProfilePhoto(tcpHelper tch)
         {
             printBasicMenu("AGREAR FOTO DE PERFIL");
             string res = string.Empty;
@@ -433,7 +391,7 @@ namespace ClientApp
             actionFinished();
         }
 
-        static void downloadProfilePhoto(tcpClientHelper tch)
+        static void downloadProfilePhoto(tcpHelper tch)
         {
             printBasicMenu("DESCARGAR FOTO DE PERFIL");
             string res = string.Empty;
@@ -449,7 +407,7 @@ namespace ClientApp
             actionFinished();
         }
 
-        static void consultMessages(tcpClientHelper tch)
+        static void consultMessages(tcpHelper tch)
         {
             printBasicMenu("CONSULTA MENSAJES");
             bool contMessage = true;
@@ -478,7 +436,7 @@ namespace ClientApp
                 }
             }
         }
-        static bool userLogin(bool login, tcpClientHelper sh)
+        static bool userLogin(bool login, tcpHelper sh)
         {
             bool loginRes = login;
             string res = string.Empty;
@@ -503,7 +461,7 @@ namespace ClientApp
             return loginRes;
         }
 
-        static void createUser(tcpClientHelper sh)
+        static void createUser(tcpHelper sh)
         {
             bool createUser = true;
 
@@ -542,7 +500,7 @@ namespace ClientApp
             }
         }
 
-        static void filterByAbility(tcpClientHelper sh)
+        static void filterByAbility(tcpHelper sh)
         {
             printBasicMenu("FILTRO POR HABILIDAD");
             string res = string.Empty;
@@ -552,7 +510,7 @@ namespace ClientApp
             actionFinished();
         }
 
-        static void filterByKeyword(tcpClientHelper sh)
+        static void filterByKeyword(tcpHelper sh)
         {
             printBasicMenu("FILTRO POR PALABRA CLAVE");
             string res = string.Empty;
@@ -562,7 +520,7 @@ namespace ClientApp
             actionFinished();
         }
 
-        static void filterByID(tcpClientHelper sh)
+        static void filterByID(tcpHelper sh)
         {
             printBasicMenu("FILTRO POR ID");
             string res = string.Empty;
@@ -586,21 +544,21 @@ namespace ClientApp
             }
         }
 
-        static void readHistory(tcpClientHelper sh)
+        static void readHistory(tcpHelper sh)
         {
             printBasicMenu("CONSULTA HISTORICA");
             historicalQueryMethod(emaiLogged, sh);
             actionFinished();
         }
 
-        static void viewUnreadMessages(tcpClientHelper sh)
+        static void viewUnreadMessages(tcpHelper sh)
         {
             printBasicMenu("MENSAJES SIN LEER");
             unreadMessagesQueryMethod(emaiLogged, sh);
             actionFinished();
         }
 
-        static void sendMessage(tcpClientHelper sh)
+        static void sendMessage(tcpHelper sh)
         {
             printBasicMenu("ENVIAR MENSAJE");
             string res;
@@ -628,85 +586,85 @@ namespace ClientApp
 
         //Methods
 
-        static void setPortMethod(string newPort, tcpClientHelper tch)
+        static void setPortMethod(string newPort, tcpHelper tch)
         {
 
         }
 
-        static void setIPMethod(string newIP, tcpClientHelper tch)
+        static void setIPMethod(string newIP, tcpHelper tch)
         {
 
         }
 
-        static bool sendMessageMethod(string transmitterEmail, string receiverEmail, string messageText, tcpClientHelper tch)
+        static bool sendMessageMethod(string transmitterEmail, string receiverEmail, string messageText, tcpHelper tch)
         {
             var msg = new Message(transmitterEmail, receiverEmail, messageText, "" + Message.Status.NotReaded);
             return ClientCommands.SendMessage(msg, tch);
         }
 
-        static bool loginUserMethod(string userEmail, tcpClientHelper tch)
+        static bool loginUserMethod(string userEmail, tcpHelper tch)
         {
             User usu = new User() { Email = userEmail };
             userLogged = ClientCommands.SignIn(usu, tch);
             return userLogged != null;
         }
 
-        static bool logOutMethod(tcpClientHelper tch)
+        static bool logOutMethod(tcpHelper tch)
         {
             return ClientCommands.SignOut(userLogged, tch);
         }
 
-        static void historicalQueryMethod(string emaiLogged, tcpClientHelper tch)
+        static void historicalQueryMethod(string emaiLogged, tcpHelper tch)
         {
             User usu = new User() { Email = emaiLogged };
             ClientCommands.GetMessagesHistory(usu, tch);
         }
 
-        static void unreadMessagesQueryMethod(string emaiLogged, tcpClientHelper tch)
+        static void unreadMessagesQueryMethod(string emaiLogged, tcpHelper tch)
         {
             User usu = new User() { Email = emaiLogged };
             ClientCommands.GetUnreadedMessages(usu, tch);
         }
 
-        static bool createUserMethod(string userName, string userSurname, string userEmail, tcpClientHelper tch)
+        static bool createUserMethod(string userName, string userSurname, string userEmail, tcpHelper tch)
         {
             User usu = new User(userName, userEmail, "" + User.Status.NotLogged);
             return ClientCommands.CreateNewUser(usu, tch);
         }
 
-        static bool createProfileMethod(string profileDescription, List<string> skills, tcpClientHelper tch)
+        static bool createProfileMethod(string profileDescription, List<string> skills, tcpHelper tch)
         {
             string[] a = skills.ToArray();
             UserProfile up = new UserProfile(userLogged.Id, profileDescription, a, "");
             return ClientCommands.CreateUserProfile(up, tch);
         }
 
-        static bool updateProfilePhotoMethod(string photo, tcpClientHelper tch)
+        static bool updateProfilePhotoMethod(string photo, tcpHelper tch)
         {
             UserProfile up = new UserProfile() { UserId = userLogged.Id, Image = photo };
             return ClientCommands.UploadUserProfileImage(up, photo, tch);
         }
 
         //Retorna si se obtuvo resultado, en caso positivo lo imprime en consola
-        static bool requestfilterAbilityMethod(string skill, tcpClientHelper tch)
+        static bool requestfilterAbilityMethod(string skill, tcpHelper tch)
         {
             string[] abilities = new string[] { skill };
             return ClientCommands.GetAllProfiles("", "", abilities, tch);
         }
 
-        static bool requestfilterKeywordMethod(string word, tcpClientHelper tch)
+        static bool requestfilterKeywordMethod(string word, tcpHelper tch)
         {
             string[] keywords = new string[] { word };
             return ClientCommands.GetAllProfiles(word, word, keywords, tch);
         }
 
-        static bool requestfilterIdMethod(string id, tcpClientHelper tch)
+        static bool requestfilterIdMethod(string id, tcpHelper tch)
         {
             string[] ids = new string[] { id };
             return ClientCommands.GetAllProfiles(id, "", Array.Empty<string>(), tch);
         }
 
-        static bool downloadProfileImageMethod(string userId, tcpClientHelper tch)
+        static bool downloadProfileImageMethod(string userId, tcpHelper tch)
         {
             UserProfile up = new UserProfile() { UserId = userId };
             return ClientCommands.DownloadUserProfileImage(up, tch);

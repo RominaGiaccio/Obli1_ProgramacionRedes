@@ -127,6 +127,11 @@ C:\Users\USUARIO\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\
 C:\Users\USUARIO\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.pdb
 C:\Users\USUARIO\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.genruntimeconfig.cache
 C:\Users\USUARIO\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ref\ServerApp.dll
+C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.csproj.AssemblyReference.cache
+C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.AssemblyInfoInputs.cache
+C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.AssemblyInfo.cs
+C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.csproj.CoreCompileInputs.cache
 C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\ServerApp.exe
 C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\ServerApp.dll.config
 C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\ServerApp.deps.json
@@ -152,11 +157,6 @@ C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\Protocol.pdb
 C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\Utils.pdb
 C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\Domain.pdb
 C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Debug\net6.0\Enums.pdb
-C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.csproj.AssemblyReference.cache
-C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.GeneratedMSBuildEditorConfig.editorconfig
-C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.AssemblyInfoInputs.cache
-C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.AssemblyInfo.cs
-C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.csproj.CoreCompileInputs.cache
 C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.csproj.CopyComplete
 C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\ServerApp.dll
 C:\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Debug\net6.0\refint\ServerApp.dll

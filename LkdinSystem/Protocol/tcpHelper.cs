@@ -3,11 +3,15 @@ using System.Text;
 
 namespace Protocol
 {
-    public class tcpServerHelper
+    public class tcpHelper
     {
         private readonly NetworkStream _networkStream;
 
-        public tcpServerHelper(TcpClient tcpClientSocket)
+        public tcpHelper(NetworkStream networkStream)
+        {
+            _networkStream = networkStream;
+        }
+        public tcpHelper(TcpClient tcpClientSocket)
         {
             NetworkStream networkStream = tcpClientSocket.GetStream();
             _networkStream = networkStream;
@@ -82,7 +86,7 @@ namespace Protocol
             }
             return data;*/
         }
-        
+
     }
 }
 

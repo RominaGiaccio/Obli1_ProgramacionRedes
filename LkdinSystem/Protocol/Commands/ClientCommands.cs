@@ -12,7 +12,7 @@ namespace Protocol.Commands
 {
     public class ClientCommands
     {
-        public static bool CreateNewUser(User user, tcpClientHelper tch)
+        public static bool CreateNewUser(User user, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("01", States.OK, user.ToString());
             string message = user.ToString();
@@ -25,7 +25,7 @@ namespace Protocol.Commands
             return response.Status == ((int)States.OK).ToString();
         }
 
-        public static User SignIn(User user, tcpClientHelper tch)
+        public static User SignIn(User user, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("10", States.OK, user.ToString());
             string message = user.ToString();
@@ -43,7 +43,7 @@ namespace Protocol.Commands
             return null;
         }
 
-        public static bool SignOut(User user, tcpClientHelper tch)
+        public static bool SignOut(User user, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("11", States.OK, user.ToString());
             string message = user.ToString();
@@ -56,7 +56,7 @@ namespace Protocol.Commands
             return response.Status == ((int)States.OK).ToString();
         }
 
-        public static bool CreateUserProfile(UserProfile userProfile, tcpClientHelper tch)
+        public static bool CreateUserProfile(UserProfile userProfile, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("02", States.OK, userProfile.ToString());
             string message = userProfile.ToString();
@@ -70,7 +70,7 @@ namespace Protocol.Commands
             return response.Status == ((int)States.OK).ToString();
         }
 
-        public static bool SendMessage(Message msg, tcpClientHelper tch)
+        public static bool SendMessage(Message msg, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("05", States.OK, msg.ToString());
             string message = msg.ToString();
@@ -83,7 +83,7 @@ namespace Protocol.Commands
             return response.Status == ((int)States.OK).ToString();
         }
 
-        public static bool UploadUserProfileImage(UserProfile userProfile, string path, tcpClientHelper tch)
+        public static bool UploadUserProfileImage(UserProfile userProfile, string path, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("03", States.OK, userProfile.ToString());
             string message = userProfile.ToString();
@@ -92,7 +92,7 @@ namespace Protocol.Commands
 
             Console.WriteLine("Subiendo archivo...");
 
-            var fileCommonHandler = new FileCommsClientHandler(tch);
+            var fileCommonHandler = new FileCommsHandler(tch);
             fileCommonHandler.SendFile(path);
 
             Console.WriteLine("Archivo enviado");
@@ -104,7 +104,7 @@ namespace Protocol.Commands
             return response.Status == ((int)States.OK).ToString();
         }
 
-        public static bool DownloadUserProfileImage(UserProfile userProfile, tcpClientHelper tch)
+        public static bool DownloadUserProfileImage(UserProfile userProfile, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("09", States.OK, userProfile.ToString());
             string message = userProfile.ToString();
@@ -116,7 +116,7 @@ namespace Protocol.Commands
             if (response.Status == ((int)States.OK).ToString())
             {
                 Console.WriteLine("Recibiendo imagen de perfil...");
-                var fileCommonHandler = new FileCommsClientHandler(tch);
+                var fileCommonHandler = new FileCommsHandler(tch);
                 fileCommonHandler.ReceiveFile();
                 Console.WriteLine("Imagen de perfil recibida...");
 
@@ -130,7 +130,7 @@ namespace Protocol.Commands
             }
         }
 
-        public static bool GetAllProfiles(string userId, string description, string[] abilities, tcpClientHelper tch)
+        public static bool GetAllProfiles(string userId, string description, string[] abilities, tcpHelper tch)
         {
             string abilitiesMessage = "";
 
@@ -171,7 +171,7 @@ namespace Protocol.Commands
             return response.Status == ((int)States.OK).ToString();
         }
 
-        public static void GetUnreadedMessages(User user, tcpClientHelper tch)
+        public static void GetUnreadedMessages(User user, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("06", States.OK, user.ToString());
             string message = user.ToString();
@@ -183,7 +183,7 @@ namespace Protocol.Commands
             Console.WriteLine(response.Data);
         }
 
-        public static void GetMessagesHistory(User user, tcpClientHelper tch)
+        public static void GetMessagesHistory(User user, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("07", States.OK, user.ToString());
             string message = user.ToString();
