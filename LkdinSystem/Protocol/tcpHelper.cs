@@ -20,7 +20,6 @@ namespace Protocol
         public void Send(byte[] data)
         {
             //obtener datos a enviar
-            //byte[] data = Encoding.UTF8.GetBytes(option);
             //obtener el largo de los datos del mensaje 
             byte[] dataLength = BitConverter.GetBytes(data.Length);
             //enviar el largo 
@@ -33,7 +32,7 @@ namespace Protocol
         {
             //recibo el largo del mensaje
             int offset = 0; //offset
-            byte[] dataLength = new byte[length];//new byte[Protocol.Constants.WordLength];
+            byte[] dataLength = new byte[length];
             while (offset < Protocol.Constants.WordLength)
             {
                 //para recibir o leer el buffer si o si tenemos que llevar a mano lo que se recibe
@@ -42,11 +41,8 @@ namespace Protocol
                 int recived = _networkStream.Read(dataLength, offset, count);
                 if (recived == 0)
                 {
-                    //cerrar conexion con cliente o lanzar excepcion, enviar mensaje
-                    //cerrar conexion
                     _networkStream.Close();
                     throw new Exception("Connection ends");
-                    //return;
                 }
                 offset += recived;
             }
@@ -61,30 +57,13 @@ namespace Protocol
                 int recived = _networkStream.Read(data, offset, count);
                 if (recived == 0)
                 {
-                    //cerrar conexion con cliente o lanzar excepcion, enviar mensaje
-                    //return;
                     throw new Exception("Connection lost");
                 }
 
                 offset += recived;
             }
 
-
-            //string mensaje = Encoding.UTF8.GetString(data);
-
             return data;
-            //Console.WriteLine("El cliente dice: {0}", mensaje);
-            /*int offset = 0;
-            var data = new byte[length];
-            while (offset < length)
-            {
-                int count = length - offset;
-                int recived = _networkStream.Read(data, offset, count);
-                if (recived == 0)
-                    throw new Exception("Connection lost");
-                offset += recived;
-            }
-            return data;*/
         }
 
     }
