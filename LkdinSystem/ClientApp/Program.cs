@@ -654,13 +654,11 @@ namespace ClientApp
 
         static bool requestfilterKeywordMethod(string word, tcpHelper tch)
         {
-            string[] keywords = new string[] { word };
-            return ClientCommands.GetAllProfiles(word, word, keywords, tch);
+            return ClientCommands.GetAllProfiles("", word, Array.Empty<string>(), tch);
         }
 
         static bool requestfilterIdMethod(string id, tcpHelper tch)
         {
-            string[] ids = new string[] { id };
             return ClientCommands.GetAllProfiles(id, "", Array.Empty<string>(), tch);
         }
 

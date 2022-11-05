@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {}
+    "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {}
   },
   "projects": {
-    "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {
+    "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
+        "projectUniqueName": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
         "projectName": "Utils",
-        "projectPath": "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
+        "projectPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
         "packagesPath": "C:\\Users\\Nahuel\\.nuget\\packages\\",
-        "outputPath": "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\obj\\",
+        "outputPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nahuel\\AppData\\Roaming\\NuGet\\NuGet.Config",
