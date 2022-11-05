@@ -18,23 +18,22 @@ namespace Protocol
             _th = tch;
         }
 
-
-        public void SendFile(string path)
+        public async Task SendFileAsync(string path)
         {
             if (FileHandler.FileExists(path))
             {
                 var fileName = FileHandler.GetFileName(path);
                 // ---> Enviar el largo del nombre del archivo
-                _th.Send(ConversionHandler.ConvertIntToBytes(fileName.Length));
+                await _th.SendAsync(ConversionHandler.ConvertIntToBytes(fileName.Length));
                 // ---> Enviar el nombre del archivo
-                _th.Send(ConversionHandler.ConvertStringToBytes(fileName));
+                await _th.SendAsync(ConversionHandler.ConvertStringToBytes(fileName));
                 // ---> Obtener el tamaño del archivo
                 long fileSize = FileHandler.GetFileSize(path);
                 // ---> Enviar el tamaño del archivo
                 var convertedFileSize = ConversionHandler.ConvertLongToBytes(fileSize);
-                _th.Send(convertedFileSize);
+                await _th.SendAsync(convertedFileSize);
                 // ---> Enviar el archivo (pero con file stream)
-                SendFileWithStream(fileSize, path);
+                await SendFileWithStreamAsync(fileSize, path);
             }
             else
             {
@@ -42,21 +41,21 @@ namespace Protocol
             }
         }
 
-        public void ReceiveFile()
+        public async Task ReceiveFileAsync()
         {
             // ---> Recibir el largo del nombre del archivo
             int fileNameSize = ConversionHandler.ConvertBytesToInt(
-                _th.Receive(Constants.FixedFileNameSize));
+                await _th.ReceiveAsync(Constants.FixedFileNameSize));
             // ---> Recibir el nombre del archivo
-            string fileName = ConversionHandler.ConvertBytesToString(_th.Receive(fileNameSize));
+            string fileName = ConversionHandler.ConvertBytesToString(await _th.ReceiveAsync(fileNameSize));
             // ---> Recibir el largo del archivo
             long fileSize = ConversionHandler.ConvertBytesToLong(
-                _th.Receive(Constants.FixedFileSize));
+                await _th.ReceiveAsync(Constants.FixedFileSize));
             // ---> Recibir el archivo
-            ReceiveFileWithStreams(fileSize, fileName);
+            await ReceiveFileWithStreamsAsync(fileSize, fileName);
         }
 
-        private void SendFileWithStream(long fileSize, string path)
+        private async Task SendFileWithStreamAsync(long fileSize, string path)
         {
             long fileParts = FileOperations.CalculateFileParts(fileSize);
             long offset = 0;
@@ -68,21 +67,21 @@ namespace Protocol
                 if (currentPart == fileParts)
                 {
                     var lastPartSize = (int)(fileSize - offset);
-                    data = FileStreamHandler.Read(path, offset, lastPartSize);
+                    data = await FileStreamHandler.ReadAsync(path, offset, lastPartSize);
                     offset += lastPartSize;
                 }
                 else
                 {
-                    data = FileStreamHandler.Read(path, offset, Constants.MaxPackageSize);
+                    data = await FileStreamHandler.ReadAsync(path, offset, Constants.MaxPackageSize);
                     offset += Constants.MaxPackageSize;
                 }
 
-                _th.Send(data);
+                await _th.SendAsync(data);
                 currentPart++;
             }
         }
 
-        private void ReceiveFileWithStreams(long fileSize, string fileName)
+        private async Task ReceiveFileWithStreamsAsync(long fileSize, string fileName)
         {
             long fileParts = FileOperations.CalculateFileParts(fileSize);
             long offset = 0;
@@ -94,16 +93,16 @@ namespace Protocol
                 if (currentPart == fileParts)
                 {
                     var lastPartSize = (int)(fileSize - offset);
-                    data = _th.Receive(lastPartSize);
+                    data = await _th.ReceiveAsync(lastPartSize);
                     offset += lastPartSize;
                 }
                 else
                 {
-                    data = _th.Receive(Constants.MaxPackageSize);
+                    data = await _th.ReceiveAsync(Constants.MaxPackageSize);
                     offset += Constants.MaxPackageSize;
                 }
 
-                FileStreamHandler.Write(fileName, data);
+                await FileStreamHandler.WriteAsync(fileName, data);
                 currentPart++;
             }
         }

@@ -17,18 +17,18 @@ namespace Protocol
             _networkStream = networkStream;
         }
 
-        public void Send(byte[] data)
+        public async Task SendAsync(byte[] data)
         {
             //obtener datos a enviar
             //obtener el largo de los datos del mensaje 
             byte[] dataLength = BitConverter.GetBytes(data.Length);
             //enviar el largo 
-            _networkStream.Write(dataLength, 0, Protocol.Constants.WordLength);
+            await _networkStream.WriteAsync(dataLength, 0, Protocol.Constants.WordLength).ConfigureAwait(false);
             //Enviar el mensaje
-            _networkStream.Write(data, 0, data.Length);
+            await _networkStream.WriteAsync(data, 0, data.Length).ConfigureAwait(false);
         }
 
-        public byte[] Receive(int length)
+        public async Task<byte[]> ReceiveAsync(int length)
         {
             //recibo el largo del mensaje
             int offset = 0; //offset
@@ -38,7 +38,7 @@ namespace Protocol
                 //para recibir o leer el buffer si o si tenemos que llevar a mano lo que se recibe
                 // y cotnrolar que recibimos lo que necesitamos
                 var count = Protocol.Constants.WordLength - offset;
-                int recived = _networkStream.Read(dataLength, offset, count);
+                int recived = await _networkStream.ReadAsync(dataLength, offset, count).ConfigureAwait(false);
                 if (recived == 0)
                 {
                     _networkStream.Close();
@@ -54,7 +54,7 @@ namespace Protocol
             while (offset < largo)
             {
                 int count = largo - offset;
-                int recived = _networkStream.Read(data, offset, count);
+                int recived = await _networkStream.ReadAsync(data, offset, count).ConfigureAwait(false);
                 if (recived == 0)
                 {
                     throw new Exception("Connection lost");

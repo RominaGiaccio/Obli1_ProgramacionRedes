@@ -17,50 +17,50 @@ namespace Protocol
         public static string usersProfileFileName = SettingsManager.ReadSettings("UsersProfilesFileName");
         public static string messagesFileName = SettingsManager.ReadSettings("MessagesFileName");
 
-        public void SaveNewUser(User user)
+        public async Task SaveNewUserAsync(User user)
         {
             string fileName = usersFileName;
             string message = user.ToString() + SpecialChars.EndLine;
             byte[] data = ConversionHandler.ConvertStringToBytes(message);
 
-            FileStreamHandler.Write(fileName, data);
+            await FileStreamHandler.WriteAsync(fileName, data);
         }
 
-        public void SaveNewUserProfile(UserProfile userProfile)
+        public async Task SaveNewUserProfileAsync(UserProfile userProfile)
         {
             string fileName = usersProfileFileName;
             string message = userProfile.ToString() + SpecialChars.EndLine;
             byte[] data = ConversionHandler.ConvertStringToBytes(message);
 
-            FileStreamHandler.Write(fileName, data);
+            await FileStreamHandler.WriteAsync(fileName, data);
         }
 
-        public void SaveNewMessage(Message msg)
+        public async Task SaveNewMessageAsync(Message msg)
         {
             string fileName = messagesFileName;
             string message = msg.ToString() + SpecialChars.EndLine;
             byte[] data = ConversionHandler.ConvertStringToBytes(message);
 
-            FileStreamHandler.Write(fileName, data);
+            await FileStreamHandler.WriteAsync(fileName, data);
         }
 
-        public void EmptyDataBase(string fileName)
+        public async Task EmptyDataBaseAsync(string fileName)
         {
-            FileStreamHandler.EmptyFile(fileName);
+            await FileStreamHandler.EmptyFileAsync(fileName);
         }
 
-        public List<User> GetAllUsers()
+        public async Task<List<User>> GetAllUsersAsync()
         {
             string path = usersFileName;
 
             if (!File.Exists(path))
             {
                 byte[] emptyData = ConversionHandler.ConvertStringToBytes("");
-                FileStreamHandler.Write(path, emptyData);
+                await FileStreamHandler.WriteAsync(path, emptyData);
             }
 
             var fileSize = (int)FileHandler.GetFileSize(path);
-            byte[] data = FileStreamHandler.Read(path, 0, fileSize);
+            byte[] data = await FileStreamHandler.ReadAsync(path, 0, fileSize);
 
             string[] splitedUsers = ConversionHandler.ConvertBytesToString(data).Split(SpecialChars.EndLine);
 
@@ -77,13 +77,13 @@ namespace Protocol
             return users;
         }
 
-        public List<UserProfile> GetAllProfiles()
+        public async Task<List<UserProfile>> GetAllProfilesAsync()
         {
             string path = usersProfileFileName;
 
             var fileSize = (int)FileHandler.GetFileSize(path);
             
-            byte[] data = FileStreamHandler.Read(path, 0, fileSize);
+            byte[] data = await FileStreamHandler.ReadAsync(path, 0, fileSize);
 
             string[] splitedUsersProfiles = ConversionHandler.ConvertBytesToString(data).Split(SpecialChars.EndLine);
 
@@ -100,13 +100,13 @@ namespace Protocol
             return usersProfiles;
         }
 
-        public List<Message> GetAllNotReadedUserMessages(User user)
+        public async Task<List<Message>> GetAllNotReadedUserMessagesAsync(User user)
         {
             string path = messagesFileName;
 
             var fileSize = (int)FileHandler.GetFileSize(path);
 
-            byte[] data = FileStreamHandler.Read(path, 0, fileSize);
+            byte[] data = await FileStreamHandler.ReadAsync(path, 0, fileSize);
 
             string[] splitedMessages = ConversionHandler.ConvertBytesToString(data).Split(SpecialChars.EndLine);
 
@@ -140,23 +140,23 @@ namespace Protocol
                 }
             }
 
-            EmptyDataBase(path);
+            await EmptyDataBaseAsync(path);
 
             for (int i = 0; i < newMessages.Count; i++)
             {
-                SaveNewMessage(newMessages[i]);
+                await SaveNewMessageAsync(newMessages[i]);
             }
 
             return messagesToReturn;
         }
 
-        public List<Message> GetUserMessagesHistory(User user)
+        public async Task<List<Message>> GetUserMessagesHistoryAsync(User user)
         {
             string path = messagesFileName;
 
             var fileSize = (int)FileHandler.GetFileSize(path);
 
-            byte[] data = FileStreamHandler.Read(path, 0, fileSize);
+            byte[] data = await FileStreamHandler.ReadAsync(path, 0, fileSize);
 
             string[] splitedMessages = ConversionHandler.ConvertBytesToString(data).Split(SpecialChars.EndLine);
 
