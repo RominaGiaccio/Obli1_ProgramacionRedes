@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cBNftmwIZv8MIJJnjl65GVGfQ+26DB8nlRBw9sEK9pvU+r99jWHYdohzhMBnrkTh5wVVLOt+IBxv11igOEFb4A==",
+  "dgSpecHash": "nGR76Kfx23Wp3Gl2CdR1/cjkmp99bRibkwT3hBb7r7WlDiABl1mLuWW5VrcWafXjUApXh7g3NxKtQysvAFqSdQ==",
   "success": true,
-  "projectFilePath": "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\ClientApp\\ClientApp.csproj",
+  "projectFilePath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\ClientApp\\ClientApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nahuel\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\Nahuel\\.nuget\\packages\\system.configuration.configurationmanager\\6.0.1\\system.configuration.configurationmanager.6.0.1.nupkg.sha512",

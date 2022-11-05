@@ -48,24 +48,33 @@ namespace Protocol.Commands
             var description = splitedFilters[1];
             var abilities = splitedFilters[2];
 
-            if (!string.IsNullOrWhiteSpace(userId) || !string.IsNullOrWhiteSpace(description))
-            {
-                usersProfiles = usersProfiles.FindAll((e) => e.UserId.Contains(userId) || e.Description.Contains(description));
-            }
 
-            if (!string.IsNullOrWhiteSpace(abilities))
+            if (!string.IsNullOrWhiteSpace(userId))
             {
+                //Console.WriteLine("Es por id");
+                usersProfiles = originalUsersProfiles.FindAll((e) => e.UserId.Contains(userId));
+            }
+            else if (!string.IsNullOrWhiteSpace(description))
+            {
+                //Console.WriteLine("Es por descripcion");
+                usersProfiles = originalUsersProfiles.FindAll((e) => e.Description.Contains(description));
+            }
+            else if (!string.IsNullOrWhiteSpace(abilities))
+            {
+                //Console.WriteLine("Es por habilidad");
                 string[] splitedAbilities = abilities.Split(SpecialChars.ArrayDivider);
 
                 for (int i = 0; i < splitedAbilities.Length; i++)
                 {
-                    originalUsersProfiles.FindAll((e) => e.Abilities.Contains(splitedAbilities[i])).ForEach(up =>
+                    Console.WriteLine("una habilidad buscada: " + splitedAbilities[i]);
+                    usersProfiles = originalUsersProfiles.FindAll((e) => e.Abilities.Contains(splitedAbilities[i]));
+                    /*.ForEach(up =>
                     {
                         if (usersProfiles.Find(u => u.UserId == up.UserId) == null)
                         {
                             usersProfiles.Add(up);
                         }
-                    });
+                    });*/
                 }
             }
 

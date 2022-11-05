@@ -454,11 +454,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\ClientApp\\ClientApp.csproj",
+      "projectUniqueName": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\ClientApp\\ClientApp.csproj",
       "projectName": "ClientApp",
-      "projectPath": "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\ClientApp\\ClientApp.csproj",
+      "projectPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\ClientApp\\ClientApp.csproj",
       "packagesPath": "C:\\Users\\Nahuel\\.nuget\\packages\\",
-      "outputPath": "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\ClientApp\\obj\\",
+      "outputPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\ClientApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Nahuel\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -475,8 +475,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj": {
-              "projectPath": "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj"
+            "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj": {
+              "projectPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj"
             }
           }
         }
