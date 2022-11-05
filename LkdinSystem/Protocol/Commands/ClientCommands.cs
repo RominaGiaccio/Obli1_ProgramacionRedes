@@ -229,9 +229,6 @@ namespace Protocol.Commands
                     Console.WriteLine("----------------------------------------------------------------------------");
                 }
             }
-
-            //Console.WriteLine(response.Data);
-            //Console.WriteLine(response.Data);
         }
     }
 }

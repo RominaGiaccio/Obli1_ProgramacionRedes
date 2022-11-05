@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dX0L/siVJc/CN7rb05IRCtGsj5KrHUtEtTLX4EanUDZ8/GGnRnAd9pPDdaxZiGLQ257sgav17zhncQZPiAAJmA==",
+  "dgSpecHash": "av4KrFiORDGqAvqtlqo4isCVKlH36ExmxB+V07jfCyiNFz9nQy5SdcbAfz1Q0iAh1ULKOZN2FQS1mT58BWMClw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Nahuel\\Desktop\\pr\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj",
+  "projectFilePath": "C:\\Users\\Nahuel\\Desktop\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nahuel\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\Nahuel\\.nuget\\packages\\system.configuration.configurationmanager\\6.0.1\\system.configuration.configurationmanager.6.0.1.nupkg.sha512",

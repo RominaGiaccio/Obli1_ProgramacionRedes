@@ -56,7 +56,7 @@ namespace Domain
             foreach (string ab in up.Abilities){
                 abilitiesString += ab + " ";
             }
-            string response = " (Id:) " + up.UserId + "(Descripcion:) " + up.Description + " (Habilidades:) " + abilitiesString +
+            string response = " (Id:) " + up.UserId + " (Descripcion:) " + up.Description + " (Habilidades:) " + abilitiesString +
                 " (Foto perfil:) " + up.Image;
             if (up.Image.Equals("")) {
                 response += "No tiene foto de perfil.";

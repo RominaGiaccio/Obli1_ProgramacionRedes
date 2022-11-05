@@ -70,3 +70,15 @@ C:\Users\Nahuel\Desktop\pr\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Debug\ne
 C:\Users\Nahuel\Desktop\pr\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Debug\net6.0\refint\Enums.dll
 C:\Users\Nahuel\Desktop\pr\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Debug\net6.0\Enums.pdb
 C:\Users\Nahuel\Desktop\pr\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Debug\net6.0\ref\Enums.dll
+C:\Users\Nahuel\Desktop\Obli1_ProgramacionRedes\LkdinSystem\Enum\bin\Debug\net6.0\Enums.deps.json
+C:\Users\Nahuel\Desktop\Obli1_ProgramacionRedes\LkdinSystem\Enum\bin\Debug\net6.0\Enums.dll
+C:\Users\Nahuel\Desktop\Obli1_ProgramacionRedes\LkdinSystem\Enum\bin\Debug\net6.0\Enums.pdb
+C:\Users\Nahuel\Desktop\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Debug\net6.0\Enums.csproj.AssemblyReference.cache
+C:\Users\Nahuel\Desktop\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Debug\net6.0\Enums.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Nahuel\Desktop\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Debug\net6.0\Enums.AssemblyInfoInputs.cache
+C:\Users\Nahuel\Desktop\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Debug\net6.0\Enums.AssemblyInfo.cs
+C:\Users\Nahuel\Desktop\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Debug\net6.0\Enums.csproj.CoreCompileInputs.cache
+C:\Users\Nahuel\Desktop\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Debug\net6.0\Enums.dll
+C:\Users\Nahuel\Desktop\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Debug\net6.0\refint\Enums.dll
+C:\Users\Nahuel\Desktop\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Debug\net6.0\Enums.pdb
+C:\Users\Nahuel\Desktop\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Debug\net6.0\ref\Enums.dll
