@@ -58,5 +58,11 @@ namespace Domain
                 CurrentState = splited[4]
             };
         }
+
+        public static string ToMessageString(Message mesg)
+        {
+            return "(De:) " + mesg.SenderEmail + " (Para:) " + mesg.ReceiverEmail +
+                " (Mensaje:) " + mesg.Text + " (Id:) " + mesg.Id;
+        }
     }
 }
