@@ -665,12 +665,11 @@ namespace ClientApp
         static async Task<bool> requestfilterKeywordMethodAsync(string word, tcpHelper tch)
         {
             string[] keywords = new string[] { word };
-            return await ClientCommands.GetAllProfilesAsync(word, word, keywords, tch);
+            return await ClientCommands.GetAllProfilesAsync("", word, keywords, tch);
         }
 
         static async Task<bool> requestfilterIdMethodAsync(string id, tcpHelper tch)
         {
-            string[] ids = new string[] { id };
             return await ClientCommands.GetAllProfilesAsync(id, "", Array.Empty<string>(), tch);
         }
 
