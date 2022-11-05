@@ -6,40 +6,44 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Utils;
+using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace ServerApp
 {
     class Program
     {
-        public static ClientHandler ch = new ClientHandler();
+        public static ClientTcpHandler cth = new ClientTcpHandler();
 
         public static void Main(string[] args)
         {
             Console.WriteLine("Server initialize...");
 
-            var serverSocket = new Socket(AddressFamily.InterNetwork,SocketType.Stream,ProtocolType.Tcp);
-
             string ipAddress = SettingsManager.ReadSettings(ServerConfig.serverIPConfigKey);
             int ipPort = int.Parse(SettingsManager.ReadSettings(ServerConfig.serverPortConfigKey));
 
-            var localEndpoint = new IPEndPoint(IPAddress.Parse(ipAddress), ipPort);
+            //Definimos el endpoint y le pasamos la ip
+            var ipEndPoint = new IPEndPoint(IPAddress.Parse(ipAddress), ipPort);
+            var tcpListener = new TcpListener(ipEndPoint);
 
-            serverSocket.Bind(localEndpoint); // vinculo el socket al endpoint
-            serverSocket.Listen(1); // pongo el servidor en listen
+            //Ponemos el listener a escuchar (No es necesario especificar protocolo, ni address family etc)
+            tcpListener.Start(100);
 
             bool exit = false;
             int clientsCount = 0;
 
             while (!exit)
             {
-                var clientSocket = serverSocket.Accept();
+                //Operacion bloqueante
+                var tcpClientListener = tcpListener.AcceptTcpClient(); 
+
                 clientsCount++;
-
                 Console.WriteLine("New client {0} accepted", clientsCount);
-
-                new Thread(() => ch.Handler(clientSocket, clientsCount)).Start();
+                var thread = new Thread(() => cth.Handler(tcpClientListener, clientsCount));
+                thread.Start();
             }
 
             Console.ReadLine();
