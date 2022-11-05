@@ -14,17 +14,17 @@ namespace Protocol.Commands
 
         public static Dictionary<string, Delegate> Commands = new()
         {
-            { "01", serverCommands.SaveNewUser },
-            { "02", serverCommands.SaveNewUserProfile },
-            { "03", serverCommands.UploadUserProfileImage },
-            { "04", serverCommands.GetAllProfiles },
-            { "05", serverCommands.SaveNewMessage },
-            { "06", serverCommands.GetNotReadedMessages },
-            { "07", serverCommands.GetUserMessagesHistory },
-            { "08", serverCommands.GetUserMessagesHistory },
-            { "09", serverCommands.DownloadUserProfileImage },
-            { "10", serverCommands.SignIn },
-            { "11", serverCommands.SignOut },
+            { "01", serverCommands.SaveNewUserAsync },
+            { "02", serverCommands.SaveNewUserProfileAsync },
+            { "03", serverCommands.UploadUserProfileImageAsync },
+            { "04", serverCommands.GetAllProfilesAsync },
+            { "05", serverCommands.SaveNewMessageAsync },
+            { "06", serverCommands.GetNotReadedMessagesAsync },
+            { "07", serverCommands.GetUserMessagesHistoryAsync },
+            { "08", serverCommands.GetUserMessagesHistoryAsync },
+            { "09", serverCommands.DownloadUserProfileImageAsync },
+            { "10", serverCommands.SignInAsync },
+            { "11", serverCommands.SignOutAsync },
         };
     }
 }

@@ -12,27 +12,27 @@ namespace Protocol.Commands
 {
     public class ClientCommands
     {
-        public static bool CreateNewUser(User user, tcpHelper tch)
+        public static async Task<bool> CreateNewUserAsync(User user, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("01", States.OK, user.ToString());
             string message = user.ToString();
 
-            TransferSegmentManager.SendData(fixedPart, message, tch);
+            await TransferSegmentManager.SendDataAsync(fixedPart, message, tch);
 
-            var response = TransferSegmentManager.ReceiveData(tch);
+            var response = await TransferSegmentManager.ReceiveDataAsync(tch);
 
             Console.WriteLine(response.Data);
             return response.Status == ((int)States.OK).ToString();
         }
 
-        public static User SignIn(User user, tcpHelper tch)
+        public static async Task<User> SignInAsync(User user, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("10", States.OK, user.ToString());
             string message = user.ToString();
 
-            TransferSegmentManager.SendData(fixedPart, message, tch);
+            await TransferSegmentManager.SendDataAsync(fixedPart, message, tch);
 
-            var response = TransferSegmentManager.ReceiveData(tch);
+            var response = await TransferSegmentManager.ReceiveDataAsync(tch);
 
             Console.WriteLine(response.Data);
 
@@ -43,81 +43,81 @@ namespace Protocol.Commands
             return null;
         }
 
-        public static bool SignOut(User user, tcpHelper tch)
+        public static async Task<bool> SignOutAsync(User user, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("11", States.OK, user.ToString());
             string message = user.ToString();
 
-            TransferSegmentManager.SendData(fixedPart, message, tch);
+            await TransferSegmentManager.SendDataAsync(fixedPart, message, tch);
 
-            var response = TransferSegmentManager.ReceiveData(tch);
+            var response = await TransferSegmentManager.ReceiveDataAsync(tch);
 
             Console.WriteLine(response.Data);
             return response.Status == ((int)States.OK).ToString();
         }
 
-        public static bool CreateUserProfile(UserProfile userProfile, tcpHelper tch)
+        public static async Task<bool> CreateUserProfileAsync(UserProfile userProfile, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("02", States.OK, userProfile.ToString());
             string message = userProfile.ToString();
 
-            TransferSegmentManager.SendData(fixedPart, message, tch);
+            await TransferSegmentManager.SendDataAsync(fixedPart, message, tch);
 
-            var response = TransferSegmentManager.ReceiveData(tch);
+            var response = await TransferSegmentManager.ReceiveDataAsync(tch);
 
             Console.WriteLine(response.Data);
 
             return response.Status == ((int)States.OK).ToString();
         }
 
-        public static bool SendMessage(Message msg, tcpHelper tch)
+        public static async Task<bool> SendMessageAsync(Message msg, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("05", States.OK, msg.ToString());
             string message = msg.ToString();
 
-            TransferSegmentManager.SendData(fixedPart, message, tch);
+            await TransferSegmentManager.SendDataAsync(fixedPart, message, tch);
 
-            var response = TransferSegmentManager.ReceiveData(tch);
+            var response = await TransferSegmentManager.ReceiveDataAsync(tch);
 
             Console.WriteLine(response.Data);
             return response.Status == ((int)States.OK).ToString();
         }
 
-        public static bool UploadUserProfileImage(UserProfile userProfile, string path, tcpHelper tch)
+        public static async Task<bool> UploadUserProfileImageAsync(UserProfile userProfile, string path, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("03", States.OK, userProfile.ToString());
             string message = userProfile.ToString();
 
-            TransferSegmentManager.SendData(fixedPart, message, tch);
+            await TransferSegmentManager.SendDataAsync(fixedPart, message, tch);
 
             Console.WriteLine("Subiendo archivo...");
 
             var fileCommonHandler = new FileCommsHandler(tch);
-            fileCommonHandler.SendFile(path);
+            await fileCommonHandler.SendFileAsync(path);
 
             Console.WriteLine("Archivo enviado");
 
-            var response = TransferSegmentManager.ReceiveData(tch);
+            var response = await TransferSegmentManager.ReceiveDataAsync(tch);
 
             Console.WriteLine(response.Data);
 
             return response.Status == ((int)States.OK).ToString();
         }
 
-        public static bool DownloadUserProfileImage(UserProfile userProfile, tcpHelper tch)
+        public static async Task<bool> DownloadUserProfileImageAsync(UserProfile userProfile, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("09", States.OK, userProfile.ToString());
             string message = userProfile.ToString();
 
-            TransferSegmentManager.SendData(fixedPart, message, tch);
+            await TransferSegmentManager.SendDataAsync(fixedPart, message, tch);
 
-            var response = TransferSegmentManager.ReceiveData(tch);
+            var response = await TransferSegmentManager.ReceiveDataAsync(tch);
 
             if (response.Status == ((int)States.OK).ToString())
             {
                 Console.WriteLine("Recibiendo imagen de perfil...");
                 var fileCommonHandler = new FileCommsHandler(tch);
-                fileCommonHandler.ReceiveFile();
+                await fileCommonHandler.ReceiveFileAsync();
                 Console.WriteLine("Imagen de perfil recibida...");
 
                 return true;
@@ -130,7 +130,7 @@ namespace Protocol.Commands
             }
         }
 
-        public static bool GetAllProfiles(string userId, string description, string[] abilities, tcpHelper tch)
+        public static async Task<bool> GetAllProfilesAsync(string userId, string description, string[] abilities, tcpHelper tch)
         {
             string abilitiesMessage = "";
 
@@ -148,9 +148,9 @@ namespace Protocol.Commands
 
             string fixedPart = TransferSegmentManager.GerFixedPart("04", States.OK, msg);
 
-            TransferSegmentManager.SendData(fixedPart, msg, tch);
+            await TransferSegmentManager.SendDataAsync(fixedPart, msg, tch);
 
-            var response = TransferSegmentManager.ReceiveData(tch);
+            var response = await TransferSegmentManager.ReceiveDataAsync(tch);
 
             if (response.Data != EmptyStatesMessages.NoProfilesMessage)
             {
@@ -171,26 +171,26 @@ namespace Protocol.Commands
             return response.Status == ((int)States.OK).ToString();
         }
 
-        public static void GetUnreadedMessages(User user, tcpHelper tch)
+        public static async Task GetUnreadedMessagesAsync(User user, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("06", States.OK, user.ToString());
             string message = user.ToString();
 
-            TransferSegmentManager.SendData(fixedPart, message, tch);
+            await TransferSegmentManager.SendDataAsync(fixedPart, message, tch);
 
-            var response = TransferSegmentManager.ReceiveData(tch);
+            var response = await TransferSegmentManager.ReceiveDataAsync(tch);
 
             Console.WriteLine(response.Data);
         }
 
-        public static void GetMessagesHistory(User user, tcpHelper tch)
+        public static async Task GetMessagesHistoryAsync(User user, tcpHelper tch)
         {
             string fixedPart = TransferSegmentManager.GerFixedPart("07", States.OK, user.ToString());
             string message = user.ToString();
 
-            TransferSegmentManager.SendData(fixedPart, message, tch);
+            await TransferSegmentManager.SendDataAsync(fixedPart, message, tch);
 
-            var response = TransferSegmentManager.ReceiveData(tch);
+            var response = await TransferSegmentManager.ReceiveDataAsync(tch);
 
             Console.WriteLine(response.Data);
         }

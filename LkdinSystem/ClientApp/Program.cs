@@ -13,6 +13,7 @@ using Domain;
 using Protocol.Commands;
 using Protocol;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 
 namespace ClientApp
 {
@@ -32,7 +33,7 @@ namespace ClientApp
         static NetworkStream networkStream;
         static tcpHelper tch;
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Console.WriteLine("Iniciando Aplicacion Cliente....!!!");
 
@@ -44,111 +45,120 @@ namespace ClientApp
             bool cont = false;
             bool login = false;
 
-            while (!exit)
+            try
             {
-                while (!cont)
+                while (!exit)
                 {
-                    printStartMenu(disconnected);
-                    string res = messageLoop("Para seleccionar una opción ingresa el número correspondiente sin espacios.", "El número no puede ser vacio.");
-                    switch (res)
+                    while (!cont)
                     {
-                        /*case "0": //CONFIGURACION                        
-                            clientConfiguration(sh);
-                            break;*/
-                        case "1"://CONECTAR A SERVIDOR
-                            if (disconnected)
-                            {   // Crear la conexion.
-                                printPrincipal();
-                                tcpClient.Connect(remoteEndPoint);
-                                networkStream = tcpClient.GetStream();
-                                tch = new tcpHelper(networkStream);
-                                Console.WriteLine("Cliente Conectado al Servidor...!!!");
-                                disconnected = false;
-                                cont = true;
-                            }
-                            else
-                            {
-                                // Cerrar la conexion.
-                                printPrincipal();
-                                disconnected = true;
-                                Console.WriteLine("Se cerró el Cliente");
-                                networkStream.Close();
-                                disconnected = true;
+                        printStartMenu(disconnected);
+                        string res = messageLoop("Para seleccionar una opción ingresa el número correspondiente sin espacios.", "El número no puede ser vacio.");
+                        switch (res)
+                        {
+                            /*case "0": //CONFIGURACION                        
+                                clientConfiguration(sh);
+                                break;*/
+                            case "1"://CONECTAR A SERVIDOR
+                                if (disconnected)
+                                {   // Crear la conexion.
+                                    printPrincipal();
+                                    await tcpClient.ConnectAsync(remoteEndPoint).ConfigureAwait(false);
+                                    networkStream = tcpClient.GetStream();
+                                    tch = new tcpHelper(networkStream);
+                                    Console.WriteLine("Cliente Conectado al Servidor...!!!");
+                                    disconnected = false;
+                                    cont = true;
+                                }
+                                else
+                                {
+                                    // Cerrar la conexion.
+                                    printPrincipal();
+                                    disconnected = true;
+                                    Console.WriteLine("Se cerró el Cliente");
+                                    networkStream.Close();
+                                    disconnected = true;
+                                    exit = true;
+                                    cont = true;
+                                }
+                                break;
+                            case "2": //SALIR DEL CLIENTE                        
                                 exit = true;
                                 cont = true;
+                                break;
+                            default:
+                                Console.WriteLine("Para seleccionar una opción ingresa el número correspondiente sin espacios.");
+                                Console.ReadLine();
+                                break;
+                        }
+                    }
+
+                    while (cont && !exit)
+                    {
+                        string select;
+                        if (login)
+                        {
+                            printUserMenu();
+                            select = messageLoop("Para seleccionar una opción ingresa el número correspondiente sin espacios.", "El número no puede ser vacio.");
+                            switch (select)
+                            {
+                                case "1"://DAR DE ALTA PERFIL
+                                    await createProfileAsync(tch);
+                                    break;
+                                case "2"://ACTUALIZAR FOTO DE PERFIL
+                                    await updateProfilePhotoAsync(tch);
+                                    break;
+                                case "3"://DESCARGAR FOTO DE PERFIL
+                                    await downloadProfilePhotoAsync(tch);
+                                    break;
+                                case "4"://CONSULTAR PERFILES
+                                    await consultProfileAsync(tch);
+                                    break;
+                                case "5"://MENSAJES
+                                    await consultMessagesAsync(tch);
+                                    break;
+                                case "6"://LOGOUT
+                                    await logOutMethodAsync(tch);
+                                    login = false;
+                                    emaiLogged = string.Empty;
+                                    break;
+                                default:
+                                    Console.WriteLine("Para seleccionar una opción ingresa el número correspondiente sin espacios.");
+                                    break;
                             }
-                            break;
-                        case "2": //SALIR DEL CLIENTE                        
-                            exit = true;
-                            cont = true;
-                            break;
-                        default:
-                            Console.WriteLine("Para seleccionar una opción ingresa el número correspondiente sin espacios.");
-                            Console.ReadLine();
-                            break;
+                        }
+                        else
+                        {
+                            printClientMenu();
+                            select = messageLoop("Para seleccionar una opción ingresa el número correspondiente sin espacios.", "El número no puede ser vacio.");
+                            switch (select)
+                            {
+                                case "1":
+                                    login = await userLoginAsync(login, tch);
+                                    break;
+                                case "2":
+                                    await createUserAsync(tch);
+                                    break;
+                                case "3":
+                                    cont = false;
+                                    break;
+                                default:
+                                    Console.WriteLine("Para seleccionar una opción ingresa el número correspondiente sin espacios.");
+                                    break;
+                            }
+                        }
                     }
                 }
 
-                while (cont && !exit)
-                {
-                    string select;
-                    if (login)
-                    {
-                        printUserMenu();
-                        select = messageLoop("Para seleccionar una opción ingresa el número correspondiente sin espacios.", "El número no puede ser vacio.");
-                        switch (select)
-                        {
-                            case "1"://DAR DE ALTA PERFIL
-                                createProfile(tch);
-                                break;
-                            case "2"://ACTUALIZAR FOTO DE PERFIL
-                                updateProfilePhoto(tch);
-                                break;
-                            case "3"://DESCARGAR FOTO DE PERFIL
-                                downloadProfilePhoto(tch);
-                                break;
-                            case "4"://CONSULTAR PERFILES
-                                consultProfile(tch);
-                                break;
-                            case "5"://MENSAJES
-                                consultMessages(tch);
-                                break;
-                            case "6"://LOGOUT
-                                logOutMethod(tch);
-                                login = false;
-                                emaiLogged = string.Empty;
-                                break;
-                            default:
-                                Console.WriteLine("Para seleccionar una opción ingresa el número correspondiente sin espacios.");
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        printClientMenu();
-                        select = messageLoop("Para seleccionar una opción ingresa el número correspondiente sin espacios.", "El número no puede ser vacio.");
-                        switch (select)
-                        {
-                            case "1":
-                                login = userLogin(login, tch);
-                                break;
-                            case "2":
-                                createUser(tch);
-                                break;
-                            case "3":
-                                cont = false;
-                                break;
-                            default:
-                                Console.WriteLine("Para seleccionar una opción ingresa el número correspondiente sin espacios.");
-                                break;
-                        }
-                    }
-                }
+                Console.Clear();
             }
-            Console.Clear();
+            catch(Exception e)
+            {
+                Console.Clear();
+                Console.WriteLine("Ocurrio un error inesperado");
+            }
             Console.WriteLine("FIN.");
-
         }
+
         static string messageLoop(string message, string messageError)
         {
             string solution = String.Empty;
@@ -318,7 +328,7 @@ namespace ClientApp
             printBasicMenu("La ip fue actualizada: " + ipClient);
             actionFinished();
         }
-        static void createProfile(tcpHelper tch)
+        static async Task createProfileAsync(tcpHelper tch)
         {
             printBasicMenu("DAR DE ALTA PERFIL");
             //Revisar si ya existe perfil
@@ -335,7 +345,7 @@ namespace ClientApp
                 res = messageLoop("Ingresar Y para agregar mas habilidades o N para continuar:", "Debe ingresar Y para agregar mas habilidades o N para continuar.");
 
             }
-            if (createProfileMethod(profileDescription, skills, tch))
+            if (await createProfileMethodAsync(profileDescription, skills, tch))
             {
                 printBasicMenu("Perfil creado correctamente.");
             }
@@ -346,7 +356,7 @@ namespace ClientApp
             actionFinished();
         }
 
-        static void consultProfile(tcpHelper tch)
+        static async Task consultProfileAsync(tcpHelper tch)
         {
             bool filterProfile = true;
             string res;
@@ -357,13 +367,13 @@ namespace ClientApp
                 switch (res)
                 {
                     case "1": //FILTRAR POR HABILIDAD
-                        filterByAbility(tch);
+                        await filterByAbilityAsync(tch);
                         break;
                     case "2": //FILTRAR POR PALABRA CLAVE
-                        filterByKeyword(tch);
+                        await filterByKeywordAsync(tch);
                         break;
                     case "3": //ESPECIFICO POR ID
-                        filterByID(tch);
+                        await filterByIDAsync(tch);
                         break;
                     case "4": //ATRAS
                         filterProfile = false;
@@ -375,12 +385,12 @@ namespace ClientApp
             }
         }
 
-        static void updateProfilePhoto(tcpHelper tch)
+        static async Task updateProfilePhotoAsync(tcpHelper tch)
         {
             printBasicMenu("AGREAR FOTO DE PERFIL");
             string res = string.Empty;
             res = messageLoop("Ingresar foto de perfil.", "Debe ingresar una foto de perfil.");
-            if (updateProfilePhotoMethod(res, tch))
+            if (await updateProfilePhotoMethodAsync(res, tch))
             {
                 printBasicMenu("Foto guardada.");
             }
@@ -391,12 +401,12 @@ namespace ClientApp
             actionFinished();
         }
 
-        static void downloadProfilePhoto(tcpHelper tch)
+        static async Task downloadProfilePhotoAsync(tcpHelper tch)
         {
             printBasicMenu("DESCARGAR FOTO DE PERFIL");
             string res = string.Empty;
             res = messageLoop("Ingresar el id del perfil que posee la foto a descargar.", "Debe ingresar el id del perfil para descargar la foto.");
-            if (downloadProfileImageMethod(res, tch))
+            if (await downloadProfileImageMethodAsync(res, tch))
             {
                 printBasicMenu("Foto descargada.");
             }
@@ -407,7 +417,7 @@ namespace ClientApp
             actionFinished();
         }
 
-        static void consultMessages(tcpHelper tch)
+        static async Task consultMessagesAsync(tcpHelper tch)
         {
             printBasicMenu("CONSULTA MENSAJES");
             bool contMessage = true;
@@ -419,13 +429,13 @@ namespace ClientApp
                 switch (res)
                 {
                     case "1": //CONSULTA HISTORICA
-                        readHistory(tch);
+                        await readHistoryAsync(tch);
                         break;
                     case "2": //MENSAJES SIN LEER
-                        viewUnreadMessages(tch);
+                        await viewUnreadMessagesAsync(tch);
                         break;
                     case "3": //ENVIAR MENSAJE
-                        sendMessage(tch);
+                        await sendMessageAsync(tch);
                         break;
                     case "4": //ATRAS
                         contMessage = false;
@@ -436,7 +446,7 @@ namespace ClientApp
                 }
             }
         }
-        static bool userLogin(bool login, tcpHelper sh)
+        static async Task<bool> userLoginAsync(bool login, tcpHelper sh)
         {
             bool loginRes = login;
             string res = string.Empty;
@@ -445,7 +455,7 @@ namespace ClientApp
             {
                 printBasicMenu("LOGIN");
                 email = messageLoop("Ingresar email de usuario:", "El email no puede ser vacio.");
-                if (loginUserMethod(email, sh))
+                if (await loginUserMethodAsync(email, sh))
                 {
                     printBasicMenu("Login exitoso.");
                     loginRes = true;
@@ -461,7 +471,7 @@ namespace ClientApp
             return loginRes;
         }
 
-        static void createUser(tcpHelper sh)
+        static async Task createUserAsync(tcpHelper sh)
         {
             bool createUser = true;
 
@@ -476,7 +486,7 @@ namespace ClientApp
                 {
                     case "A":
                         //Crear usuario y volver a menu cliente
-                        if (createUserMethod(userName, userSurname, userEmail, sh))
+                        if (await createUserMethodAsync(userName, userSurname, userEmail, sh))
                         {
                             printBasicMenu("Usuario se creo exitosamente.");
                             actionFinished();
@@ -500,33 +510,33 @@ namespace ClientApp
             }
         }
 
-        static void filterByAbility(tcpHelper sh)
+        static async Task filterByAbilityAsync(tcpHelper sh)
         {
             printBasicMenu("FILTRO POR HABILIDAD");
             string res = string.Empty;
             res = messageLoop("Ingrese la habilidad por la cual desea filtrar: ", "Debe ingresar la habilidad por la cual desea filtrar: ");
             printBasicMenu("RESULTADO FILTRO POR HABILIDAD");
-            requestfilterAbilityMethod(res, sh);
+            await requestfilterAbilityMethodAsync(res, sh);
             actionFinished();
         }
 
-        static void filterByKeyword(tcpHelper sh)
+        static async Task filterByKeywordAsync(tcpHelper sh)
         {
             printBasicMenu("FILTRO POR PALABRA CLAVE");
             string res = string.Empty;
             res = messageLoop("Ingrese la palabra clave por la cual desea filtrar: ", "Debe ingresar la palabra clave por la cual desea filtrar: ");
             printBasicMenu("RESULTADO FILTRO POR PALABRA CLAVE");
-            requestfilterKeywordMethod(res, sh);
+            await requestfilterKeywordMethodAsync(res, sh);
             actionFinished();
         }
 
-        static void filterByID(tcpHelper sh)
+        static async Task filterByIDAsync(tcpHelper sh)
         {
             printBasicMenu("FILTRO POR ID");
             string res = string.Empty;
             res = messageLoop("Ingrese el ID por la cual desea filtrar: ", "Debe ingresar el ID por la cual desea filtrar: ");
             printBasicMenu("RESULTADO FILTRO POR ID");
-            requestfilterIdMethod(res, sh);
+            await requestfilterIdMethodAsync(res, sh);
             actionFinished();
         }
 
@@ -544,21 +554,21 @@ namespace ClientApp
             }
         }
 
-        static void readHistory(tcpHelper sh)
+        static async Task readHistoryAsync(tcpHelper sh)
         {
             printBasicMenu("CONSULTA HISTORICA");
-            historicalQueryMethod(emaiLogged, sh);
+            await historicalQueryMethodAsync(emaiLogged, sh);
             actionFinished();
         }
 
-        static void viewUnreadMessages(tcpHelper sh)
+        static async Task viewUnreadMessagesAsync(tcpHelper sh)
         {
             printBasicMenu("MENSAJES SIN LEER");
-            unreadMessagesQueryMethod(emaiLogged, sh);
+            await unreadMessagesQueryMethodAsync(emaiLogged, sh);
             actionFinished();
         }
 
-        static void sendMessage(tcpHelper sh)
+        static async Task sendMessageAsync(tcpHelper sh)
         {
             printBasicMenu("ENVIAR MENSAJE");
             string res;
@@ -568,7 +578,7 @@ namespace ClientApp
             res = messageLoop("Ingresa A para enviar el mensaje o X para cancelar:", "Ingresa A para enviar el mensaje o X para cancelar:");
             if (res.Equals("A", StringComparison.InvariantCultureIgnoreCase))
             {
-                if (sendMessageMethod(emaiLogged, userEmail, messageText, sh))
+                if (await sendMessageMethodAsync(emaiLogged, userEmail, messageText, sh))
                 {
                     printBasicMenu("Mensaje enviado.");
                 }
@@ -596,76 +606,77 @@ namespace ClientApp
 
         }
 
-        static bool sendMessageMethod(string transmitterEmail, string receiverEmail, string messageText, tcpHelper tch)
+        static async Task<bool> sendMessageMethodAsync(string transmitterEmail, string receiverEmail, string messageText, tcpHelper tch)
         {
             var msg = new Message(transmitterEmail, receiverEmail, messageText, "" + Message.Status.NotReaded);
-            return ClientCommands.SendMessage(msg, tch);
+            return await ClientCommands.SendMessageAsync(msg, tch);
         }
 
-        static bool loginUserMethod(string userEmail, tcpHelper tch)
+        static async Task<bool> loginUserMethodAsync(string userEmail, tcpHelper tch)
         {
             User usu = new User() { Email = userEmail };
-            userLogged = ClientCommands.SignIn(usu, tch);
+            userLogged = await ClientCommands.SignInAsync(usu, tch);
             return userLogged != null;
         }
 
-        static bool logOutMethod(tcpHelper tch)
+        static async Task<bool> logOutMethodAsync(tcpHelper tch)
         {
-            return ClientCommands.SignOut(userLogged, tch);
+            return await ClientCommands.SignOutAsync(userLogged, tch);
         }
 
-        static void historicalQueryMethod(string emaiLogged, tcpHelper tch)
-        {
-            User usu = new User() { Email = emaiLogged };
-            ClientCommands.GetMessagesHistory(usu, tch);
-        }
-
-        static void unreadMessagesQueryMethod(string emaiLogged, tcpHelper tch)
+        static async Task historicalQueryMethodAsync(string emaiLogged, tcpHelper tch)
         {
             User usu = new User() { Email = emaiLogged };
-            ClientCommands.GetUnreadedMessages(usu, tch);
+            await ClientCommands.GetMessagesHistoryAsync(usu, tch);
         }
 
-        static bool createUserMethod(string userName, string userSurname, string userEmail, tcpHelper tch)
+        static async Task unreadMessagesQueryMethodAsync(string emaiLogged, tcpHelper tch)
+        {
+            User usu = new User() { Email = emaiLogged };
+            await ClientCommands.GetUnreadedMessagesAsync(usu, tch);
+        }
+
+        static async Task<bool> createUserMethodAsync(string userName, string userSurname, string userEmail, tcpHelper tch)
         {
             User usu = new User(userName, userEmail, "" + User.Status.NotLogged);
-            return ClientCommands.CreateNewUser(usu, tch);
+            return await ClientCommands.CreateNewUserAsync(usu, tch);
         }
 
-        static bool createProfileMethod(string profileDescription, List<string> skills, tcpHelper tch)
+        static async Task<bool> createProfileMethodAsync(string profileDescription, List<string> skills, tcpHelper tch)
         {
             string[] a = skills.ToArray();
             UserProfile up = new UserProfile(userLogged.Id, profileDescription, a, "");
-            return ClientCommands.CreateUserProfile(up, tch);
+            return await ClientCommands.CreateUserProfileAsync(up, tch);
         }
 
-        static bool updateProfilePhotoMethod(string photo, tcpHelper tch)
+        static async Task<bool> updateProfilePhotoMethodAsync(string photo, tcpHelper tch)
         {
             UserProfile up = new UserProfile() { UserId = userLogged.Id, Image = photo };
-            return ClientCommands.UploadUserProfileImage(up, photo, tch);
+            return await ClientCommands.UploadUserProfileImageAsync(up, photo, tch);
         }
 
         //Retorna si se obtuvo resultado, en caso positivo lo imprime en consola
-        static bool requestfilterAbilityMethod(string skill, tcpHelper tch)
+        static async Task<bool> requestfilterAbilityMethodAsync(string skill, tcpHelper tch)
         {
             string[] abilities = new string[] { skill };
-            return ClientCommands.GetAllProfiles("", "", abilities, tch);
+            return await ClientCommands.GetAllProfilesAsync("", "", abilities, tch);
         }
 
-        static bool requestfilterKeywordMethod(string word, tcpHelper tch)
+        static async Task<bool> requestfilterKeywordMethodAsync(string word, tcpHelper tch)
         {
-            return ClientCommands.GetAllProfiles("", word, Array.Empty<string>(), tch);
+            string[] keywords = new string[] { word };
+            return await ClientCommands.GetAllProfilesAsync("", word, keywords, tch);
         }
 
-        static bool requestfilterIdMethod(string id, tcpHelper tch)
+        static async Task<bool> requestfilterIdMethodAsync(string id, tcpHelper tch)
         {
-            return ClientCommands.GetAllProfiles(id, "", Array.Empty<string>(), tch);
+            return await ClientCommands.GetAllProfilesAsync(id, "", Array.Empty<string>(), tch);
         }
 
-        static bool downloadProfileImageMethod(string userId, tcpHelper tch)
+        static async Task<bool> downloadProfileImageMethodAsync(string userId, tcpHelper tch)
         {
             UserProfile up = new UserProfile() { UserId = userId };
-            return ClientCommands.DownloadUserProfileImage(up, tch);
+            return await ClientCommands.DownloadUserProfileImageAsync(up, tch);
         }
     }
 }

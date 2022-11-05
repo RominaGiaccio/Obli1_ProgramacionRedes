@@ -18,9 +18,9 @@ namespace Protocol.Commands
 
         public static FileDatabaseManager fileDatabaseManager = new FileDatabaseManager();
 
-        public string GetAllUsers()
+        public async Task<string> GetAllUsersAsync()
         {
-            var users = fileDatabaseManager.GetAllUsers();
+            var users = await fileDatabaseManager.GetAllUsersAsync();
 
             var message = "";
 
@@ -37,9 +37,9 @@ namespace Protocol.Commands
             return message;
         }
 
-        public string GetAllProfiles(string filters)
+        public async Task<string> GetAllProfilesAsync(string filters)
         {
-            var originalUsersProfiles = fileDatabaseManager.GetAllProfiles();
+            var originalUsersProfiles = await fileDatabaseManager.GetAllProfilesAsync();
             var usersProfiles = originalUsersProfiles;
 
             var splitedFilters = filters.Split(SpecialChars.Separator);
@@ -93,7 +93,7 @@ namespace Protocol.Commands
             return message == String.Empty ? EmptyStatesMessages.NoProfilesMessage : message;
         }
 
-        public string SaveNewUser(string message)
+        public async Task<string> SaveNewUserAsync(string message)
         {
             if (string.IsNullOrWhiteSpace(message))
             {
@@ -103,7 +103,7 @@ namespace Protocol.Commands
             {
                 User user = User.ToEntity(message);
 
-                var users = fileDatabaseManager.GetAllUsers();
+                var users = await fileDatabaseManager.GetAllUsersAsync();
 
                 User? usu = users.Find((e) => e.Email == user.Email);
 
@@ -112,13 +112,13 @@ namespace Protocol.Commands
                     throw new Exception("Usuario ya registrado");
                 }
 
-                fileDatabaseManager.SaveNewUser(user);
+                await fileDatabaseManager.SaveNewUserAsync(user);
 
                 return "Usuario guardado";
             }
         }
 
-        public string SaveNewUserProfile(string message)
+        public async Task<string> SaveNewUserProfileAsync(string message)
         {
             if (string.IsNullOrWhiteSpace(message))
             {
@@ -128,7 +128,7 @@ namespace Protocol.Commands
             {
                 UserProfile userProfile = UserProfile.ToEntity(message);
 
-                var users = fileDatabaseManager.GetAllUsers();
+                var users = await fileDatabaseManager.GetAllUsersAsync();
 
                 User? user = users.Find((e) => e.Id == userProfile.UserId);
 
@@ -137,17 +137,17 @@ namespace Protocol.Commands
                     throw new Exception("No existe el usuario");
                 }
 
-                fileDatabaseManager.SaveNewUserProfile(userProfile);
+                await fileDatabaseManager.SaveNewUserProfileAsync(userProfile);
 
                 return "Perfil guardado correctamente";
             }
         }
 
-        public string SignIn(string message)
+        public async Task<string> SignInAsync(string message)
         {
             User user = User.ToEntity(message);
 
-            var users = fileDatabaseManager.GetAllUsers();
+            var users = await fileDatabaseManager.GetAllUsersAsync();
 
             User? savedUser = users.Find((e) => e.Email == user.Email);
 
@@ -166,21 +166,25 @@ namespace Protocol.Commands
             savedUser.CurrentState = "" + User.Status.Logged;
             newUsers.Add(savedUser);
 
-            fileDatabaseManager.EmptyDataBase(usersFileName);
+            await fileDatabaseManager.EmptyDataBaseAsync(usersFileName);
+
+            var tasks = new List<Task>();
 
             newUsers.ForEach(user =>
             {
-                fileDatabaseManager.SaveNewUser(user);
+                tasks.Add(fileDatabaseManager.SaveNewUserAsync(user));
             });
+
+            Task.WaitAll(tasks.ToArray());
 
             return savedUser.ToString();
         }
 
-        public string SignOut(string message)
+        public async Task<string> SignOutAsync(string message)
         {
             User user = User.ToEntity(message);
 
-            var users = fileDatabaseManager.GetAllUsers();
+            var users = await fileDatabaseManager.GetAllUsersAsync();
 
             User? savedUser = users.Find((e) => e.Id == user.Id);
 
@@ -194,17 +198,21 @@ namespace Protocol.Commands
             user.CurrentState = "" + User.Status.NotLogged;
             newUsers.Add(user);
 
-            fileDatabaseManager.EmptyDataBase(usersFileName);
+            await fileDatabaseManager.EmptyDataBaseAsync(usersFileName);
+
+            var tasks = new List<Task>();
 
             newUsers.ForEach(user =>
             {
-                fileDatabaseManager.SaveNewUser(user);
+                tasks.Add(fileDatabaseManager.SaveNewUserAsync(user));
             });
+
+            Task.WaitAll(tasks.ToArray());
 
             return "Usuario deslogeado";
         }
 
-        public string UploadUserProfileImage(string message)
+        public async Task<string> UploadUserProfileImageAsync(string message)
         {
             if (string.IsNullOrWhiteSpace(message))
             {
@@ -214,7 +222,7 @@ namespace Protocol.Commands
             {
                 UserProfile userProfile = UserProfile.ToEntity(message);
 
-                var userProfiles = fileDatabaseManager.GetAllProfiles();
+                var userProfiles = await fileDatabaseManager.GetAllProfilesAsync();
 
                 UserProfile? savedUserProfile = userProfiles.Find((e) => e.UserId == userProfile.UserId);
 
@@ -229,29 +237,32 @@ namespace Protocol.Commands
 
                 newUsersProfiles.Add(savedUserProfile);
 
-                fileDatabaseManager.EmptyDataBase(usersProfileFileName);
+                await fileDatabaseManager.EmptyDataBaseAsync(usersProfileFileName);
 
+                var tasks = new List<Task>();
                 newUsersProfiles.ForEach(user =>
                 {
-                    fileDatabaseManager.SaveNewUserProfile(user);
+                    tasks.Add(fileDatabaseManager.SaveNewUserProfileAsync(user));
                 });
+
+                Task.WaitAll(tasks.ToArray());
 
                 return "Perfil actualizado";
             }
         }
 
-        public string DownloadUserProfileImage(string message)
+        public async Task<string> DownloadUserProfileImageAsync(string message)
         {
             UserProfile userProfile = UserProfile.ToEntity(message);
 
-            var usersProfiles = fileDatabaseManager.GetAllProfiles();
+            var usersProfiles = await fileDatabaseManager.GetAllProfilesAsync();
 
             var image = usersProfiles?.Find(up => up.UserId == userProfile.UserId)?.Image;
 
             return !string.IsNullOrWhiteSpace(image) ? image : "No image";
         }
 
-        public string SaveNewMessage(string message)
+        public async Task<string> SaveNewMessageAsync(string message)
         {
             if (string.IsNullOrWhiteSpace(message))
             {
@@ -261,7 +272,7 @@ namespace Protocol.Commands
             {
                 Message msg = Message.ToEntity(message);
 
-                var users = fileDatabaseManager.GetAllUsers();
+                var users = await fileDatabaseManager.GetAllUsersAsync();
 
                 User? sender = users.Find((e) => e.Email == msg.SenderEmail);
                 User? receiver = users.Find((e) => e.Email == msg.ReceiverEmail);
@@ -276,17 +287,17 @@ namespace Protocol.Commands
                     throw new Exception("Usuario receptor no existe");
                 }
 
-                fileDatabaseManager.SaveNewMessage(msg);
+                await fileDatabaseManager.SaveNewMessageAsync(msg);
 
                 return "Mensaje guardado correctamente";
             }
         }
 
-        public string GetNotReadedMessages(string receiveStr)
+        public async Task<string> GetNotReadedMessagesAsync(string receiveStr)
         {
             User user = User.ToEntity(receiveStr);
 
-            List<Message> messages = fileDatabaseManager.GetAllNotReadedUserMessages(user);
+            List<Message> messages = await fileDatabaseManager.GetAllNotReadedUserMessagesAsync(user);
 
             var message = "";
 
@@ -303,10 +314,10 @@ namespace Protocol.Commands
             return message == String.Empty ? EmptyStatesMessages.NoMessagesMessage : message;
         }
 
-        public string GetUserMessagesHistory(string receiveStr)
+        public async Task<string> GetUserMessagesHistoryAsync(string receiveStr)
         {
             User user = User.ToEntity(receiveStr);
-            List<Message> messages = fileDatabaseManager.GetUserMessagesHistory(user);
+            List<Message> messages = await fileDatabaseManager.GetUserMessagesHistoryAsync(user);
 
             var message = "";
 

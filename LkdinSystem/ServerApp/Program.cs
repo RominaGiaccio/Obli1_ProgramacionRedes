@@ -18,7 +18,7 @@ namespace ServerApp
     {
         public static ClientTcpHandler cth = new ClientTcpHandler();
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Console.WriteLine("Server initialize...");
 
@@ -38,12 +38,11 @@ namespace ServerApp
             while (!exit)
             {
                 //Operacion bloqueante
-                var tcpClientListener = tcpListener.AcceptTcpClient(); 
+                var tcpClientListener = await tcpListener.AcceptTcpClientAsync(); 
 
                 clientsCount++;
                 Console.WriteLine("New client {0} accepted", clientsCount);
-                var thread = new Thread(() => cth.Handler(tcpClientListener, clientsCount));
-                thread.Start();
+                var task = Task.Run(async () => await cth.Handler(tcpClientListener, clientsCount));
             }
 
             Console.ReadLine();

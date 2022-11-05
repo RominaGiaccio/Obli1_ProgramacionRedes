@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\ServerApp.csproj": {}
+    "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\ServerApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Domain\\Domain.csproj": {
+    "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\Nahuel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Domain\\obj\\",
+        "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\danil\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Nahuel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danil\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,11 +28,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj": {
-                "projectPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj"
+              "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj": {
+                "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj"
               },
-              "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {
-                "projectPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj"
+              "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {
+                "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj"
               }
             }
           }
@@ -66,17 +66,17 @@
         }
       }
     },
-    "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj": {
+    "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj",
+        "projectUniqueName": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj",
         "projectName": "Enums",
-        "projectPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj",
-        "packagesPath": "C:\\Users\\Nahuel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\obj\\",
+        "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\Enums.csproj",
+        "packagesPath": "C:\\Users\\danil\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Enum\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Nahuel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danil\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -121,17 +121,17 @@
         }
       }
     },
-    "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj": {
+    "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj",
+        "projectUniqueName": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj",
         "projectName": "Protocol",
-        "projectPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj",
-        "packagesPath": "C:\\Users\\Nahuel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\obj\\",
+        "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj",
+        "packagesPath": "C:\\Users\\danil\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Nahuel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danil\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -145,11 +145,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Domain\\Domain.csproj"
+              "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Domain\\Domain.csproj"
               },
-              "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {
-                "projectPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj"
+              "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {
+                "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj"
               }
             }
           }
@@ -183,17 +183,17 @@
         }
       }
     },
-    "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\ServerApp.csproj": {
+    "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\ServerApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\ServerApp.csproj",
+        "projectUniqueName": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\ServerApp.csproj",
         "projectName": "ServerApp",
-        "projectPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\ServerApp.csproj",
-        "packagesPath": "C:\\Users\\Nahuel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\obj\\",
+        "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\ServerApp.csproj",
+        "packagesPath": "C:\\Users\\danil\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\ServerApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Nahuel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danil\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -207,11 +207,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj": {
-                "projectPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj"
+              "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj": {
+                "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Protocol\\Protocol.csproj"
               },
-              "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {
-                "projectPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj"
+              "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {
+                "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj"
               }
             }
           }
@@ -245,17 +245,17 @@
         }
       }
     },
-    "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {
+    "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
+        "projectUniqueName": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
         "projectName": "Utils",
-        "projectPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
-        "packagesPath": "C:\\Users\\Nahuel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nahuel\\Desktop\\repoPR\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\obj\\",
+        "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
+        "packagesPath": "C:\\Users\\danil\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Nahuel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danil\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

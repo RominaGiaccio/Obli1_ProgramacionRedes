@@ -29,15 +29,15 @@ namespace Protocol
 
         public static readonly int fixedPartLength = Constants.FixedCommandDataSize + Constants.FixedStatusSize + Constants.FixedDataSize;
 
-        public static void SendData(string fixedPart, string message, tcpHelper th)
+        public static async Task SendDataAsync(string fixedPart, string message, tcpHelper th)
         {
-            th.Send(ConversionHandler.ConvertStringToBytes(fixedPart));
-            th.Send(ConversionHandler.ConvertStringToBytes(message));
+            await th.SendAsync(ConversionHandler.ConvertStringToBytes(fixedPart));
+            await th.SendAsync(ConversionHandler.ConvertStringToBytes(message));
         }
 
-        public static SegmentDataObject ReceiveData(tcpHelper th)
+        public static async Task<SegmentDataObject> ReceiveDataAsync(tcpHelper th)
         {
-            byte[] responseFixedPart = th.Receive(fixedPartLength);
+            byte[] responseFixedPart = await th.ReceiveAsync(fixedPartLength);
 
             string stringFixedPart = ConversionHandler.ConvertBytesToString(responseFixedPart);
 
@@ -47,7 +47,7 @@ namespace Protocol
 
             int dataLengthNumber = int.Parse(dataLength);
 
-            byte[] responseData = th.Receive(dataLengthNumber);
+            byte[] responseData = await th.ReceiveAsync(dataLengthNumber);
             string responseMessage = Encoding.UTF8.GetString(responseData);
 
             return new SegmentDataObject
