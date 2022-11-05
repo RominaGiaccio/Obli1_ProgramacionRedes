@@ -150,17 +150,33 @@ namespace Protocol.Commands
 
             await TransferSegmentManager.SendDataAsync(fixedPart, msg, tch);
 
+            if (!userId.Equals(""))
+            {
+                Console.WriteLine("Se filtro por Id de usuario: " + userId);
+                Console.WriteLine("----------------------------------------------------------------------------");
+            }
+            else if (!description.Equals("")) {
+                Console.WriteLine("Se filtro por descripcion: " + description);
+                Console.WriteLine("----------------------------------------------------------------------------");
+            }
+            else
+            {
+                Console.WriteLine("Se filtro por habilidad: " + abilities[0]);
+                Console.WriteLine("----------------------------------------------------------------------------");
+            }
+
             var response = await TransferSegmentManager.ReceiveDataAsync(tch);
 
             if (response.Data != EmptyStatesMessages.NoProfilesMessage)
             {
                 var profiles = response.Data.Split(SpecialChars.EndLine);
 
-                Console.WriteLine("UserId" + SpecialChars.Separator + "Description" + SpecialChars.Separator + "Abilities" + SpecialChars.Separator + "Image");
-
                 for (int i = 0; i < profiles.Length; i++)
                 {
-                    Console.WriteLine(UserProfile.ToEntity(profiles[i]));
+                    UserProfile up = UserProfile.ToEntity(profiles[i]);
+                    string mesgProfile = UserProfile.ToProfileString(up);
+                    Console.WriteLine(mesgProfile);
+                    Console.WriteLine("----------------------------------------------------------------------------");
                 }
             }
             else
@@ -180,7 +196,17 @@ namespace Protocol.Commands
 
             var response = await TransferSegmentManager.ReceiveDataAsync(tch);
 
-            Console.WriteLine(response.Data);
+            string[] mesajes = response.Data.Split("Readed");
+            foreach (string m in mesajes)
+            {
+                if (!m.Equals(""))
+                {
+                    Message mesg = Message.ToEntity(m + "Readed");
+                    string mesgString = Message.ToMessageString(mesg);
+                    Console.WriteLine(mesgString);
+                    Console.WriteLine("----------------------------------------------------------------------------");
+                }
+            }
         }
 
         public static async Task GetMessagesHistoryAsync(User user, tcpHelper tch)
@@ -192,7 +218,20 @@ namespace Protocol.Commands
 
             var response = await TransferSegmentManager.ReceiveDataAsync(tch);
 
-            Console.WriteLine(response.Data);
+            string[] mesajes = response.Data.Split("Readed");
+            foreach (string m in mesajes)
+            {
+                if (!m.Equals(""))
+                {
+                    Message mesg = Message.ToEntity(m + "Readed");
+                    string mesgString = Message.ToMessageString(mesg);
+                    Console.WriteLine(mesgString);
+                    Console.WriteLine("----------------------------------------------------------------------------");
+                }
+            }
+
+            //Console.WriteLine(response.Data);
+            //Console.WriteLine(response.Data);
         }
     }
 }

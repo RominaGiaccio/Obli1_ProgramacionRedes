@@ -49,5 +49,19 @@ namespace Domain
                 Image = splited[3]?.Split("\r")[0] ?? ""
             };
         }
+
+        public static string ToProfileString(UserProfile up)
+        {
+            string abilitiesString = " ";
+            foreach (string ab in up.Abilities){
+                abilitiesString += ab + " ";
+            }
+            string response = " (Id:) " + up.UserId + "(Descripcion:) " + up.Description + " (Habilidades:) " + abilitiesString +
+                " (Foto perfil:) " + up.Image;
+            if (up.Image.Equals("")) {
+                response += "No tiene foto de perfil.";
+            }
+            return response;
+        }
     }
 }

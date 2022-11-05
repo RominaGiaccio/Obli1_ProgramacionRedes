@@ -51,22 +51,19 @@ namespace Protocol.Commands
 
             if (!string.IsNullOrWhiteSpace(userId))
             {
-                //Console.WriteLine("Es por id");
                 usersProfiles = originalUsersProfiles.FindAll((e) => e.UserId.Contains(userId));
             }
             else if (!string.IsNullOrWhiteSpace(description))
             {
-                //Console.WriteLine("Es por descripcion");
                 usersProfiles = originalUsersProfiles.FindAll((e) => e.Description.Contains(description));
             }
             else if (!string.IsNullOrWhiteSpace(abilities))
             {
-                //Console.WriteLine("Es por habilidad");
                 string[] splitedAbilities = abilities.Split(SpecialChars.ArrayDivider);
 
                 for (int i = 0; i < splitedAbilities.Length; i++)
                 {
-                    Console.WriteLine("una habilidad buscada: " + splitedAbilities[i]);
+                    
                     usersProfiles = originalUsersProfiles.FindAll((e) => e.Abilities.Contains(splitedAbilities[i]));
                     /*.ForEach(up =>
                     {
