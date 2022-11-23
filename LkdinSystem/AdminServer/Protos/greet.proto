@@ -2,20 +2,72 @@ syntax = "proto3";
 
 option csharp_namespace = "AdminServer";
 
-package greet;
+package admin;
 
 // The greeting service definition.
-service Greeter {
+service Admin {
   // Sends a greeting
   rpc SayHello (HelloRequest) returns (HelloReply);
+
+  //Users 
+  rpc PostUser(UserDTO) returns (MessageReply);
+  rpc PutUser(UserDTO) returns (MessageReply);
+  rpc DeleteUser(UserDTO) returns (MessageReply);
+ /* 
+
+  //Profiles
+  rpc CreateProfile (CreateProfileRequest) returns (CreateProfileReply);
+  rpc DeleteProfile (DeleteProfileRequest) returns (DeleteProfileReply);
+  rpc UpdateProfile (UpdateProfileRequest) returns (UpdateProfileReply);*/
+
 }
 
 // The request message containing the user's name.
 message HelloRequest {
   string name = 1;
 }
+/*
+
+message CreateProfileRequest {
+  string name = 1;
+}
+
+message DeleteProfileRequest {
+  string name = 1;
+}
+
+message UpdateProfileRequest {
+  string name = 1;
+}*/
 
 // The response message containing the greetings.
 message HelloReply {
   string message = 1;
+}
+/*
+
+
+message CreateProfileReply {
+  string message = 1;
+}
+
+message DeleteProfileReply {
+  string message = 1;
+}
+
+message UpdateProfileReply {
+  string message = 1;
+}*/
+
+message MessageReply {
+	string message = 1;
+}
+
+//DTO
+
+ message UserDTO{
+	string id = 1;
+	string name = 2;
+	string email = 3;
+	string currentState = 4;
 }

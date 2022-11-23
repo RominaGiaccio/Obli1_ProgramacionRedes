@@ -132,10 +132,10 @@ namespace ClientApp
                             select = messageLoop("Para seleccionar una opción ingresa el número correspondiente sin espacios.", "El número no puede ser vacio.");
                             switch (select)
                             {
-                                case "1":
+                                case "1": //LOGIN
                                     login = await userLoginAsync(login, tch);
                                     break;
-                                case "2":
+                                case "2": //DAR DE ALTA USUARIO
                                     await createUserAsync(tch);
                                     break;
                                 case "3":
