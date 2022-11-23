@@ -5,13 +5,8 @@ using System.Xml.Linq;
 
 namespace GrpcServerProgram.Services
 {
-    public class GreeterService : Admin.AdminBase
+    public class AdminService : Admin.AdminBase
     {
-        private readonly ILogger<GreeterService> _logger;
-        public GreeterService(ILogger<GreeterService> logger)
-        {
-            _logger = logger;
-        }
 
         public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
         {
@@ -32,7 +27,7 @@ namespace GrpcServerProgram.Services
 
         public Task<MessageReply> PutUser(UserDTO request, ServerCallContext context)
         {
-            Console.WriteLine("Se intenta actualizar usuario con nombre {0}", request.Name));
+            Console.WriteLine("Se intenta actualizar usuario con nombre {0}", request.Name);
             var message = "No implementado";
             return Task.FromResult(new MessageReply { Message = message });
         }
@@ -44,5 +39,34 @@ namespace GrpcServerProgram.Services
             return Task.FromResult(new MessageReply { Message = message });
         }
 
+        public Task<MessageReply> PostProfile(ProfileDTO request, ServerCallContext context, ServerCommands serverCommands)
+        {
+            Console.WriteLine("Se intenta crear usuario con id {0}", request.Id);
+            var message = serverCommands.SaveNewUserProfileAsync(request.Id + "/#" + request.Description + "/#" +"" +"/#" + request.Image);
+            //var message = serverCommands.SaveNewUserProfileAsync(request.Id + "/#" + request.Description + "/#" + request.Abilities + "/#" + request.Image);
+            return Task.FromResult(new MessageReply { Message = message.Result });
+        }
+
+        public override Task<MessageReply> PutProfile(ProfileDTO request, ServerCallContext context)
+        {
+            Console.WriteLine("Se intenta actualizar usuario con nombre {0}", request.Id);
+            var message = "No implementado";
+            return Task.FromResult(new MessageReply { Message = message });
+        }
+
+        public override Task<MessageReply> DeleteProfile(ProfileDTO request, ServerCallContext context)
+        {
+            Console.WriteLine("Se intenta eliminar usuario con nombre {0}", request.Id);
+            var message = "No implementado";
+            return Task.FromResult(new MessageReply { Message = message });
+        }
+
+        public Task<MessageReply> PutImageProfile(ProfileDTO request, ServerCallContext context, ServerCommands serverCommands)
+        {
+            Console.WriteLine("Se intenta actualizar usuario con nombre {0}", request.Id);
+            //var message = serverCommands.UploadUserProfileImageAsync(request.Id + "/#" + request.Description + "/#" + request.Abilities + "/#" + request.Image);
+            var message = serverCommands .UploadUserProfileImageAsync(request.Id + "/#" + request.Description + "/#" + "" + "/#" + request.Image);
+            return Task.FromResult(new MessageReply { Message = message.Result });
+        }
     }
 }

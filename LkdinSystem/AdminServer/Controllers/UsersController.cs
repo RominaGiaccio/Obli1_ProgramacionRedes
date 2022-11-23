@@ -4,14 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminServer.Controllers
 {
-
     [ApiController]
     [Route("admin")]
     public class UsersController : ControllerBase
     {
             private Admin.AdminClient client;
             private string grpcURL;
-
 
             public UsersController(ILogger<UsersController> logger)
             {
@@ -27,13 +25,13 @@ namespace AdminServer.Controllers
                 using var channel = GrpcChannel.ForAddress(grpcURL);
                 client = new Admin.AdminClient(channel);
                 var reply = await client.PostUserAsync(new UserDTO() { 
-                    Id = user.Id , Name = user.Name, CurrentState = user.CurrentState }) ;
+                    Id = user.Id , Name = user.Name, Email = user.Email, CurrentState = user.CurrentState }) ;
                 return Ok(reply.Message);
             }
 
             [HttpDelete("users/{id}")]
             public async Task<ActionResult> DeleteUser(string id)//[FromRoute]
-        {
+            {
                 using var channel = GrpcChannel.ForAddress(grpcURL);
                 client = new Admin.AdminClient(channel);
                 var reply = await client.DeleteUserAsync(new UserDTO() {Id = id});
@@ -42,7 +40,7 @@ namespace AdminServer.Controllers
 
             [HttpPut("users/{id}")]
             public async Task<ActionResult> UpdateUser(string id)//[FromRoute]
-        {
+            {
                 using var channel = GrpcChannel.ForAddress(grpcURL);
                 client = new Admin.AdminClient(channel);
                 var reply = await client.PutUserAsync(new UserDTO() { Id = id });
