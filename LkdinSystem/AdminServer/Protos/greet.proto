@@ -46,6 +46,6 @@ message MessageReply {
  message ProfileDTO{
 	string id = 1;
 	string description = 2;
-	//string[] abilities = 3;
+	string abilities = 3;
 	string image = 4;
 }
