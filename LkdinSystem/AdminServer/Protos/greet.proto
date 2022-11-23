@@ -18,6 +18,7 @@ service Admin {
   rpc PostProfile(ProfileDTO) returns (MessageReply);
   rpc PutProfile(ProfileDTO) returns (MessageReply);
   rpc DeleteProfile(ProfileDTO) returns (MessageReply);
+  rpc DeleteProfileImage(ProfileDTO) returns (MessageReply);
 }
 
 // The request message containing the user's name.

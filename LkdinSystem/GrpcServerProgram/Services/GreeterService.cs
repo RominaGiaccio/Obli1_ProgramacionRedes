@@ -65,11 +65,11 @@ namespace GrpcServerProgram.Services
             return Task.FromResult(new MessageReply { Message = message.Result });
         }
 
-        public Task<MessageReply> PutImageProfile(ProfileDTO request, ServerCallContext context)
+        public Task<MessageReply> DeleteProfileImage(ProfileDTO request, ServerCallContext context)
         {
             Console.WriteLine("Se intenta actualizar usuario con nombre {0}", request.Id);
             string[] skills = request.Abilities.Split("/");
-            var message = serverCommands.UploadUserProfileImageAsync(request.Id + "/#" + request.Description + "/#" + skills + "/#" + request.Image);
+            var message = serverCommands.DeleteUserProfileImageAsync(request.Id + "/#" + request.Description + "/#" + skills + "/#" + request.Image);
             return Task.FromResult(new MessageReply { Message = message.Result });
         }
     }

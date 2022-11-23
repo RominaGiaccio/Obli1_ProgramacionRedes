@@ -353,7 +353,7 @@ namespace Protocol.Commands
 
                 var newUsersProfiles = userProfiles.FindAll((e) => e.UserId != savedUserProfile.UserId);
 
-                //savedUserProfile.Image = userProfile.Image.Split("\\").Last();
+                savedUserProfile.Image = userProfile.Image.Split("\\").Last();
                 savedUserProfile.Description = userProfile.Description;
                 savedUserProfile.Abilities = userProfile.Abilities;
 
@@ -405,6 +405,45 @@ namespace Protocol.Commands
                 Task.WaitAll(tasks.ToArray());
 
                 return "Perfil eliminado";
+            }
+        }
+
+        public async Task<string> DeleteUserProfileImageAsync(string message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                throw new Exception("Usuario invalido");
+            }
+            else
+            {
+                UserProfile userProfile = UserProfile.ToEntity(message);
+
+                var userProfiles = await fileDatabaseManager.GetAllProfilesAsync();
+
+                UserProfile? savedUserProfile = userProfiles.Find((e) => e.UserId == userProfile.UserId);
+
+                if (savedUserProfile == null)
+                {
+                    throw new Exception("No existe el perfil");
+                }
+
+                var newUsersProfiles = userProfiles.FindAll((e) => e.UserId != savedUserProfile.UserId);
+
+                savedUserProfile.Image = "";
+
+                newUsersProfiles.Add(savedUserProfile);
+
+                await fileDatabaseManager.EmptyDataBaseAsync(usersProfileFileName);
+
+                var tasks = new List<Task>();
+                newUsersProfiles.ForEach(user =>
+                {
+                    tasks.Add(fileDatabaseManager.SaveNewUserProfileAsync(user));
+                });
+
+                Task.WaitAll(tasks.ToArray());
+
+                return "Foto Eliminada";
             }
         }
 

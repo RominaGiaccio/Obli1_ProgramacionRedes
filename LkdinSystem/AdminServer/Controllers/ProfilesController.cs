@@ -35,8 +35,8 @@ namespace AdminServer.Controllers
             return Ok(reply.Message);
         }
 
-        [HttpDelete("users/{id}")]
-        public async Task<ActionResult> DeleteUser(string id)//[FromRoute]
+        [HttpDelete("profiles/{id}")]
+        public async Task<ActionResult> DeleteProfile(string id)//[FromRoute]
         {
             using var channel = GrpcChannel.ForAddress(grpcURL);
             client = new Admin.AdminClient(channel);
@@ -44,8 +44,17 @@ namespace AdminServer.Controllers
             return Ok(reply.Message);
         }
 
-        [HttpPut("users/{id}")]
-        public async Task<ActionResult> UpdateUser(string id)//[FromRoute]
+        [HttpDelete("profiles/{id}")]
+        public async Task<ActionResult> DeleteProfileImage(string id)//[FromRoute]
+        {
+            using var channel = GrpcChannel.ForAddress(grpcURL);
+            client = new Admin.AdminClient(channel);
+            var reply = await client.DeleteProfileImageAsync(new ProfileDTO() { Id = id });
+            return Ok(reply.Message);
+        }
+
+        [HttpPut("profiles/{id}")]
+        public async Task<ActionResult> UploadProfile(string id)//[FromRoute]
         {
             using var channel = GrpcChannel.ForAddress(grpcURL);
             client = new Admin.AdminClient(channel);
