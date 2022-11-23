@@ -330,5 +330,160 @@ namespace Protocol.Commands
 
             return message == String.Empty ? EmptyStatesMessages.NoMessagesMessage : message;
         }
+
+        //New commands for admin server
+        public async Task<string> UploadUserProfileAsync(string message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                throw new Exception("Perfil invalido");
+            }
+            else
+            {
+                UserProfile userProfile = UserProfile.ToEntity(message);
+
+                var userProfiles = await fileDatabaseManager.GetAllProfilesAsync();
+
+                UserProfile? savedUserProfile = userProfiles.Find((e) => e.UserId == userProfile.UserId);
+
+                if (savedUserProfile == null)
+                {
+                    throw new Exception("No existe el perfil");
+                }
+
+                var newUsersProfiles = userProfiles.FindAll((e) => e.UserId != savedUserProfile.UserId);
+
+                //savedUserProfile.Image = userProfile.Image.Split("\\").Last();
+                savedUserProfile.Description = userProfile.Description;
+                savedUserProfile.Abilities = userProfile.Abilities;
+
+                newUsersProfiles.Add(savedUserProfile);
+
+                await fileDatabaseManager.EmptyDataBaseAsync(usersProfileFileName);
+
+                var tasks = new List<Task>();
+                newUsersProfiles.ForEach(user =>
+                {
+                    tasks.Add(fileDatabaseManager.SaveNewUserProfileAsync(user));
+                });
+
+                Task.WaitAll(tasks.ToArray());
+
+                return "Perfil actualizado";
+            }
+        }
+
+        public async Task<string> DeleteUserProfileAsync(string message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                throw new Exception("Perfil invalido");
+            }
+            else
+            {
+                UserProfile userProfile = UserProfile.ToEntity(message);
+
+                var userProfiles = await fileDatabaseManager.GetAllProfilesAsync();
+
+                UserProfile? savedUserProfile = userProfiles.Find((e) => e.UserId == userProfile.UserId);
+
+                if (savedUserProfile == null)
+                {
+                    throw new Exception("No existe el perfil");
+                }
+
+                var newUsersProfiles = userProfiles.FindAll((e) => e.UserId != savedUserProfile.UserId);
+
+                await fileDatabaseManager.EmptyDataBaseAsync(usersProfileFileName);
+
+                var tasks = new List<Task>();
+                newUsersProfiles.ForEach(user =>
+                {
+                    tasks.Add(fileDatabaseManager.SaveNewUserProfileAsync(user));
+                });
+
+                Task.WaitAll(tasks.ToArray());
+
+                return "Perfil eliminado";
+            }
+        }
+
+        public async Task<string> DeleteUserAsync(string message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                throw new Exception("Usuario invalido");
+            }
+            else
+            {
+                User user = User.ToEntity(message);
+
+                var users = await fileDatabaseManager.GetAllUsersAsync();
+
+                User? usu = users.Find((e) => e.Email == user.Email);
+
+                if (usu == null)
+                {
+                    throw new Exception("Usuario no existe");
+                }
+
+                var newUsers = users.FindAll((e) => e.Id != user.Id);
+                
+                await fileDatabaseManager.EmptyDataBaseAsync(usersFileName);
+
+                var tasks = new List<Task>();
+                newUsers.ForEach(user =>
+                {
+                    tasks.Add(fileDatabaseManager.SaveNewUserAsync(user));
+                });
+
+                Task.WaitAll(tasks.ToArray());
+
+               // await fileDatabaseManager.SaveNewUserAsync(user);
+
+                return "Usuario eliminado";
+            }
+        }
+
+        public async Task<string> UploadUserAsync(string message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                throw new Exception("Usuario invalido");
+            }
+            else
+            {
+                User user = User.ToEntity(message);
+
+                var users = await fileDatabaseManager.GetAllUsersAsync();
+
+                User? usu = users.Find((e) => e.Email == user.Email);
+
+                if (usu == null)
+                {
+                    throw new Exception("Usuario no existe");
+                }
+
+                var newUsers = users.FindAll((e) => e.Id != user.Id);
+
+                usu.Name = user.Name;
+
+                usu.Email = user.Email;
+
+                newUsers.Add(usu);
+
+                await fileDatabaseManager.EmptyDataBaseAsync(usersFileName);
+
+                var tasks = new List<Task>();
+                newUsers.ForEach(user =>
+                {
+                    tasks.Add(fileDatabaseManager.SaveNewUserAsync(user));
+                });
+
+                Task.WaitAll(tasks.ToArray());
+
+                return "Usuario actualizado";
+            }
+        }
     }
 }

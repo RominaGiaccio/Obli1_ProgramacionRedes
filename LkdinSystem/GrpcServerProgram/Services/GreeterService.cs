@@ -1,13 +1,15 @@
 using Grpc.Core;
 using GrpcServerProgram;
+using Protocol;
 using Protocol.Commands;
 using System.Xml.Linq;
 
 namespace GrpcServerProgram.Services
 {
+    
     public class AdminService : Admin.AdminBase
     {
-
+        public static ServerCommands serverCommands = new ServerCommands();
         public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
         {
             return Task.FromResult(new HelloReply
@@ -16,7 +18,7 @@ namespace GrpcServerProgram.Services
             });
         }
 
-        public Task<MessageReply> PostUser(UserDTO request, ServerCallContext context, ServerCommands serverCommands)
+        public Task<MessageReply> PostUser(UserDTO request, ServerCallContext context)
         {
             //BusinessLogic session = BusinessLogic.GetInstance();
             Console.WriteLine("Se intenta crear usuario con nombre {0}", request.Name);
@@ -28,18 +30,18 @@ namespace GrpcServerProgram.Services
         public Task<MessageReply> PutUser(UserDTO request, ServerCallContext context)
         {
             Console.WriteLine("Se intenta actualizar usuario con nombre {0}", request.Name);
-            var message = "No implementado";
-            return Task.FromResult(new MessageReply { Message = message });
+            var message = serverCommands.UploadUserAsync(request.Id + "/#" + request.Name + "/#" + request.Email + "/#" + request.CurrentState);
+            return Task.FromResult(new MessageReply { Message = message.Result });
         }
 
         public Task<MessageReply> DeleteUser(UserDTO request, ServerCallContext context)
         {
             Console.WriteLine("Se intenta eliminar usuario con nombre {0}", request.Name);
-            var message = "No implementado";
-            return Task.FromResult(new MessageReply { Message = message });
+            var message = serverCommands.DeleteUserAsync(request.Id + "/#" + request.Name + "/#" + request.Email + "/#" + request.CurrentState);
+            return Task.FromResult(new MessageReply { Message = message.Result });
         }
 
-        public Task<MessageReply> PostProfile(ProfileDTO request, ServerCallContext context, ServerCommands serverCommands)
+        public Task<MessageReply> PostProfile(ProfileDTO request, ServerCallContext context)
         {
             Console.WriteLine("Se intenta crear usuario con id {0}", request.Id);
             var message = serverCommands.SaveNewUserProfileAsync(request.Id + "/#" + request.Description + "/#" +"" +"/#" + request.Image);
@@ -50,22 +52,22 @@ namespace GrpcServerProgram.Services
         public override Task<MessageReply> PutProfile(ProfileDTO request, ServerCallContext context)
         {
             Console.WriteLine("Se intenta actualizar usuario con nombre {0}", request.Id);
-            var message = "No implementado";
-            return Task.FromResult(new MessageReply { Message = message });
+            var message = serverCommands.UploadUserProfileAsync(request.Id + "/#" + request.Description + "/#" + "" + "/#" + request.Image);
+            return Task.FromResult(new MessageReply { Message = message.Result });
         }
 
         public override Task<MessageReply> DeleteProfile(ProfileDTO request, ServerCallContext context)
         {
             Console.WriteLine("Se intenta eliminar usuario con nombre {0}", request.Id);
-            var message = "No implementado";
-            return Task.FromResult(new MessageReply { Message = message });
+            var message = serverCommands.DeleteUserProfileAsync(request.Id + "/#" + request.Description + "/#" + "" + "/#" + request.Image);
+            return Task.FromResult(new MessageReply { Message = message.Result });
         }
 
-        public Task<MessageReply> PutImageProfile(ProfileDTO request, ServerCallContext context, ServerCommands serverCommands)
+        public Task<MessageReply> PutImageProfile(ProfileDTO request, ServerCallContext context)
         {
             Console.WriteLine("Se intenta actualizar usuario con nombre {0}", request.Id);
             //var message = serverCommands.UploadUserProfileImageAsync(request.Id + "/#" + request.Description + "/#" + request.Abilities + "/#" + request.Image);
-            var message = serverCommands .UploadUserProfileImageAsync(request.Id + "/#" + request.Description + "/#" + "" + "/#" + request.Image);
+            var message = serverCommands.UploadUserProfileImageAsync(request.Id + "/#" + request.Description + "/#" + "" + "/#" + request.Image);
             return Task.FromResult(new MessageReply { Message = message.Result });
         }
     }
