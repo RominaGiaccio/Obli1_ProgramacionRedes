@@ -11,16 +11,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Protos\admin.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.21.9" />
-    <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
     <PackageReference Include="Grpc.Net.Client" Version="2.50.0" />
     <PackageReference Include="Grpc.Tools" Version="2.50.0">
       <PrivateAssets>all</PrivateAssets>
@@ -31,6 +31,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Protocol\Protocol.csproj" />
     <ProjectReference Include="..\Utils\Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\admin.proto" GrpcServices="Server" />
   </ItemGroup>
 
 </Project>

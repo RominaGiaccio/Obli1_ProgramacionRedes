@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AdminServer.Controllers
 {
     [ApiController]
-    [Route("admin")]
+    [Route("profiles")]
     public class ProfilesController : ControllerBase
     {
         private Admin.AdminClient client;
@@ -19,8 +19,8 @@ namespace AdminServer.Controllers
 
         }
 
-        [HttpPost("profiles")]
-        public async Task<ActionResult> PostProfile(UserProfile profile)//[FromBody] 
+        [HttpPost]
+        public async Task<ActionResult> PostProfile([FromBody] UserProfile profile)
         {
             using var channel = GrpcChannel.ForAddress(grpcURL);
             client = new Admin.AdminClient(channel);
@@ -35,8 +35,8 @@ namespace AdminServer.Controllers
             return Ok(reply.Message);
         }
 
-        [HttpDelete("profiles/{id}")]
-        public async Task<ActionResult> DeleteProfile(string id)//[FromRoute]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProfile([FromRoute] string id)
         {
             using var channel = GrpcChannel.ForAddress(grpcURL);
             client = new Admin.AdminClient(channel);
@@ -44,21 +44,21 @@ namespace AdminServer.Controllers
             return Ok(reply.Message);
         }
 
-        [HttpDelete("profiles/{id}")]
-        public async Task<ActionResult> DeleteProfileImage(string id)//[FromRoute]
-        {
-            using var channel = GrpcChannel.ForAddress(grpcURL);
-            client = new Admin.AdminClient(channel);
-            var reply = await client.DeleteProfileImageAsync(new ProfileDTO() { Id = id });
-            return Ok(reply.Message);
-        }
-
-        [HttpPut("profiles/{id}")]
-        public async Task<ActionResult> UploadProfile(string id)//[FromRoute]
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UploadProfile([FromRoute] string id)
         {
             using var channel = GrpcChannel.ForAddress(grpcURL);
             client = new Admin.AdminClient(channel);
             var reply = await client.PutProfileAsync(new ProfileDTO() { Id = id });
+            return Ok(reply.Message);
+        }
+
+        [HttpDelete("image/{id}")]
+        public async Task<ActionResult> DeleteProfileImage([FromRoute] string id)
+        {
+            using var channel = GrpcChannel.ForAddress(grpcURL);
+            client = new Admin.AdminClient(channel);
+            var reply = await client.DeleteProfileImageAsync(new ProfileDTO() { Id = id });
             return Ok(reply.Message);
         }
     }

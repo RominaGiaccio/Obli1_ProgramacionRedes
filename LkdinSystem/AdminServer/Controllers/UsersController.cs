@@ -5,47 +5,48 @@ using Microsoft.AspNetCore.Mvc;
 namespace AdminServer.Controllers
 {
     [ApiController]
-    [Route("admin")]
+    [Route("users")]
     public class UsersController : ControllerBase
     {
-            private Admin.AdminClient client;
-            private string grpcURL;
+        private Admin.AdminClient client;
+        private string grpcURL;
 
-            public UsersController(ILogger<UsersController> logger)
-            {
-                AppContext.SetSwitch(
-          "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-                grpcURL = SettingsManager.ReadSetting(ServerConfig.GrpcURL);
+        public UsersController(ILogger<UsersController> logger)
+        {
+            AppContext.SetSwitch(
+        "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+            grpcURL = SettingsManager.ReadSetting(ServerConfig.GrpcURL);
                 
-            }
+        }
 
-            [HttpPost("users")]
-            public async Task<ActionResult> PostUser(User user)//[FromBody] 
-            {
-                using var channel = GrpcChannel.ForAddress(grpcURL);
-                client = new Admin.AdminClient(channel);
-                var reply = await client.PostUserAsync(new UserDTO() { 
-                    Id = user.Id , Name = user.Name, Email = user.Email, CurrentState = user.CurrentState }) ;
-                return Ok(reply.Message);
-            }
-
-            [HttpDelete("users/{id}")]
-            public async Task<ActionResult> DeleteUser(string id)//[FromRoute]
-            {
-                using var channel = GrpcChannel.ForAddress(grpcURL);
-                client = new Admin.AdminClient(channel);
-                var reply = await client.DeleteUserAsync(new UserDTO() {Id = id});
+        [HttpPost]
+        public async Task<ActionResult> PostUser([FromBody] User user)
+        {
+            using var channel = GrpcChannel.ForAddress(grpcURL);
+            client = new Admin.AdminClient(channel);
+            var reply = await client.PostUserAsync(new UserDTO() { 
+                Id = user.Id, Name = user.Name, Email = user.Email, CurrentState = user.CurrentState
+            }) ;
             return Ok(reply.Message);
-            }
+        }
 
-            [HttpPut("users/{id}")]
-            public async Task<ActionResult> UpdateUser(string id)//[FromRoute]
-            {
-                using var channel = GrpcChannel.ForAddress(grpcURL);
-                client = new Admin.AdminClient(channel);
-                var reply = await client.PutUserAsync(new UserDTO() { Id = id });
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteUser([FromRoute] string id)
+        {
+            using var channel = GrpcChannel.ForAddress(grpcURL);
+            client = new Admin.AdminClient(channel);
+            var reply = await client.DeleteUserAsync(new UserDTO() {Id = id});
             return Ok(reply.Message);
-            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateUser([FromRoute] string id)
+        {
+            using var channel = GrpcChannel.ForAddress(grpcURL);
+            client = new Admin.AdminClient(channel);
+            var reply = await client.PutUserAsync(new UserDTO() { Id = id });
+            return Ok(reply.Message);
+        }
 
         /*
 

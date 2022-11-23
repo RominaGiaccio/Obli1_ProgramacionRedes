@@ -1,22 +1,11 @@
 using Grpc.Core;
-using GrpcServerProgram;
-using Protocol;
 using Protocol.Commands;
-using System.Xml.Linq;
 
 namespace GrpcServerProgram.Services
 {
-    
     public class AdminService : Admin.AdminBase
     {
         public static ServerCommands serverCommands = new ServerCommands();
-        public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
-        {
-            return Task.FromResult(new HelloReply
-            {
-                Message = "Hello " + request.Name
-            });
-        }
 
         public override Task<MessageReply> PostUser(UserDTO request, ServerCallContext context)
         {
