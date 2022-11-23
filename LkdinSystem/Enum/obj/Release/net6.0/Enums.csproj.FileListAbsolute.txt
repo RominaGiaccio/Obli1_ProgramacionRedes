@@ -10,3 +10,15 @@ C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Release
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Release\net6.0\refint\Enums.dll
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Release\net6.0\Enums.pdb
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Release\net6.0\ref\Enums.dll
+C:\Obli1_ProgramacionRedes\LkdinSystem\Enum\bin\Release\net6.0\Enums.deps.json
+C:\Obli1_ProgramacionRedes\LkdinSystem\Enum\bin\Release\net6.0\Enums.dll
+C:\Obli1_ProgramacionRedes\LkdinSystem\Enum\bin\Release\net6.0\Enums.pdb
+C:\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Release\net6.0\Enums.csproj.AssemblyReference.cache
+C:\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Release\net6.0\Enums.GeneratedMSBuildEditorConfig.editorconfig
+C:\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Release\net6.0\Enums.AssemblyInfoInputs.cache
+C:\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Release\net6.0\Enums.AssemblyInfo.cs
+C:\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Release\net6.0\Enums.csproj.CoreCompileInputs.cache
+C:\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Release\net6.0\Enums.dll
+C:\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Release\net6.0\refint\Enums.dll
+C:\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Release\net6.0\Enums.pdb
+C:\Obli1_ProgramacionRedes\LkdinSystem\Enum\obj\Release\net6.0\ref\Enums.dll

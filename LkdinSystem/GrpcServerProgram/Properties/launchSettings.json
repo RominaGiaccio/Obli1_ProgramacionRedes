@@ -2,8 +2,9 @@
   "profiles": {
     "GrpcServerProgram": {
       "commandName": "Project",
+      "dotnetRunMessages": true,
       "launchBrowser": false,
-      "applicationUrl": "https://localhost:5001",
+      "applicationUrl": "http://localhost:5118;https://localhost:7118",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
