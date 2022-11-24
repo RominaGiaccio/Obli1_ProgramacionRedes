@@ -9,11 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientApp", "ClientApp\Clie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Protocol", "Protocol\Protocol.csproj", "{886FD866-7CBA-4FE8-A938-57B37F128491}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{4B6B4C77-3951-47AD-B959-70D3759EE836}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils", "Utils\Utils.csproj", "{4B6B4C77-3951-47AD-B959-70D3759EE836}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{0638F95C-4AFF-4437-A8A9-0E4E24D9A38F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{0638F95C-4AFF-4437-A8A9-0E4E24D9A38F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enums", "Enum\Enums.csproj", "{9C7CD75F-ABA1-4255-AF73-700160A56DC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enums", "Enum\Enums.csproj", "{9C7CD75F-ABA1-4255-AF73-700160A56DC7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiServerLogs", "WebApiServerLogs\WebApiServerLogs.csproj", "{A09950B0-69B7-458F-B300-5887A9C5D4DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{9C7CD75F-ABA1-4255-AF73-700160A56DC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C7CD75F-ABA1-4255-AF73-700160A56DC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C7CD75F-ABA1-4255-AF73-700160A56DC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A09950B0-69B7-458F-B300-5887A9C5D4DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A09950B0-69B7-458F-B300-5887A9C5D4DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A09950B0-69B7-458F-B300-5887A9C5D4DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A09950B0-69B7-458F-B300-5887A9C5D4DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

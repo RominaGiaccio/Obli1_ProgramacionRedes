@@ -34,3 +34,4 @@ C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Re
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Release\net6.0\ServerApp.pdb
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Release\net6.0\ServerApp.genruntimeconfig.cache
 C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\obj\Release\net6.0\ref\ServerApp.dll
+C:\Users\danil\source\repos\Obli1_ProgramacionRedes\LkdinSystem\ServerApp\bin\Release\net6.0\RabbitMQ.Client.dll

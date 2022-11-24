@@ -1,16 +1,7 @@
-﻿using Domain;
-using Enums;
-using Protocol;
-using Protocol.Commands;
-using System;
-using System.IO;
+﻿using Protocol;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
-using System.Text;
 using Utils;
-using System.Threading.Tasks;
-using System.Net.Http;
 
 namespace ServerApp
 {
