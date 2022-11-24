@@ -24,13 +24,16 @@ namespace AdminServer.Controllers
         {
             using var channel = GrpcChannel.ForAddress(grpcURL);
             client = new Admin.AdminClient(channel);
+            string skills = "";
+            for (int i = 0; i < profile.Abilities.Length; i++) {
+                skills += "/" + profile.Abilities[i];
+            }
             var reply = await client.PostProfileAsync(new ProfileDTO()
             {
                 Id = profile.UserId,
                 Description = profile.Description,
-                //abilities = profile.Abilities,
+                Abilities = skills,
                 Image = profile.Image
-                
             });
             return Ok(reply.Message);
         }
@@ -44,12 +47,22 @@ namespace AdminServer.Controllers
             return Ok(reply.Message);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UploadProfile([FromRoute] string id)
+        [HttpPut]
+        public async Task<ActionResult> PutProfile([FromBody] UserProfile profile)
         {
             using var channel = GrpcChannel.ForAddress(grpcURL);
             client = new Admin.AdminClient(channel);
-            var reply = await client.PutProfileAsync(new ProfileDTO() { Id = id });
+            string skills = "";
+            for (int i = 0; i < profile.Abilities.Length; i++)
+            {
+                skills += "/" + profile.Abilities[i];
+            }
+            var reply = await client.PutProfileAsync(new ProfileDTO() {
+                Id = profile.UserId,
+                Description = profile.Description,
+                Abilities = skills,
+                Image = profile.Image
+            });
             return Ok(reply.Message);
         }
 

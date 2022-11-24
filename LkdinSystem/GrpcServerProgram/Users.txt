@@ -1,1 +1,5 @@
-some id/#some name/#email/#currentState
+3331767c-bb81-4ae3-ae23-3889d00e4468/#NombreUsuario/#EmailUsuario1/#N
+4441767c-bb81-4ae3-ae23-3889d00e4468/#NombreUsuario/#EmailUsuario2/#NotLogged
+XF328-2768/#Cookie/#galletita@gmail/#N
+dba57a73-62d8-4200-a22d-8e652ba2a778/#a/#a/#Logged
+1111/#Cookie/#galletita@gmail/#N

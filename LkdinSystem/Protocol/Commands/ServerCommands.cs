@@ -408,7 +408,7 @@ namespace Protocol.Commands
             }
         }
 
-        public async Task<string> DeleteUserProfileImageAsync(string message)
+        public async Task<string> DeleteProfileImageAsync(string message)
         {
             if (string.IsNullOrWhiteSpace(message))
             {
@@ -459,7 +459,7 @@ namespace Protocol.Commands
 
                 var users = await fileDatabaseManager.GetAllUsersAsync();
 
-                User? usu = users.Find((e) => e.Email == user.Email);
+                User? usu = users.Find((e) => e.Id.ToLower() == user.Id.ToLower());
 
                 if (usu == null)
                 {
@@ -496,14 +496,14 @@ namespace Protocol.Commands
 
                 var users = await fileDatabaseManager.GetAllUsersAsync();
 
-                User? usu = users.Find((e) => e.Email == user.Email);
+                User? usu = users.Find((e) => e.Id.ToLower() == user.Id.ToLower());
 
                 if (usu == null)
                 {
                     throw new Exception("Usuario no existe");
                 }
 
-                var newUsers = users.FindAll((e) => e.Id != user.Id);
+                var newUsers = users.FindAll((e) => e.Id.ToLower() != user.Id.ToLower());
 
                 usu.Name = user.Name;
 

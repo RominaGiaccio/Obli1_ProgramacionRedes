@@ -40,11 +40,12 @@ namespace AdminServer.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUser([FromRoute] string id)
+        public async Task<ActionResult> PutUser([FromBody] User user)
         {
             using var channel = GrpcChannel.ForAddress(grpcURL);
             client = new Admin.AdminClient(channel);
-            var reply = await client.PutUserAsync(new UserDTO() { Id = id });
+            var reply = await client.PutUserAsync(new UserDTO() { Id = user.Id,
+            Name = user.Name, Email = user.Email});
             return Ok(reply.Message);
         }
 
