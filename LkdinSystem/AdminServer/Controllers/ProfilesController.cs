@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Enums;
 using Grpc.Net.Client;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,10 +25,7 @@ namespace AdminServer.Controllers
         {
             using var channel = GrpcChannel.ForAddress(grpcURL);
             client = new Admin.AdminClient(channel);
-            string skills = "";
-            for (int i = 0; i < profile.Abilities.Length; i++) {
-                skills += "/" + profile.Abilities[i];
-            }
+            string skills = string.Join(SpecialChars.ArrayDivider, profile.Abilities);
             var reply = await client.PostProfileAsync(new ProfileDTO()
             {
                 Id = profile.UserId,
@@ -52,11 +50,7 @@ namespace AdminServer.Controllers
         {
             using var channel = GrpcChannel.ForAddress(grpcURL);
             client = new Admin.AdminClient(channel);
-            string skills = "";
-            for (int i = 0; i < profile.Abilities.Length; i++)
-            {
-                skills += "/" + profile.Abilities[i];
-            }
+            string skills = string.Join(SpecialChars.ArrayDivider, profile.Abilities);
             var reply = await client.PutProfileAsync(new ProfileDTO() {
                 Id = profile.UserId,
                 Description = profile.Description,

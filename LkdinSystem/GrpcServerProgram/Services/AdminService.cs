@@ -11,11 +11,11 @@ namespace GrpcServerProgram.Services
 
         public override Task<MessageReply> PostUser(UserDTO request, ServerCallContext context)
         {
-            //BusinessLogic session = BusinessLogic.GetInstance();
             Console.WriteLine("Se intenta crear usuario con nombre {0}", request.Name);
             try
             {
-                var message = serverCommands.SaveNewUserAsync(request.Id + "/#" + request.Name + "/#" + request.Email + "/#" + request.CurrentState);
+                var newID = Guid.NewGuid();
+                var message = serverCommands.SaveNewUserAsync(newID + "/#" + request.Name + "/#" + request.Email + "/#" + "NotLogged");
                 return Task.FromResult(new MessageReply { Message = message.Result, Status = "Ok" });
             }
             catch (Exception ex)
@@ -57,8 +57,7 @@ namespace GrpcServerProgram.Services
             Console.WriteLine("Se intenta crear usuario con id {0}", request.Id);
             try
             {
-                string[] skills = request.Abilities.Split("/");
-                var message = serverCommands.SaveNewUserProfileAsync(request.Id + "/#" + request.Description + "/#" + skills + "/#" + request.Image);
+                var message = serverCommands.SaveNewUserProfileAsync(request.Id + "/#" + request.Description + "/#" + request.Abilities + "/#" + request.Image);
                 return Task.FromResult(new MessageReply { Message = message.Result, Status = "Ok" });
             }
             catch (Exception ex)
@@ -72,8 +71,7 @@ namespace GrpcServerProgram.Services
             Console.WriteLine("Se intenta actualizar usuario con nombre {0}", request.Id);
             try
             {
-                string[] skills = request.Abilities.Split("/");
-                var message = serverCommands.UploadUserProfileAsync(request.Id + "/#" + request.Description + "/#" + skills + "/#" + request.Image);
+                var message = serverCommands.UploadUserProfileAsync(request.Id + "/#" + request.Description + "/#" + request.Abilities + "/#" + request.Image);
                 return Task.FromResult(new MessageReply { Message = message.Result, Status = "Ok" });
             }
             catch (Exception ex)
@@ -85,10 +83,9 @@ namespace GrpcServerProgram.Services
         public override Task<MessageReply> DeleteProfile(ProfileDTO request, ServerCallContext context)
         {
             Console.WriteLine("Se intenta eliminar usuario con nombre {0}", request.Id);
-            string[] skills = request.Abilities.Split("/");
             try
             {
-                var message = serverCommands.DeleteUserProfileAsync(request.Id + "/#" + request.Description + "/#" + skills + "/#" + request.Image);
+                var message = serverCommands.DeleteUserProfileAsync(request.Id + "/#" + request.Description + "/#" + request.Abilities + "/#" + request.Image);
                 return Task.FromResult(new MessageReply { Message = message.Result, Status = "Ok" });
             }
             catch (Exception ex)
@@ -102,8 +99,7 @@ namespace GrpcServerProgram.Services
             Console.WriteLine("Se intenta actualizar usuario con nombre {0}", request.Id);
             try
             {
-                string[] skills = request.Abilities.Split("/");
-                var message = serverCommands.DeleteProfileImageAsync(request.Id + "/#" + request.Description + "/#" + skills + "/#" + request.Image);
+                var message = serverCommands.DeleteProfileImageAsync(request.Id + "/#" + request.Description + "/#" + request.Abilities + "/#" + request.Image);
                 return Task.FromResult(new MessageReply { Message = message.Result, Status = "Ok" });
             }
             catch (Exception ex)
