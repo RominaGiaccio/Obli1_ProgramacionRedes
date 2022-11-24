@@ -1,0 +1,278 @@
+{
+	"info": {
+		"_postman_id": "dc79f249-8f2e-4f93-9f6a-fc57614d7527",
+		"name": "ApiProgramacion-Redes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14039853"
+	},
+	"item": [
+		{
+			"name": "AdminServer",
+			"item": [
+				{
+					"name": "Profiles",
+					"item": [
+						{
+							"name": "Alta Perfil",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"UserId\": \"2db6c766-465c-4c6b-8815-3cfd5dc2f512\",\r\n    \"Description\": \"description4\",\r\n    \"Abilities\": [\"hab1\",\"hab2\"],\r\n    \"Image\": \"foto2.jpg\"\r\n}\r\n\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{AdminServerDomain}}profiles",
+									"host": [
+										"{{AdminServerDomain}}profiles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar foto perfil",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{AdminServerDomain}}profiles/image/{{idEliminarImagenPerfil}}",
+									"host": [
+										"{{AdminServerDomain}}profiles"
+									],
+									"path": [
+										"image",
+										"{{idEliminarImagenPerfil}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Baja Perfil",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{AdminServerDomain}}profiles/{{idBajaPerfil}}",
+									"host": [
+										"{{AdminServerDomain}}profiles"
+									],
+									"path": [
+										"{{idBajaPerfil}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modificar Perfil",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"UserId\": \"65e13a3d-7559-4575-93e9-d3c42bd5c80c\",\r\n    \"Description\": \"descriptionNueva\",\r\n    \"Abilities\": [\"hab1\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{AdminServerDomain}}profiles",
+									"host": [
+										"{{AdminServerDomain}}profiles"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "Alta usuario",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"NombreUsuario8\",\r\n    \"Email\": \"EmailUsuario8\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{AdminServerDomain}}users",
+									"host": [
+										"{{AdminServerDomain}}users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Baja usuario",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{AdminServerDomain}}users/{{idUsuarioEliminar}}",
+									"host": [
+										"{{AdminServerDomain}}users"
+									],
+									"path": [
+										"{{idUsuarioEliminar}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modificar Usuario",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Javier\",\r\n    \"Email\": \"J@gmail\",\r\n    \"CurrentState\": \"NotLogged\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{AdminServerDomain}}users/{{idUsuarioModificar}}",
+									"host": [
+										"{{AdminServerDomain}}users"
+									],
+									"path": [
+										"{{idUsuarioModificar}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "LogsServer",
+			"item": [
+				{
+					"name": "Get Logs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ServerLogsDomain}}logs",
+							"host": [
+								"{{ServerLogsDomain}}logs"
+							],
+							"query": [
+								{
+									"key": "MinDate",
+									"value": "2022-11-23T20:49:03.3129967-03:00",
+									"disabled": true
+								},
+								{
+									"key": "MaxDate",
+									"value": "2022-11-23T20:49:03.3129967-03:00",
+									"disabled": true
+								},
+								{
+									"key": "KeyWord",
+									"value": "200",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "idUsuarioEliminar",
+			"value": "5342f316-430e-4c91-b861-e29753a48aa8",
+			"type": "string"
+		},
+		{
+			"key": "idUsuarioModificar",
+			"value": "4096f842-91f9-4c06-8260-576719510e87",
+			"type": "string"
+		},
+		{
+			"key": "idBajaPerfil",
+			"value": "2db6c766-465c-4c6b-8815-3cfd5dc2f512",
+			"type": "string"
+		},
+		{
+			"key": "idEliminarImagenPerfil",
+			"value": "2db6c766-465c-4c6b-8815-3cfd5dc2f512",
+			"type": "string"
+		},
+		{
+			"key": "ServerLogsDomain",
+			"value": "https://localhost:3118/",
+			"type": "string"
+		},
+		{
+			"key": "AdminServerDomain",
+			"value": "https://localhost:7201/",
+			"type": "string"
+		}
+	]
+}

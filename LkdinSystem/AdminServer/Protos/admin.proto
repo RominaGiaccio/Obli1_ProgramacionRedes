@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option csharp_namespace = "AdminServer";
+
+package admin;
+
+service Admin {
+	//Users
+	rpc PostUser(UserDTO) returns (MessageReply);
+	rpc PutUser(UserDTO) returns (MessageReply);
+	rpc DeleteUser(UserDTO) returns (MessageReply);
+
+	//Profiles
+	rpc PostProfile(ProfileDTO) returns (MessageReply);
+	rpc PutProfile(ProfileDTO) returns (MessageReply);
+	rpc DeleteProfile(ProfileDTO) returns (MessageReply);
+	rpc DeleteProfileImage(ProfileDTO) returns (MessageReply);
+}
+
+message MessageReply {
+	string message = 1;
+	string status = 2;
+}
+
+//DTOs
+ message UserDTO {
+	string id = 1;
+	string name = 2;
+	string email = 3;
+	string currentState = 4;
+}
+
+ message ProfileDTO {
+	string id = 1;
+	string description = 2;
+	string abilities = 3;
+	string image = 4;
+}
