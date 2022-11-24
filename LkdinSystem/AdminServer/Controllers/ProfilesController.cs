@@ -35,7 +35,7 @@ namespace AdminServer.Controllers
                 Abilities = skills,
                 Image = profile.Image
             });
-            return Ok(reply.Message);
+            return ControllerErrorHandler(reply);
         }
 
         [HttpDelete("{id}")]
@@ -44,7 +44,7 @@ namespace AdminServer.Controllers
             using var channel = GrpcChannel.ForAddress(grpcURL);
             client = new Admin.AdminClient(channel);
             var reply = await client.DeleteProfileAsync(new ProfileDTO() { Id = id });
-            return Ok(reply.Message);
+            return ControllerErrorHandler(reply);
         }
 
         [HttpPut]
@@ -63,7 +63,7 @@ namespace AdminServer.Controllers
                 Abilities = skills,
                 Image = profile.Image
             });
-            return Ok(reply.Message);
+            return ControllerErrorHandler(reply);
         }
 
         [HttpDelete("image/{id}")]
@@ -73,6 +73,15 @@ namespace AdminServer.Controllers
             client = new Admin.AdminClient(channel);
             var reply = await client.DeleteProfileImageAsync(new ProfileDTO() { Id = id });
             Console.WriteLine(reply.Message);
+            return ControllerErrorHandler(reply);
+        }
+
+        public ActionResult ControllerErrorHandler(MessageReply reply)
+        {
+            if (reply.Status.Equals("Error"))
+            {
+                return BadRequest(reply.Message);
+            }
             return Ok(reply.Message);
         }
     }
