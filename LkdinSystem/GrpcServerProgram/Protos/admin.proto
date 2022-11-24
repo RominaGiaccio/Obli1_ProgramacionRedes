@@ -30,7 +30,7 @@ message MessageReply {
 	string currentState = 4;
 }
 
- message ProfileDTO{
+ message ProfileDTO {
 	string id = 1;
 	string description = 2;
 	string abilities = 3;

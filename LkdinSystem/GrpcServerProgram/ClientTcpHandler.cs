@@ -1,26 +1,57 @@
 ﻿using Enums;
-using Protocol.Commands;
 using Protocol;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Protocol.Commands;
+using RabbitMQ.Client;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+using System.Text.Json;
+using Utils;
+using Domain;
 
 namespace GrpcServerProgram
 {
     public class ClientTcpHandler
     {
+        public static void SendLog(IModel channel, string messageToSend)
+        {
+            string message = JsonSerializer.Serialize(new Log()
+            {
+                Date = DateTime.Now,
+                Message = messageToSend
+            });
+
+            var body = ConversionHandler.ConvertStringToBytes(message);
+            channel.BasicPublish(
+                exchange: "",
+                routingKey: "logs",
+                basicProperties: null,
+                body: body
+            );
+        }
+
         public async Task<Task> Handler(TcpClient tcpClientListener, int number)
         {
             var th = new tcpHelper(tcpClientListener);
             NetworkStream networkStream = tcpClientListener.GetStream();
+            var factory = new ConnectionFactory() { HostName = "localhost" };
+
+            using var connection = factory.CreateConnection();
+            using var channel = connection.CreateModel();
+            string logMessage = "";
 
             try
             {
-                Console.WriteLine("Atention Routine");
+                channel.QueueDeclare(
+                    queue: "logs",
+                    durable: false,
+                    exclusive: false,
+                    autoDelete: false,
+                    arguments: null
+                );
+
+                logMessage = $"Client: {number} - Atention Routine";
+                SendLog(channel, logMessage);
+                Console.WriteLine(logMessage);
+
                 bool clientConnected = true;
 
                 while (clientConnected)
@@ -34,11 +65,17 @@ namespace GrpcServerProgram
                     catch (Exception ex)
                     {
                         networkStream.Close();
-                        Console.WriteLine("Closing connection...");
+
+                        logMessage = $"Client: {number} - Closing connection...";
+                        SendLog(channel, logMessage);
+                        Console.WriteLine(logMessage);
+
                         break;
                     }
 
-                    Console.WriteLine("<- Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, segment.Status, segment.Data);
+                    logMessage = $"<- Client: {number} - Instruction: {segment.Command} - Status: {segment.Status} - Message: {segment.Data}";
+                    SendLog(channel, logMessage);
+                    Console.WriteLine(logMessage);
 
                     CommandsHandler.Commands.TryGetValue(segment.Command, out var commandsHandler);
 
@@ -54,35 +91,48 @@ namespace GrpcServerProgram
                             {
                                 if (segment.Command == "03")
                                 {
-                                    Console.WriteLine("Reading file");
+                                    logMessage = $"Client: {number} - Reading file";
+                                    SendLog(channel, logMessage);
+                                    Console.WriteLine(logMessage);
+
                                     var fileCommonHandler = new FileCommsHandler(th);
                                     await fileCommonHandler.ReceiveFileAsync();
-                                    Console.WriteLine("Profile image received");
+
+                                    logMessage = $"Client: {number} - Profile image received";
+                                    SendLog(channel, logMessage);
+                                    Console.WriteLine(logMessage);
                                 }
 
                                 if (segment.Command == "09")
                                 {
                                     if (!responseMessage.Equals("No image") && FileHandler.FileExists(responseMessage))
                                     {
-                                        string correctPathMessage = "Enviando imagen...";
+                                        string correctPathMessage = $"Client: {number} - Sending image...";
                                         string fixedPart = TransferSegmentManager.GerFixedPart(segment.Command, States.OK, correctPathMessage);
 
                                         await TransferSegmentManager.SendDataAsync(fixedPart, correctPathMessage, th);
 
-                                        Console.WriteLine("-> Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, (int)States.OK, correctPathMessage);
+                                        logMessage = $"-> Client: {number} - Instruction: {segment.Command} - Status: {(int)States.OK} - Message: {correctPathMessage}";
+                                        SendLog(channel, logMessage);
+                                        Console.WriteLine(logMessage);
 
                                         var fileCommonHandler = new FileCommsHandler(th);
                                         await fileCommonHandler.SendFileAsync(responseMessage);
-                                        Console.WriteLine("Image sended");
+
+                                        logMessage = $"Client: {number} - Image sended";
+                                        SendLog(channel, logMessage);
+                                        Console.WriteLine(logMessage);
                                     }
                                     else
                                     {
-                                        string errorMessage = "No existe la imagen";
+                                        string errorMessage = $"Client: {number} - Image not exists";
                                         string fixedPart = TransferSegmentManager.GerFixedPart(segment.Command, States.ERROR, errorMessage);
 
                                         await TransferSegmentManager.SendDataAsync(fixedPart, errorMessage, th);
 
-                                        Console.WriteLine("-> Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, (int)States.ERROR, errorMessage);
+                                        logMessage = $"-> Client: {number} - Instruction: {segment.Command} - Status: {(int)States.ERROR} - Message: {errorMessage}";
+                                        SendLog(channel, logMessage);
+                                        Console.WriteLine(logMessage);
                                     }
                                 }
                                 else
@@ -91,7 +141,9 @@ namespace GrpcServerProgram
 
                                     await TransferSegmentManager.SendDataAsync(fixedPart, responseMessage, th);
 
-                                    Console.WriteLine("-> Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, (int)States.OK, responseMessage);
+                                    logMessage = $"-> Client: {number} - Instruction: {segment.Command} - Status: {(int)States.OK} - Message: {responseMessage}";
+                                    SendLog(channel, logMessage);
+                                    Console.WriteLine(logMessage);
                                 }
                             }
                         }
@@ -101,15 +153,22 @@ namespace GrpcServerProgram
 
                             await TransferSegmentManager.SendDataAsync(fixedPart, ex.Message, th);
 
-                            Console.WriteLine("-> Client: {0} - Instruction: {1} - Status: {2} - Message: {3}", number, segment.Command, (int)States.ERROR, ex.Message);
+                            logMessage = $"-> Client: {number} - Instruction: {segment.Command} - Status: {(int)States.ERROR} - Message: {ex.Message}";
+                            SendLog(channel, logMessage);
+                            Console.WriteLine(logMessage);
                         }
                     }
                 }
-                Console.WriteLine("Client disconnect");
+
+                logMessage = $"Client: {number} disconnect";
+                SendLog(channel, logMessage);
+                Console.WriteLine(logMessage);
             }
             catch (SocketException e)
             {
-                Console.WriteLine("Client disconnect - " + e.Message);
+                logMessage = $"Client: {number} disconnect - " + e.Message;
+                SendLog(channel, logMessage);
+                Console.WriteLine(logMessage);
             }
 
             return Task.CompletedTask;

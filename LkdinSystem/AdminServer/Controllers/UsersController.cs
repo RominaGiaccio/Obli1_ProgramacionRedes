@@ -39,17 +39,17 @@ namespace AdminServer.Controllers
             return ControllerErrorHandler(reply);
          }
 
-          [HttpPut("{id}")]
-          public async Task<ActionResult> PutUser([FromRoute] string id, [FromBody] User user)
-          {
-              using var channel = GrpcChannel.ForAddress(grpcURL);
-              client = new Admin.AdminClient(channel);
-              var reply = await client.PutUserAsync(new UserDTO() { Id = id,
-              Name = user.Name, Email = user.Email});
-              return ControllerErrorHandler(reply);
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutUser([FromRoute] string id, [FromBody] User user)
+        {
+            using var channel = GrpcChannel.ForAddress(grpcURL);
+            client = new Admin.AdminClient(channel);
+            var reply = await client.PutUserAsync(new UserDTO() { Id = id,
+            Name = user.Name, Email = user.Email});
+            return ControllerErrorHandler(reply);
         }
 
-        public ActionResult ControllerErrorHandler(MessageReply reply)
+        private ActionResult ControllerErrorHandler(MessageReply reply)
         {
             if (reply.Status.Equals("Error"))
             {

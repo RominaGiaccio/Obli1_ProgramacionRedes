@@ -5,7 +5,6 @@ using Utils;
 using Protocol;
 
 namespace GrpcServerProgram {
-
     public class Program {
 
         public static ClientTcpHandler cth = new ClientTcpHandler();

@@ -378,19 +378,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Nahuel\\.nuget\\packages\\": {}
+    "C:\\Users\\danil\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
+      "projectUniqueName": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
       "projectName": "Utils",
-      "projectPath": "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
-      "packagesPath": "C:\\Users\\Nahuel\\.nuget\\packages\\",
-      "outputPath": "C:\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\obj\\",
+      "projectPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\Utils.csproj",
+      "packagesPath": "C:\\Users\\danil\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\danil\\source\\repos\\Obli1_ProgramacionRedes\\LkdinSystem\\Utils\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Nahuel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\danil\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -437,7 +437,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

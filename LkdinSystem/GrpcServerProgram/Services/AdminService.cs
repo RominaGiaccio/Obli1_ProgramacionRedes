@@ -1,7 +1,5 @@
-using Domain;
 using Grpc.Core;
 using Protocol.Commands;
-using System.Threading.Tasks;
 
 namespace GrpcServerProgram.Services
 {

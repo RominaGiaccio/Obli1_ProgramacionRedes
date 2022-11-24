@@ -70,7 +70,7 @@ namespace AdminServer.Controllers
             return ControllerErrorHandler(reply);
         }
 
-        public ActionResult ControllerErrorHandler(MessageReply reply)
+        private ActionResult ControllerErrorHandler(MessageReply reply)
         {
             if (reply.Status.Equals("Error"))
             {
