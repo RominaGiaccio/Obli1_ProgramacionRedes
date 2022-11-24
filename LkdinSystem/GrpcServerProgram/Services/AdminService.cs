@@ -1,5 +1,7 @@
+using Domain;
 using Grpc.Core;
 using Protocol.Commands;
+using RabbitMQ.Client;
 
 namespace GrpcServerProgram.Services
 {
@@ -14,10 +16,20 @@ namespace GrpcServerProgram.Services
             {
                 var newID = Guid.NewGuid();
                 var message = serverCommands.SaveNewUserAsync(newID + "/#" + request.Name + "/#" + request.Email + "/#" + "NotLogged");
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                using var connection = factory.CreateConnection();
+                using var channel = connection.CreateModel();
+
+                ClientTcpHandler.SendLog(channel, message.Result);
                 return Task.FromResult(new MessageReply { Message = message.Result, Status = "Ok" });
             }
             catch (Exception ex)
             {
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                using var connection = factory.CreateConnection();
+                using var channel = connection.CreateModel();
+
+                ClientTcpHandler.SendLog(channel, ex.Message);
                 return Task.FromResult(new MessageReply { Message = ex.Message, Status = "Error" });
             }
         }
@@ -28,10 +40,20 @@ namespace GrpcServerProgram.Services
             try
             {
                 var message = serverCommands.UploadUserAsync(request.Id + "/#" + request.Name + "/#" + request.Email + "/#" + request.CurrentState);
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                using var connection = factory.CreateConnection();
+                using var channel = connection.CreateModel();
+
+                ClientTcpHandler.SendLog(channel, message.Result);
                 return Task.FromResult(new MessageReply { Message = message.Result, Status = "Ok" });
             }
             catch (Exception ex)
             {
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                using var connection = factory.CreateConnection();
+                using var channel = connection.CreateModel();
+
+                ClientTcpHandler.SendLog(channel, ex.Message);
                 return Task.FromResult(new MessageReply { Message = ex.Message, Status = "Error" });
             }
         }
@@ -42,10 +64,20 @@ namespace GrpcServerProgram.Services
             try
             {
                 var message = serverCommands.DeleteUserAsync(request.Id + "/#" + request.Name + "/#" + request.Email + "/#" + request.CurrentState);
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                using var connection = factory.CreateConnection();
+                using var channel = connection.CreateModel();
+
+                ClientTcpHandler.SendLog(channel, message.Result);
                 return Task.FromResult(new MessageReply { Message = message.Result, Status = "Ok" });
             }
             catch (Exception ex)
             {
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                using var connection = factory.CreateConnection();
+                using var channel = connection.CreateModel();
+
+                ClientTcpHandler.SendLog(channel, ex.Message);
                 return Task.FromResult(new MessageReply { Message = ex.Message, Status = "Error" });
             }
         }
@@ -56,10 +88,20 @@ namespace GrpcServerProgram.Services
             try
             {
                 var message = serverCommands.SaveNewUserProfileAsync(request.Id + "/#" + request.Description + "/#" + request.Abilities + "/#" + request.Image);
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                using var connection = factory.CreateConnection();
+                using var channel = connection.CreateModel();
+
+                ClientTcpHandler.SendLog(channel, message.Result);
                 return Task.FromResult(new MessageReply { Message = message.Result, Status = "Ok" });
             }
             catch (Exception ex)
             {
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                using var connection = factory.CreateConnection();
+                using var channel = connection.CreateModel();
+
+                ClientTcpHandler.SendLog(channel, ex.Message);
                 return Task.FromResult(new MessageReply { Message = ex.Message, Status = "Error" });
             }
         }
@@ -70,10 +112,20 @@ namespace GrpcServerProgram.Services
             try
             {
                 var message = serverCommands.UploadUserProfileAsync(request.Id + "/#" + request.Description + "/#" + request.Abilities + "/#" + request.Image);
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                using var connection = factory.CreateConnection();
+                using var channel = connection.CreateModel();
+
+                ClientTcpHandler.SendLog(channel, message.Result);
                 return Task.FromResult(new MessageReply { Message = message.Result, Status = "Ok" });
             }
             catch (Exception ex)
             {
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                using var connection = factory.CreateConnection();
+                using var channel = connection.CreateModel();
+
+                ClientTcpHandler.SendLog(channel, ex.Message);
                 return Task.FromResult(new MessageReply { Message = ex.Message, Status = "Error" });
             }
         }
@@ -84,10 +136,20 @@ namespace GrpcServerProgram.Services
             try
             {
                 var message = serverCommands.DeleteUserProfileAsync(request.Id + "/#" + request.Description + "/#" + request.Abilities + "/#" + request.Image);
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                using var connection = factory.CreateConnection();
+                using var channel = connection.CreateModel();
+
+                ClientTcpHandler.SendLog(channel, message.Result);
                 return Task.FromResult(new MessageReply { Message = message.Result, Status = "Ok" });
             }
             catch (Exception ex)
             {
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                using var connection = factory.CreateConnection();
+                using var channel = connection.CreateModel();
+
+                ClientTcpHandler.SendLog(channel, ex.Message);
                 return Task.FromResult(new MessageReply { Message = ex.Message, Status = "Error" });
             }
         }
@@ -98,10 +160,20 @@ namespace GrpcServerProgram.Services
             try
             {
                 var message = serverCommands.DeleteProfileImageAsync(request.Id + "/#" + request.Description + "/#" + request.Abilities + "/#" + request.Image);
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                using var connection = factory.CreateConnection();
+                using var channel = connection.CreateModel();
+
+                ClientTcpHandler.SendLog(channel, message.Result);
                 return Task.FromResult(new MessageReply { Message = message.Result, Status = "Ok" });
             }
             catch (Exception ex)
             {
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                using var connection = factory.CreateConnection();
+                using var channel = connection.CreateModel();
+
+                ClientTcpHandler.SendLog(channel, ex.Message);
                 return Task.FromResult(new MessageReply { Message = ex.Message, Status = "Error" });
             }
         }
