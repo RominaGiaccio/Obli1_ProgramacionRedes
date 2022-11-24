@@ -19,6 +19,7 @@ service Admin {
 
 message MessageReply {
 	string message = 1;
+	string status = 2;
 }
 
 //DTOs

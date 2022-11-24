@@ -381,6 +381,9 @@ namespace Protocol.Commands
             }
             else
             {
+               // var reply = await DeleteProfileImageAsync(new ProfileDTO() { Id = id });
+                await DeleteProfileImageAsync(message);
+
                 UserProfile userProfile = UserProfile.ToEntity(message);
 
                 var userProfiles = await fileDatabaseManager.GetAllProfilesAsync();
@@ -428,7 +431,7 @@ namespace Protocol.Commands
                 }
 
                 var newUsersProfiles = userProfiles.FindAll((e) => e.UserId != savedUserProfile.UserId);
-
+                File.Delete(savedUserProfile.Image);
                 savedUserProfile.Image = "";
 
                 newUsersProfiles.Add(savedUserProfile);
@@ -457,6 +460,8 @@ namespace Protocol.Commands
             {
                 User user = User.ToEntity(message);
 
+                await DeleteUserProfileAsync(message);
+
                 var users = await fileDatabaseManager.GetAllUsersAsync();
 
                 User? usu = users.Find((e) => e.Id.ToLower() == user.Id.ToLower());
@@ -477,8 +482,6 @@ namespace Protocol.Commands
                 });
 
                 Task.WaitAll(tasks.ToArray());
-
-               // await fileDatabaseManager.SaveNewUserAsync(user);
 
                 return "Usuario eliminado";
             }

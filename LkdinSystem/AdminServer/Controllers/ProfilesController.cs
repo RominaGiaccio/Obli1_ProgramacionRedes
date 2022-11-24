@@ -72,6 +72,7 @@ namespace AdminServer.Controllers
             using var channel = GrpcChannel.ForAddress(grpcURL);
             client = new Admin.AdminClient(channel);
             var reply = await client.DeleteProfileImageAsync(new ProfileDTO() { Id = id });
+            Console.WriteLine(reply.Message);
             return Ok(reply.Message);
         }
     }

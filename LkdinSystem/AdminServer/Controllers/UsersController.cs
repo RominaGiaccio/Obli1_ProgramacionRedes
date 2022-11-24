@@ -27,7 +27,7 @@ namespace AdminServer.Controllers
             var reply = await client.PostUserAsync(new UserDTO() { 
                 Id = user.Id, Name = user.Name, Email = user.Email, CurrentState = user.CurrentState
             }) ;
-            return Ok(reply.Message);
+            return ControllerErrorHandler(reply);
         }
 
         [HttpDelete("{id}")]
@@ -36,29 +36,26 @@ namespace AdminServer.Controllers
             using var channel = GrpcChannel.ForAddress(grpcURL);
             client = new Admin.AdminClient(channel);
             var reply = await client.DeleteUserAsync(new UserDTO() {Id = id});
-            return Ok(reply.Message);
+            return ControllerErrorHandler(reply);
+         }
+
+          [HttpPut("{id}")]
+          public async Task<ActionResult> PutUser([FromBody] User user)
+          {
+              using var channel = GrpcChannel.ForAddress(grpcURL);
+              client = new Admin.AdminClient(channel);
+              var reply = await client.PutUserAsync(new UserDTO() { Id = user.Id,
+              Name = user.Name, Email = user.Email});
+              return ControllerErrorHandler(reply);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> PutUser([FromBody] User user)
+        public ActionResult ControllerErrorHandler(MessageReply reply)
         {
-            using var channel = GrpcChannel.ForAddress(grpcURL);
-            client = new Admin.AdminClient(channel);
-            var reply = await client.PutUserAsync(new UserDTO() { Id = user.Id,
-            Name = user.Name, Email = user.Email});
+            if (reply.Status.Equals("Error"))
+            {
+                return BadRequest(reply.Message);
+            }
             return Ok(reply.Message);
         }
-
-        /*
-
-            [HttpPut]
-            public async Task<ActionResult> UpdateUser()
-            {
-                using var channel = GrpcChannel.ForAddress(grpcURL);
-                client = new Greeter.GreeterClient(channel);
-                var reply = await client.SayHelloAsync(new HelloRequest() { Name = "loli" });
-                return Ok(reply.Message);
-            }
-      */
     }
 }
